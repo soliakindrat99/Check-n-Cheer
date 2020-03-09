@@ -1,0 +1,28 @@
+﻿@model Check_n_Cheer.Models.User;
+
+@{
+    ViewData["Title"] = "Sign Up";
+}
+
+<div class="container">
+<h1>@ViewData["Title"]</h1>
+<p></p>
+
+<p>Please fill in this form to create an account.</p>
+<hr>
+<form asp-action="SignUp" method="post">
+    <b>
+        <label asp-for="Email">Email</label>
+        <input type="email" class="input" placeholder="Enter Email" asp-for="Email" required>
+    </b>
+
+    <label asp-for="Password"><b>Password</b></label>
+    <input type="password" class="input" placeholder="Enter Password" asp-for="Password" id="password" required>
+
+    <label for="psw-repeat"><b>Repeat Password</b></label>
+    <input type="password" class="input" placeholder="Repeat Password" name="psw-repeat" id="confirm_password" required>
+    <hr>
+
+    <button type="submit" class="registerbtn"> Sign up </button>
+</form>
+</div>
