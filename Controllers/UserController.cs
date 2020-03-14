@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
 using System.Threading.Tasks;
-using System.Security.Claims;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -25,6 +23,21 @@ namespace Check_n_Cheer.Controllers
             db = context;
         }
 
+        public string Get(string key)
+        {
+            return Request.Cookies[key];
+        }
+        public void Set(string key, string value, int expireTime = 1)
+        {
+            CookieOptions option = new CookieOptions();
+            option.Expires = DateTime.Now.AddMinutes(expireTime);
+            Response.Cookies.Append(key, value, option);
+        }
+        public void Remove(string key)
+        {
+            Response.Cookies.Delete(key);
+        }
+
         [HttpGet]
         public ViewResult SignUp()
         {
@@ -32,14 +45,13 @@ namespace Check_n_Cheer.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> SignUp(User user)
+        public async Task<IActionResult> SignUp(User formData)
         {
-            if(user != null)
+            if(formData != null)
             {
-                db.Users.Add(user);
+                db.Users.Add(formData);
                 await db.SaveChangesAsync();
-                await Authenticate(user.Email);
-                return View("Profile", user);
+                return View("SignIn");
             }
             return View();
         }
@@ -50,26 +62,20 @@ namespace Check_n_Cheer.Controllers
             return View();
         }
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public async Task<IActionResult> SignIn(User formData)
         {
             User user = await db.Users.FirstOrDefaultAsync(u => u.Email == formData.Email);
             if(user != null && user.Password == formData.Password)
             {
-                await Authenticate(user.Email);
-                return View("Profile", user);
+                Set("user", Convert.ToString(user.Id));
+                return RedirectToAction("Profile");
             }
             return View();
         }
-        [Authorize]
+
         public IActionResult Profile()
         {
-            if (User.Identity.IsAuthenticated)
-            {
-                ViewData["Authenticated"] = "true";
-            }
-            else
-                ViewData["Authenticated"] = "false";
+            ViewData["Id"] = Get("user");
             return View();
         }
 
@@ -77,19 +83,6 @@ namespace Check_n_Cheer.Controllers
         {
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             return RedirectToAction("SignIn", "User");
-        }
-
-        private async Task Authenticate(string email)
-        {
-            
-            var claims = new List<Claim>
-            {
-                new Claim(ClaimsIdentity.DefaultNameClaimType, email)
-            };
-            
-            ClaimsIdentity id = new ClaimsIdentity(claims, "ApplicationCookie", ClaimsIdentity.DefaultNameClaimType, ClaimsIdentity.DefaultRoleClaimType);
-            
-            await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(id));
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
