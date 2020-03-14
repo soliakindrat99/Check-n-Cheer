@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Microsoft.AspNetCore.Http;
 using Check_n_Cheer.Models;
 
 namespace Check_n_Cheer.Controllers
@@ -18,9 +19,28 @@ namespace Check_n_Cheer.Controllers
             _logger = logger;
         }
 
+        public string Get(string key)
+        {
+            return Request.Cookies[key];
+        }
+        public void Set(string key, string value, int expireTime = 1)
+        {
+            CookieOptions option = new CookieOptions();
+            option.Expires = DateTime.Now.AddMinutes(expireTime);
+            Response.Cookies.Append(key, value, option);
+        }
+        public void Remove(string key)
+        {
+            Response.Cookies.Delete(key);
+        }
+
         public IActionResult Index()
         {
-            ViewData["Message"] = "And this is a messege from controller";
+            if (Get("user") == null)
+                ViewData["LoggedIn"] = "false";
+            else
+                ViewData["LoggedIn"] = "true";
+
             return View();
         }
 

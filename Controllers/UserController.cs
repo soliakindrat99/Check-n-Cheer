@@ -3,9 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Check_n_Cheer.Models;
@@ -39,9 +37,14 @@ namespace Check_n_Cheer.Controllers
         }
 
         [HttpGet]
-        public ViewResult SignUp()
+        public IActionResult SignUp()
         {
-            return View();
+            if (Get("user") == null){
+                ViewData["LoggedIn"] = "false";
+                return View();
+            }
+            ViewData["LoggedIn"] = "true";
+            return RedirectToAction("Index", "Home");
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -51,15 +54,21 @@ namespace Check_n_Cheer.Controllers
             {
                 db.Users.Add(formData);
                 await db.SaveChangesAsync();
-                return View("SignIn");
+                return RedirectToAction("SignIn");
             }
             return View();
         }
 
         [HttpGet]
-        public ViewResult SignIn()
+        public IActionResult SignIn()
         {
-            return View();
+            if (Get("user") == null)
+            {
+                ViewData["LoggedIn"] = "false";
+                return View();
+            }
+            ViewData["LoggedIn"] = "true";
+            return RedirectToAction("Index", "Home");
         }
         [HttpPost]
         public async Task<IActionResult> SignIn(User formData)
@@ -73,15 +82,22 @@ namespace Check_n_Cheer.Controllers
             return View();
         }
 
-        public IActionResult Profile()
+        public async Task<IActionResult> Profile()
         {
-            ViewData["Id"] = Get("user");
-            return View();
+            int id = int.Parse(Get("user"));
+            User user = await db.Users.FirstOrDefaultAsync(u => u.Id == id);
+            if(user != null)
+            {
+                ViewData["LoggedIn"] = "true";
+                return View(user);
+            }
+            ViewData["LoggedIn"] = "false";
+            return RedirectToAction("Error");
         }
 
         public async Task<IActionResult> Logout()
         {
-            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            Remove("user");
             return RedirectToAction("SignIn", "User");
         }
 
