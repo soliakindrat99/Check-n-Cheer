@@ -1,24 +1,22 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Check_n_Cheer.Models;
+using Check_n_Cheer.Interfaces;
 
 namespace Check_n_Cheer.Controllers
 {
     public class UserController : Controller
     {
         private readonly ILogger<UserController> _logger;
-        private UserContext db;
+        private IUserRepository _repo;
 
-        public UserController(ILogger<UserController> logger, UserContext context)
+        public UserController(ILogger<UserController> logger, IUserRepository repo)
         {
             _logger = logger;
-            db = context;
+            _repo = repo;
         }
 
         public string Get(string key)
@@ -49,12 +47,11 @@ namespace Check_n_Cheer.Controllers
             return RedirectToAction("Index", "Home");
         }
         [HttpPost]
-        public async Task<IActionResult> SignUp(User formData)
+        public IActionResult SignUp(User formData)
         {
             if(formData != null)
             {
-                db.Users.Add(formData);
-                await db.SaveChangesAsync();
+                _repo.RegisterUser(formData);
                 return RedirectToAction("SignIn");
             }
             return View();
@@ -72,9 +69,9 @@ namespace Check_n_Cheer.Controllers
             return RedirectToAction("Index", "Home");
         }
         [HttpPost]
-        public async Task<IActionResult> SignIn(User formData)
+        public IActionResult SignIn(User formData)
         {
-            User user = await db.Users.FirstOrDefaultAsync(u => u.Email == formData.Email);
+            User user = _repo.GetUser(formData.Email);
             if(user != null && user.Password == formData.Password)
             {
                 Set("user", Convert.ToString(user.Id));
@@ -83,11 +80,11 @@ namespace Check_n_Cheer.Controllers
             return View();
         }
 
-        public async Task<IActionResult> Profile()
+        public IActionResult Profile()
         {
             int id = int.Parse(Get("user"));
-            User user = await db.Users.FirstOrDefaultAsync(u => u.Id == id);
-            if(user != null)
+            User user = _repo.GetUser(id);
+            if (user != null)
             {
                 ViewData["LoggedIn"] = "true";
                 return View(user);
@@ -96,7 +93,7 @@ namespace Check_n_Cheer.Controllers
             return RedirectToAction("Error");
         }
 
-        public async Task<IActionResult> Logout()
+        public IActionResult Logout()
         {
             Remove("user");
             return RedirectToAction("SignIn", "User");

@@ -43,7 +43,6 @@ namespace Check_n_Cheer.Controllers
                 ViewData["LoggedIn"] = "false";
             else
                 ViewData["LoggedIn"] = "true";
-
             return View();
         }
 

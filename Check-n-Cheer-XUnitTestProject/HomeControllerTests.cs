@@ -1,50 +1,51 @@
 using System;
 using Xunit;
+using Moq;
 using Check_n_Cheer.Controllers;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
-using NSubstitute;
 using Microsoft.Extensions.Logging;
-using Moq;
 using Microsoft.Net.Http.Headers;
 
 namespace Check_n_Cheer_XUnitTestProject
 {
-    public class UnitTests
+    public class HomeControllerTests
     {
-        [Fact]
-        public void IndexPageNotNull()
+        private readonly ILogger<HomeController> _logger;
+        private readonly HomeController _controller;
+        public HomeControllerTests()
         {
-            var logger = Mock.Of<ILogger<HomeController>>();
-            var home = new HomeController(logger);
-            var result = home.Index() as ViewResult;
+            _logger = Mock.Of<ILogger<HomeController>>();
+            _controller = new HomeController(_logger);
+        }
+        [Fact]
+        public void IndexPageReturnsView()
+        {
+            var result = _controller.Index();
             Assert.NotNull(result);
+            Assert.IsType<ViewResult>(result);
         }
         [Fact]
         public void IsNotLoggedInFirst()
         {
-            var logger = Mock.Of<ILogger<HomeController>>();
             var httpContext = new DefaultHttpContext();
-            var home = new HomeController(logger);
-            home.ControllerContext = new ControllerContext
+            _controller.ControllerContext = new ControllerContext
             {
                 HttpContext = httpContext
             };
-            var result = home.Index() as ViewResult;
-            Assert.Equal("false",result.ViewData["LoggedIn"]);
+            var result = _controller.Index() as ViewResult;
+            Assert.Equal("false", result.ViewData["LoggedIn"]);
         }
         [Fact]
         public void LoggedInWhenCookieFieldIsSet()
         {
-            var logger = Mock.Of<ILogger<HomeController>>();
             var httpContext = new DefaultHttpContext();
             httpContext.Request.Headers.Add("Cookie", new CookieHeaderValue("user", "100").ToString());
-            var home = new HomeController(logger);
-            home.ControllerContext = new ControllerContext
+            _controller.ControllerContext = new ControllerContext
             {
                 HttpContext = httpContext
             };
-            var result = home.Index() as ViewResult;
+            var result = _controller.Index() as ViewResult;
             Assert.Equal("true", result.ViewData["LoggedIn"]);
         }
     }

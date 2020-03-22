@@ -9764,23 +9764,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Solia\\.nuget\\packages\\": {},
-    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
+    "C:\\Users\\User\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Програмна інженерія\\Check-n-Cheer\\Check-n-Cheer-XUnitTestProject\\Check-n-Cheer-XUnitTestProject.csproj",
+      "projectUniqueName": "C:\\Users\\User\\source\\repos\\Check-n-Cheer\\Check-n-Cheer-XUnitTestProject\\Check-n-Cheer-XUnitTestProject.csproj",
       "projectName": "Check-n-Cheer-XUnitTestProject",
-      "projectPath": "D:\\Програмна інженерія\\Check-n-Cheer\\Check-n-Cheer-XUnitTestProject\\Check-n-Cheer-XUnitTestProject.csproj",
-      "packagesPath": "C:\\Users\\Solia\\.nuget\\packages\\",
-      "outputPath": "D:\\Програмна інженерія\\Check-n-Cheer\\Check-n-Cheer-XUnitTestProject\\obj\\",
+      "projectPath": "C:\\Users\\User\\source\\repos\\Check-n-Cheer\\Check-n-Cheer-XUnitTestProject\\Check-n-Cheer-XUnitTestProject.csproj",
+      "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\User\\source\\repos\\Check-n-Cheer\\Check-n-Cheer-XUnitTestProject\\obj\\",
       "projectStyle": "PackageReference",
-      "fallbackFolders": [
-        "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
-      ],
       "configFilePaths": [
-        "C:\\Users\\Solia\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\User\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -9793,8 +9789,8 @@
       "frameworks": {
         "netcoreapp3.1": {
           "projectReferences": {
-            "D:\\Програмна інженерія\\Check-n-Cheer\\Check-n-Cheer\\Check-n-Cheer.csproj": {
-              "projectPath": "D:\\Програмна інженерія\\Check-n-Cheer\\Check-n-Cheer\\Check-n-Cheer.csproj"
+            "C:\\Users\\User\\source\\repos\\Check-n-Cheer\\Check-n-Cheer\\Check-n-Cheer.csproj": {
+              "projectPath": "C:\\Users\\User\\source\\repos\\Check-n-Cheer\\Check-n-Cheer\\Check-n-Cheer.csproj"
             }
           }
         }
