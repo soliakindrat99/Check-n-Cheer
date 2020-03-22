@@ -27,6 +27,8 @@ namespace Check_n_Cheer.Controllers
         }
         public void Set(string key, string value, int expireTime = 1)
         {
+            if (Response == null)
+                return;
             CookieOptions option = new CookieOptions();
             option.Expires = DateTime.Now.AddMinutes(expireTime);
             Response.Cookies.Append(key, value, option);
@@ -53,6 +55,7 @@ namespace Check_n_Cheer.Controllers
             {
                 _repo.RegisterUser(formData);
                 var view = View("Thanks", formData);
+                view.ViewData["LoggedIn"] = "false";
                 view.ViewData["Type"] = "signing up";
                 return view;
             }
@@ -78,8 +81,8 @@ namespace Check_n_Cheer.Controllers
             if(user != null && user.Password == formData.Password)
             {
                 Set("user", Convert.ToString(user.Id));
-                ViewData["LoggedIn"] = "true";
-                var view = View("Thanks", formData);
+                var view = View("Thanks", user);
+                view.ViewData["LoggedIn"] = "true";
                 view.ViewData["Type"] = "signing in";
                 return view;
             }

@@ -2,10 +2,12 @@ using Xunit;
 using Moq;
 using Check_n_Cheer.Controllers;
 using Check_n_Cheer.Interfaces;
+using Check_n_Cheer.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Microsoft.Net.Http.Headers;
+
 
 namespace Check_n_Cheer_XUnitTestProject
 {
@@ -62,5 +64,48 @@ namespace Check_n_Cheer_XUnitTestProject
             Assert.NotNull(result);
             Assert.IsType<RedirectToActionResult>(result);
         }
+        [Fact]
+        public void PostSignUpAction_RegisterUser_ReturnsView()
+        {
+            var testUser = new User
+            {
+                Id = 100,
+                Email = "test@test.com",
+                Password = "test"
+            };
+            var result = _controller.SignUp(testUser);
+            var viewResult = Assert.IsType<ViewResult>(result);
+            var user = Assert.IsType<User>(viewResult.Model);
+            Assert.Equal(testUser.Email, user.Email);
+            Assert.Equal(testUser.Password, user.Password);
+        }
+        [Fact]
+        public void PostSignInAction_SignInUser_ReturnsView()
+        {
+            _mockRepo.Setup(repo => repo.GetUser("test@test.com"))
+                .Returns(new User() {
+                    Id = 100,
+                    Email = "test@test.com",
+                    Password = "test"
+                });
+            var httpContext = new DefaultHttpContext();
+            _controller.ControllerContext = new ControllerContext
+            {
+                HttpContext = httpContext
+            };
+
+            var testUser = new User
+            {
+                Id = 100,
+                Email = "test@test.com",
+                Password = "test"
+            };
+            var result = _controller.SignIn(testUser);
+            var viewResult = Assert.IsType<ViewResult>(result);
+            var user = Assert.IsType<User>(viewResult.Model);
+            Assert.Equal(testUser.Email, user.Email);
+            Assert.Equal(testUser.Password, user.Password);
+        }
+
     }
 }
