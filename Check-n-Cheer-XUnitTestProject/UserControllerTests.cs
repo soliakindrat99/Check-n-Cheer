@@ -1,7 +1,6 @@
 using Xunit;
 using Moq;
 using Check_n_Cheer.Controllers;
-using Check_n_Cheer.Models;
 using Check_n_Cheer.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
@@ -22,9 +21,8 @@ namespace Check_n_Cheer_XUnitTestProject
             _controller = new UserController(_logger, _mockRepo.Object);
         }
         [Fact]
-        public void SignInPageReturnsViewIfUserIsNotLoginned()
+        public void IfNotLoggedIn_SignInAction_ReturnsView()
         {
-            
             var httpContext = new DefaultHttpContext();
             _controller.ControllerContext = new ControllerContext
             {
@@ -36,7 +34,7 @@ namespace Check_n_Cheer_XUnitTestProject
             Assert.IsType<ViewResult>(result);
         }
         [Fact]
-        public void SignUpPageReturnsViewIfUserIsNotLoginned()
+        public void IfNotLoggedIn_SignUpAction_ReturnsView()
         {
             var httpContext = new DefaultHttpContext();
             _controller.ControllerContext = new ControllerContext

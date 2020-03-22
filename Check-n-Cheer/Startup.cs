@@ -1,16 +1,12 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Check_n_Cheer.Models;  
+using Check_n_Cheer.Repositories;  
+using Check_n_Cheer.Interfaces;
 
 namespace Check_n_Cheer
 {
@@ -28,6 +24,7 @@ namespace Check_n_Cheer
         {
             string connection = Configuration.GetConnectionString("DefaultConnection");
             services.AddDbContext<UserContext>(options => options.UseSqlServer(connection));
+            services.AddScoped<IUserRepository, UserRepository>();
             services.AddControllersWithViews();
         }
 

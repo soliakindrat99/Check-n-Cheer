@@ -19,14 +19,14 @@ namespace Check_n_Cheer_XUnitTestProject
             _controller = new HomeController(_logger);
         }
         [Fact]
-        public void IndexPageReturnsView()
+        public void IndexAction_ReturnsView()
         {
             var result = _controller.Index();
             Assert.NotNull(result);
             Assert.IsType<ViewResult>(result);
         }
         [Fact]
-        public void IsNotLoggedInFirst()
+        public void IfNotLoggedIn_LoggedInField_IsFalse()
         {
             var httpContext = new DefaultHttpContext();
             _controller.ControllerContext = new ControllerContext
@@ -37,7 +37,7 @@ namespace Check_n_Cheer_XUnitTestProject
             Assert.Equal("false", result.ViewData["LoggedIn"]);
         }
         [Fact]
-        public void LoggedInWhenCookieFieldIsSet()
+        public void IfLoggedIn_LoggedInField_IsTrue()
         {
             var httpContext = new DefaultHttpContext();
             httpContext.Request.Headers.Add("Cookie", new CookieHeaderValue("user", "100").ToString());

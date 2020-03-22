@@ -54,6 +54,7 @@ namespace Check_n_Cheer.Controllers
                 _repo.RegisterUser(formData);
                 return RedirectToAction("SignIn");
             }
+            ViewData["LoggedIn"] = "false";
             return View();
         }
 
@@ -77,6 +78,7 @@ namespace Check_n_Cheer.Controllers
                 Set("user", Convert.ToString(user.Id));
                 return RedirectToAction("Profile");
             }
+            ViewData["LoggedIn"] = "false";
             return View();
         }
 
