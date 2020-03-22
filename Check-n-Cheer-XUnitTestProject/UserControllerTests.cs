@@ -106,6 +106,5 @@ namespace Check_n_Cheer_XUnitTestProject
             Assert.Equal(testUser.Email, user.Email);
             Assert.Equal(testUser.Password, user.Password);
         }
-
     }
 }

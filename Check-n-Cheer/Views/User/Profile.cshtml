@@ -3,7 +3,24 @@
     ViewData["Title"] = "Profile";
 
 }
-<h1>Profile</h1>
-<p>ID: @Model.Id</p>
-<p>Email: @Model.Email</p>
-<p>Password: @Model.Password</p>
+<h1>@Model.Role Profile</h1>
+@if (@Model.Role == "Admin")
+{
+    <ul>
+        <li>User1</li>
+        <li>User2</li>
+        <li>User3</li>
+    </ul>
+}
+@if (@Model.Role == "Student")
+{
+    <p>@Model.Email</p>
+    <a class="btn btn-success" asp-area="" asp-controller="Home" asp-action="Index">View current test</a>
+    <a class="btn btn-success" asp-area="" asp-controller="Home" asp-action="Index">View history</a>
+}
+@if (@Model.Role == "Teacher")
+{
+    <p>@Model.Email</p>
+    <a class="btn btn-success" asp-area="" asp-controller="Home" asp-action="Index">Create test</a>
+    <a class="btn btn-success" asp-area="" asp-controller="Home" asp-action="Index">View history</a>
+}
