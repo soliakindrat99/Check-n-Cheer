@@ -52,7 +52,9 @@ namespace Check_n_Cheer.Controllers
             if(formData != null)
             {
                 _repo.RegisterUser(formData);
-                return RedirectToAction("SignIn");
+                var view = View("Thanks", formData);
+                view.ViewData["Type"] = "signing up";
+                return view;
             }
             ViewData["LoggedIn"] = "false";
             return View();
@@ -76,7 +78,10 @@ namespace Check_n_Cheer.Controllers
             if(user != null && user.Password == formData.Password)
             {
                 Set("user", Convert.ToString(user.Id));
-                return RedirectToAction("Profile");
+                ViewData["LoggedIn"] = "true";
+                var view = View("Thanks", formData);
+                view.ViewData["Type"] = "signing in";
+                return view;
             }
             ViewData["LoggedIn"] = "false";
             return View();

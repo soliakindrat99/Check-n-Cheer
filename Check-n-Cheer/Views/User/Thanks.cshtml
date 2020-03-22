@@ -3,7 +3,14 @@
     ViewData["Title"] = "Thanks";
 }
 
-<h1>Thanks for @ViewData["Type"]</h1>
-<p>Email: @Model.Email</p>
-<p>Password: @Model.Password</p>
-
+<h1>Thanks for @ViewData["Type"]!</h1>
+@if (@ViewData["Type"] == "signing up")
+{
+    <p>Now you can Sign in in our app:</p>
+    <a class="btn btn-success" asp-area="" asp-controller="User" asp-action="SignIn">Sign In</a>
+}
+@if (@ViewData["Type"] == "signing in")
+{
+    <p>Now you can see your profile:</p>
+    <a class="btn btn-success" asp-area="" asp-controller="User" asp-action="Profile">Profile</a>
+}

@@ -21,9 +21,24 @@ namespace Check_n_Cheer_XUnitTestProject
             _controller = new UserController(_logger, _mockRepo.Object);
         }
         [Fact]
-        public void IfNotLoggedIn_SignInAction_ReturnsView()
+        public void IfNotLoggedIn_GetSignInAction_ReturnsView()
+        {
+            var result = _controller.SignIn();
+            Assert.NotNull(result);
+            Assert.IsType<ViewResult>(result);
+        }
+        [Fact]
+        public void IfNotLoggedIn_GetSignUpAction_ReturnsView()
+        {
+            var result = _controller.SignUp();
+            Assert.NotNull(result);
+            Assert.IsType<ViewResult>(result);
+        }
+        [Fact]
+        public void IfLoggedIn_GetSignInAction_ReturnsRedirect()
         {
             var httpContext = new DefaultHttpContext();
+            httpContext.Request.Headers.Add("Cookie", new CookieHeaderValue("user", "100").ToString());
             _controller.ControllerContext = new ControllerContext
             {
                 HttpContext = httpContext
@@ -31,19 +46,21 @@ namespace Check_n_Cheer_XUnitTestProject
 
             var result = _controller.SignIn();
             Assert.NotNull(result);
-            Assert.IsType<ViewResult>(result);
+            Assert.IsType<RedirectToActionResult>(result);
         }
         [Fact]
-        public void IfNotLoggedIn_SignUpAction_ReturnsView()
+        public void IfLoggedIn_GetSignUpAction_ReturnsRedirect()
         {
             var httpContext = new DefaultHttpContext();
+            httpContext.Request.Headers.Add("Cookie", new CookieHeaderValue("user", "100").ToString());
             _controller.ControllerContext = new ControllerContext
             {
                 HttpContext = httpContext
             };
+
             var result = _controller.SignUp();
             Assert.NotNull(result);
-            Assert.IsType<ViewResult>(result);
+            Assert.IsType<RedirectToActionResult>(result);
         }
     }
 }
