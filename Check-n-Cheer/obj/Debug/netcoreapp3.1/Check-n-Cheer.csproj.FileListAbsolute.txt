@@ -280,3 +280,4 @@ D:\Програмна інженерія\Check-n-Cheer\Check-n-Cheer\obj\Debug\n
 D:\Програмна інженерія\Check-n-Cheer\Check-n-Cheer\obj\Debug\netcoreapp3.1\Check-n-Cheer.csproj.CopyComplete
 D:\Програмна інженерія\Check-n-Cheer\Check-n-Cheer\obj\Debug\netcoreapp3.1\Check-n-Cheer.dll
 D:\Програмна інженерія\Check-n-Cheer\Check-n-Cheer\obj\Debug\netcoreapp3.1\Check-n-Cheer.pdb
+D:\Програмна інженерія\Check-n-Cheer\Check-n-Cheer\obj\Debug\netcoreapp3.1\Razor\Views\User\AdminProfile.cshtml.g.cs

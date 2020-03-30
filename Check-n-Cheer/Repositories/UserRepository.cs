@@ -26,5 +26,10 @@ namespace Check_n_Cheer.Repositories
             _context.Add(user);
             _context.SaveChanges();
         }
+        public User[] GetUsers()
+        {
+            var users =_context.Users.ToList();
+            return users.ToArray();
+        }
     }
 }

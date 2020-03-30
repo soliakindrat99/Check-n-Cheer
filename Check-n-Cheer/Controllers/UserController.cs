@@ -94,10 +94,29 @@ namespace Check_n_Cheer.Controllers
         {
             int id = int.Parse(Get("user"));
             User user = _repo.GetUser(id);
+            if (user.Role == "Admin")
+            {
+
+                return RedirectToAction("AdminProfile");
+            }
             if (user != null)
             {
                 ViewData["LoggedIn"] = "true";
                 return View(user);
+            }
+            ViewData["LoggedIn"] = "false";
+            return RedirectToAction("Error");
+        }
+
+        public IActionResult AdminProfile()
+        {
+            int id = int.Parse(Get("user"));
+            User user = _repo.GetUser(id);
+            User[] users = _repo.GetUsers();
+            if (user!=null && user.Role == "Admin")
+            {
+                ViewData["LoggedIn"] = "true";
+                return View(users);
             }
             ViewData["LoggedIn"] = "false";
             return RedirectToAction("Error");

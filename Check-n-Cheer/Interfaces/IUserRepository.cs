@@ -7,5 +7,6 @@ namespace Check_n_Cheer.Interfaces
         User GetUser(string email);
         User GetUser(int id);
         void RegisterUser(User user);
+        User[] GetUsers();
     };
 }

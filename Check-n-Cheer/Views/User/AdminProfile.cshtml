@@ -1,0 +1,19 @@
+﻿@model IEnumerable<Check_n_Cheer.Models.User>;
+@{
+    ViewData["Title"] = "AdminProfile";
+}
+
+<h1>Admin Profile</h1>
+<table style="width:100%">
+    @foreach (Check_n_Cheer.Models.User user in Model)
+    {
+        if (@user.Role != "Admin")
+        {
+            <tr>
+                <td>@user.Email</td>
+                <td>@user.Role</td>
+                <td><a class="btn btn-success" asp-area="" asp-controller="Home" asp-action="Index">Remove</a></td>
+            </tr>
+        }
+    }
+</table>
