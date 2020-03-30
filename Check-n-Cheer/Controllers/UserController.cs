@@ -122,6 +122,19 @@ namespace Check_n_Cheer.Controllers
             return RedirectToAction("Error");
         }
 
+        //[HttpPost]
+        //public IActionResult ChangeRole(User formData)
+        //{
+        //    int id = int.Parse(Get("user"));
+        //    User user = _repo.GetUser(id);
+        //    if (user != null)
+        //    {
+                
+                
+        //    }
+        //    return View();
+        //}
+
         public IActionResult Logout()
         {
             Remove("user");

@@ -11,9 +11,28 @@
         {
             <tr>
                 <td>@user.Email</td>
-                <td>@user.Role</td>
+                <td>
+                    @if(@user.Role=="Student")
+                    {
+                        
+                            <label asp-for="@user.Role">Student<input type="radio" asp-for="@user.Role" value="Student" checked></label>
+                            <label asp-for="@user.Role">Teacher<input type="radio" asp-for="@user.Role" value="Teacher"></label>
+                            <span asp-validation-for="@user.Role"></span>
+                     
+                    }
+                    @if(@user.Role=="Teacher")
+                    {
+                        
+                            <label asp-for="@user.Role">Student <input type="radio" asp-for="@user.Role" value="Student"></label>
+                            <label asp-for="@user.Role"> Teacher <input type="radio" asp-for="@user.Role" value="Teacher" checked></label>
+                            <span asp-validation-for="@user.Role"></span>
+                        
+                    }
+                </td>
                 <td><a class="btn btn-success" asp-area="" asp-controller="Home" asp-action="Index">Remove</a></td>
             </tr>
         }
     }
 </table>
+
+
