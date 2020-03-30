@@ -7,12 +7,12 @@
 @if (@Model.Role == "Student")
 {
     <p>@Model.Email</p>
-    <a class="btn btn-success" asp-area="" asp-controller="Home" asp-action="Index">View current test</a>
-    <a class="btn btn-success" asp-area="" asp-controller="Home" asp-action="Index">View history</a>
+    <a class="btn button_color" asp-area="" asp-controller="Home" asp-action="Index">View current test</a>
+    <a class="btn button_color" asp-area="" asp-controller="Home" asp-action="Index">View history</a>
 }
 @if (@Model.Role == "Teacher")
 {
     <p>@Model.Email</p>
-    <a class="btn btn-success" asp-area="" asp-controller="Home" asp-action="Index">Create test</a>
-    <a class="btn btn-success" asp-area="" asp-controller="Home" asp-action="Index">View history</a>
+    <a class="btn button_color" asp-area="" asp-controller="Home" asp-action="Index">Create test</a>
+    <a class="btn button_color" asp-area="" asp-controller="Home" asp-action="Index">View history</a>
 }

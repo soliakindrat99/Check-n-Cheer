@@ -7,10 +7,10 @@
 @if (@ViewData["Type"] == "signing up")
 {
     <p>Now you can Sign in in our app:</p>
-    <a class="btn btn-success" asp-area="" asp-controller="User" asp-action="SignIn">Sign In</a>
+    <a class="btn button_color" asp-area="" asp-controller="User" asp-action="SignIn">Sign In</a>
 }
 @if (@ViewData["Type"] == "signing in")
 {
     <p>Now you can see your profile:</p>
-    <a class="btn btn-success" asp-area="" asp-controller="User" asp-action="Profile">Profile</a>
+    <a class="btn button_color" asp-area="" asp-controller="User" asp-action="Profile">Profile</a>
 }

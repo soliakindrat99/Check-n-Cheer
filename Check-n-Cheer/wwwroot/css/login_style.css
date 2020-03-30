@@ -76,6 +76,15 @@ body {
 .container {
     padding: 16px;
     width: 50%;
+    justify-content: center;
+    align-items: center;
+    display: block;
+    text-align: center;
+}
+
+.button_color {
+    background-color: rgb(138, 34, 2);
+    color: white;
 }
 
 /* Full-width input fields */
@@ -101,7 +110,7 @@ hr {
 
 /* Set a style for the submit/register button */
 .registerbtn {
-    background-color: #4CAF50;
+    background-color: rgb(138, 34, 2);
     color: white;
     padding: 16px 20px;
     margin: 8px 0;
