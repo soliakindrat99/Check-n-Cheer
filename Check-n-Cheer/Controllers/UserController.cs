@@ -25,7 +25,7 @@ namespace Check_n_Cheer.Controllers
                 return null;
             return Request.Cookies[key];
         }
-        public void Set(string key, string value, int expireTime = 1)
+        public void Set(string key, string value, int expireTime = 60)
         {
             if (Response == null)
                 return;
@@ -96,7 +96,6 @@ namespace Check_n_Cheer.Controllers
             User user = _repo.GetUser(id);
             if (user.Role == "Admin")
             {
-
                 return RedirectToAction("AdminProfile");
             }
             if (user != null)
@@ -112,9 +111,9 @@ namespace Check_n_Cheer.Controllers
         {
             int id = int.Parse(Get("user"));
             User user = _repo.GetUser(id);
-            User[] users = _repo.GetUsers();
             if (user!=null && user.Role == "Admin")
             {
+                User[] users = _repo.GetUsers();
                 ViewData["LoggedIn"] = "true";
                 return View(users);
             }
@@ -122,18 +121,26 @@ namespace Check_n_Cheer.Controllers
             return RedirectToAction("Error");
         }
 
-        //[HttpPost]
-        //public IActionResult ChangeRole(User formData)
-        //{
-        //    int id = int.Parse(Get("user"));
-        //    User user = _repo.GetUser(id);
-        //    if (user != null)
-        //    {
-                
-                
-        //    }
-        //    return View();
-        //}
+        [HttpPost]
+        public IActionResult ChangeToStudent(string id)
+        {
+            _repo.SetUserRole(int.Parse(id), "Student");
+            return RedirectToAction("AdminProfile");
+        }
+
+        [HttpPost]
+        public IActionResult ChangeToTeacher(string id)
+        {
+            _repo.SetUserRole(int.Parse(id), "Teacher");
+            return RedirectToAction("AdminProfile");
+        }
+
+        [HttpPost]
+        public IActionResult RemoveUser(string id)
+        {
+            _repo.RemoveUser(int.Parse(id));
+            return RedirectToAction("AdminProfile");
+        }
 
         public IActionResult Logout()
         {

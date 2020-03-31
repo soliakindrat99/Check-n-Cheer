@@ -425,3 +425,4 @@ C:\Users\zakhar\source\repos\Check-n-Cheer\Check-n-Cheer\obj\Debug\netcoreapp3.1
 C:\Users\zakhar\source\repos\Check-n-Cheer\Check-n-Cheer\obj\Debug\netcoreapp3.1\Check-n-Cheer.dll
 C:\Users\zakhar\source\repos\Check-n-Cheer\Check-n-Cheer\obj\Debug\netcoreapp3.1\Check-n-Cheer.pdb
 C:\Users\zakhar\source\repos\Check-n-Cheer\Check-n-Cheer\obj\Debug\netcoreapp3.1\Check-n-Cheer.genruntimeconfig.cache
+C:\Users\User\source\repos\Check-n-Cheer\Check-n-Cheer\obj\Debug\netcoreapp3.1\Razor\Views\User\AdminProfile.cshtml.g.cs

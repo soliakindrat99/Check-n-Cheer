@@ -8,5 +8,7 @@ namespace Check_n_Cheer.Interfaces
         User GetUser(int id);
         void RegisterUser(User user);
         User[] GetUsers();
+        void SetUserRole(int id, string role);
+        void RemoveUser(int id);
     };
 }

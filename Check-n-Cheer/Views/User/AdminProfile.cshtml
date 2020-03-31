@@ -12,24 +12,30 @@
             <tr>
                 <td>@user.Email</td>
                 <td>
-                    @if(@user.Role=="Student")
+                    @if (@user.Role == "Student")
                     {
-                        
-                            <label asp-for="@user.Role">Student<input type="radio" asp-for="@user.Role" value="Student" checked></label>
-                            <label asp-for="@user.Role">Teacher<input type="radio" asp-for="@user.Role" value="Teacher"></label>
-                            <span asp-validation-for="@user.Role"></span>
-                     
+                        <form action="ChangeToStudent/@user.Id" method="post" >
+                            <button class="btn button_color" disabled>Student</button>
+                        </form>
+                        <form action="ChangeToTeacher/@user.Id" method="post">
+                            <button class="btn button_color">Teacher</button>
+                        </form>
                     }
-                    @if(@user.Role=="Teacher")
+                    @if (@user.Role == "Teacher")
                     {
-                        
-                            <label asp-for="@user.Role">Student <input type="radio" asp-for="@user.Role" value="Student"></label>
-                            <label asp-for="@user.Role"> Teacher <input type="radio" asp-for="@user.Role" value="Teacher" checked></label>
-                            <span asp-validation-for="@user.Role"></span>
-                        
+                        <form action="ChangeToStudent/@user.Id" method="post">
+                            <button class="btn button_color">Student</button>
+                        </form>
+                        <form action="ChangeToTeacher/@user.Id" method="post">
+                            <button class="btn button_color" disabled>Teacher</button>
+                        </form>
                     }
                 </td>
-                <td><a class="btn button_color" asp-area="" asp-controller="Home" asp-action="Index">Remove</a></td>
+                <td>
+                    <form action="RemoveUser/@user.Id" method="post">
+                        <button class="btn button_color">Remove</button>
+                    </form>
+                </td>
             </tr>
         }
     }

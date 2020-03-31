@@ -13,12 +13,12 @@ namespace Check_n_Cheer.Repositories
         }
         public User GetUser(string email)
         {
-            User user = _context.Users.SingleOrDefault(e => e.Email == email);
+            User user = _context.Users.SingleOrDefault(u => u.Email == email);
             return user;
         }
         public User GetUser(int id)
         {
-            User user = _context.Users.SingleOrDefault(e => e.Id == id);
+            User user = _context.Users.SingleOrDefault(u => u.Id == id);
             return user;
         }
         public void RegisterUser(User user)
@@ -30,6 +30,19 @@ namespace Check_n_Cheer.Repositories
         {
             var users =_context.Users.ToList();
             return users.ToArray();
+        }
+        public void SetUserRole(int id, string role)
+        {
+            User user = _context.Users.SingleOrDefault(u => u.Id == id);
+            user.Role = role;
+            _context.Users.Update(user);
+            _context.SaveChanges();
+        }
+        public void RemoveUser(int id)
+        {
+            User user = new User { Id = id };
+            _context.Users.Remove(user);
+            _context.SaveChanges();
         }
     }
 }

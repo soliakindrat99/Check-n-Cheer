@@ -44,14 +44,6 @@ body {
 }
 
 @media screen and (max-width: 500px) {
-    
-
-
-
-
-
-
-
 
     .header-right {
         float: none;
@@ -133,4 +125,8 @@ a {
 .signin {
     background-color: #f1f1f1;
     text-align: center;
+}
+
+form {
+    display: inline;
 }
