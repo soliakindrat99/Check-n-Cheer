@@ -4,6 +4,9 @@
 }
 
 <h1>Admin Profile</h1>
+<label for="name">Search user:</label>
+<input type="text" name="name" id="search_user" value="" />
+<button class="btn button_color" id="search_btn">Search</button>
 <table style="width:100%">
     @foreach (Check_n_Cheer.Models.User user in Model)
     {
@@ -14,7 +17,7 @@
                 <td>
                     @if (@user.Role == "Student")
                     {
-                        <form action="ChangeToStudent/@user.Id" method="post" >
+                        <form action="ChangeToStudent/@user.Id" method="post">
                             <button class="btn button_color" disabled>Student</button>
                         </form>
                         <form action="ChangeToTeacher/@user.Id" method="post">
