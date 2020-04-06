@@ -6,14 +6,14 @@ namespace Check_n_Cheer.Repositories
 {
     public class UserRepository : IUserRepository
     {
-        private readonly UserContext _context;
-        public UserRepository(UserContext context)
+        private readonly CheckCheerContext _context;
+        public UserRepository(CheckCheerContext context)
         {
             _context = context;
         }
         public User GetUser(string email)
         {
-            User user = _context.Users.SingleOrDefault(u => u.Email == email);
+            User user = _context.Users.FirstOrDefault(u => u.Email == email);
             return user;
         }
         public User GetUser(int id)

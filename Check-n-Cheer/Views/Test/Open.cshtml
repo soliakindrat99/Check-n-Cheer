@@ -1,0 +1,39 @@
+﻿@model Check_n_Cheer.Models.Test
+
+@{
+    ViewData["Title"] = "Open";
+}
+
+<h1>Open</h1>
+
+<div>
+    <h4>Test</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.TeacherName)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TeacherName)
+        </dd>
+        @foreach (var task in Model.Tasks)
+        {
+            <p>@task.TaskNumber </p>
+            <hr />
+            <p>@task.Condition</p>
+            @foreach (var option in task.Options)
+            {
+                <hr />
+                <p>@option.Name</p>
+                <hr />
+                <p>@option.IsCorrect</p>
+        }
+        }
+    </dl>
+</div>

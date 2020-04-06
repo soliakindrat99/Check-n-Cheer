@@ -1,31 +1,23 @@
 ﻿
-
 @{
     ViewData["Title"] = "Create Test";
 }
+@model Check_n_Cheer.DTO.CreateTestDTO
 
+<form method="post" enctype="multipart/form-data" asp-controller="Test" asp-action="CreateTest">
     <div class="questions">
-        <p>Name of test</p>
-        <p>Question 1</p>
-        <div class="answer_question">
-            <p class="question">Text of question</p>
-            <div class="answer">
-                <div>
-                    <input type="radio" name="answers" id="answer1">
-                    <label for="answer1">Answer 1</label>
-                </div>
-
-                <div>
-                    <input type="radio" name="answers" id="answer2">
-                    <label for="answer2">Answer 2</label>
-                </div>
-
-                <div>
-                    <input type="radio" name="answers" id="answer3">
-                    <label for="answer3">Answer 3</label>
-                </div>
-
-            </div>
+        <div>
+            <label asp-for="Name"></label><br />
+            <input type="text" asp-for="Name" />
         </div>
-        <button class="btn button_color">Add</button>
+        <div>
+            <label asp-for="TaskCount"></label><br />
+            <input type="number" asp-for="TaskCount" />
+        </div>
+        <div>
+            <label asp-for="TeacherName"></label><br />
+            <input type="text" asp-for="TeacherName" />
+        </div>
+        <button class="btn button_color">Create Tasks</button>
     </div>
+</form>

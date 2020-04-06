@@ -23,8 +23,11 @@ namespace Check_n_Cheer
         public void ConfigureServices(IServiceCollection services)
         {
             string connection = Configuration.GetConnectionString("DefaultConnection");
-            services.AddDbContext<UserContext>(options => options.UseSqlServer(connection));
+            services.AddDbContext<CheckCheerContext>(options => options.UseSqlServer(connection));
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<ITestRepository, TestRepository>();
+            services.AddScoped<ITaskRepository, TaskRepository>();
+            services.AddScoped<IOptionRepository, OptionRepository>();
             services.AddControllersWithViews();
         }
 

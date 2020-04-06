@@ -1,0 +1,59 @@
+﻿@model List<Check_n_Cheer.Models.Task>
+
+@{
+    ViewData["Title"] = "CreateTask";
+}
+@using (Html.BeginForm("UpdateTasks", "Task", FormMethod.Post))
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    TaskNumber
+                </th>
+                <th>
+                    Condition
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (int i = 0; i < Model.Count; i++)
+            {
+                @Html.HiddenFor(model => model[i].Id)
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => Model[i].TaskNumber)
+                    </td>
+                    <td>
+                        <input type="text" id="condition" name="condition" value="@Model[i].Condition" />
+                    </td>
+                    <td>
+                        @Html.ActionLink("AddCondition", "UpdateTask", "Task", new { taskId = Model[i].Id, testId = Model[i].Test.Id, condition = "xxx" }, new {@class = "link"}) |
+                        @Html.ActionLink("AddOption", "Create", "Option", new { taskId = Model[i].Id, testId = Model[i].Test.Id }) |
+                        @Html.ActionLink("ViewOptions", "GetAllForTask", "Option", new { taskId = Model[i].Id })
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <input name="command" type="submit" value="Submit" />
+
+    @section scripts{
+        <script>
+
+        $(function () {
+            $('.link').click(function () {
+                let x = [];
+                $("[name='condition']").each(function () {
+                    x.push(this.value)
+                });
+                var y = x.filter(function(v){return v!==''});
+                var condition = y.reverse()[0];
+         this.href = this.href.replace("xxx", condition);
+    });
+  });
+        </script>
+    }
+
+}
