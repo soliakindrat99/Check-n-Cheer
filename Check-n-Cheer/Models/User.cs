@@ -12,10 +12,4 @@ namespace Check_n_Cheer.Models
         public string Password { get; set; }
         public string Role { get; set; } = "Student";
     }
-    public enum Role
-    {
-        Admin,
-        Student,
-        Teacher
-    }
 }
