@@ -22,6 +22,19 @@ namespace Check_n_Cheer_XUnitTestProject
             _mockRepo = new Mock<IUserRepository>();
             _controller = new UserController(_logger, _mockRepo.Object);
         }
+        string GetCookieValueFromResponse(HttpResponse response, string cookieName)
+        {
+            foreach (var headers in response.Headers.Values)
+                foreach (var header in headers)
+                    if (header.StartsWith($"{cookieName}="))
+                    {
+                        var p1 = header.IndexOf('=');
+                        var p2 = header.IndexOf(';');
+                        return header.Substring(p1 + 1, p2 - p1 - 1);
+                    }
+            return null;
+        }
+
         [Fact]
         public void IfNotLoggedIn_GetSignInAction_ReturnsView()
         {
@@ -47,6 +60,7 @@ namespace Check_n_Cheer_XUnitTestProject
             };
 
             var result = _controller.SignIn();
+
             Assert.NotNull(result);
             Assert.IsType<RedirectToActionResult>(result);
         }
@@ -76,7 +90,6 @@ namespace Check_n_Cheer_XUnitTestProject
             var result = _controller.SignUp(testUser);
             var viewResult = Assert.IsType<ViewResult>(result);
             var user = Assert.IsType<User>(viewResult.Model);
-            Assert.Equal(testUser.Email, user.Email);
             Assert.Equal(testUser.Password, user.Password);
         }
         [Fact]
@@ -88,12 +101,6 @@ namespace Check_n_Cheer_XUnitTestProject
                     Email = "test@test.com",
                     Password = "test"
                 });
-            var httpContext = new DefaultHttpContext();
-            _controller.ControllerContext = new ControllerContext
-            {
-                HttpContext = httpContext
-            };
-
             var testUser = new User
             {
                 Id = 100,
@@ -105,6 +112,57 @@ namespace Check_n_Cheer_XUnitTestProject
             var user = Assert.IsType<User>(viewResult.Model);
             Assert.Equal(testUser.Email, user.Email);
             Assert.Equal(testUser.Password, user.Password);
+        }
+        [Fact]
+        public void PostSignUpAction_UserExists_ReturnsRedirect()
+        {
+            _mockRepo.Setup(repo => repo.GetUser("test@test.com"))
+                .Returns(new User()
+                {
+                    Id = 100,
+                    Email = "test@test.com",
+                    Password = "test"
+                });
+            var testUser = new User
+            {
+                Id = 100,
+                Email = "test@test.com",
+                Password = "test"
+            };
+            var result = _controller.SignUp(testUser);
+            var viewResult = Assert.IsType<RedirectToActionResult>(result);
+        }
+        [Fact]
+        public void PostSignInAction_WrongUser_ReturnsRedirect()
+        {
+            _mockRepo.Setup(repo => repo.GetUser("test@test.com"))
+               .Returns(new User()
+               {
+                   Id = 100,
+                   Email = "test@test.com",
+                   Password = "test"
+               });
+            var testUser = new User
+            {
+                Id = 100,
+                Email = "test@test.com",
+                Password = "wrong"
+            };
+            var result = _controller.SignIn(testUser);
+            var viewResult = Assert.IsType<RedirectToActionResult>(result);
+        }
+        [Fact]
+        public void LogoutAction_RemoveUserFromCookies_ReturnsRedirect()
+        {
+            var httpContext = new DefaultHttpContext();
+            httpContext.Request.Headers.Add("Cookie", new CookieHeaderValue("user", "100").ToString());
+            _controller.ControllerContext = new ControllerContext
+            {
+                HttpContext = httpContext
+            };
+            var result = _controller.Logout();
+            Assert.Equal("", GetCookieValueFromResponse(_controller.HttpContext.Response,"user"));
+            Assert.IsType<RedirectToActionResult>(result);
         }
     }
 }
