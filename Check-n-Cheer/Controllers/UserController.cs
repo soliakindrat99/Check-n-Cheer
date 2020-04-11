@@ -51,7 +51,13 @@ namespace Check_n_Cheer.Controllers
         [HttpPost]
         public IActionResult SignUp(User formData)
         {
-            if(formData != null)
+            User user = null;
+            if (formData != null)
+            {
+                user = _repo.GetUser(formData.Email);
+            }
+
+            if (user == null)
             {
                 _repo.RegisterUser(formData);
                 var view = View("Thanks", formData);
@@ -60,7 +66,7 @@ namespace Check_n_Cheer.Controllers
                 return view;
             }
             ViewData["LoggedIn"] = "false";
-            return View();
+            return RedirectToAction("SignUp");
         }
 
         [HttpGet]
@@ -87,7 +93,13 @@ namespace Check_n_Cheer.Controllers
                 return view;
             }
             ViewData["LoggedIn"] = "false";
-            return View();
+            return RedirectToAction("SignIn");
+        }
+
+        public IActionResult Logout()
+        {
+            Remove("user");
+            return RedirectToAction("SignIn");
         }
 
         public IActionResult Profile()
@@ -171,13 +183,8 @@ namespace Check_n_Cheer.Controllers
             }
             ViewData["LoggedIn"] = "false";
             return RedirectToAction("Error");
-            }
-
-        public IActionResult Logout()
-        {
-            Remove("user");
-            return RedirectToAction("SignIn", "User");
         }
+
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
