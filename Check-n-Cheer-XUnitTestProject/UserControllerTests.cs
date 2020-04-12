@@ -22,7 +22,7 @@ namespace Check_n_Cheer_XUnitTestProject
             _mockRepo = new Mock<IUserRepository>();
             _controller = new UserController(_logger, _mockRepo.Object);
         }
-        string GetCookieValueFromResponse(HttpResponse response, string cookieName)
+        private string GetCookieValueFromResponse(HttpResponse response, string cookieName)
         {
             foreach (var headers in response.Headers.Values)
                 foreach (var header in headers)
@@ -36,21 +36,21 @@ namespace Check_n_Cheer_XUnitTestProject
         }
 
         [Fact]
-        public void IfNotLoggedIn_GetSignInAction_ReturnsView()
+        public void GetSignInAction_IfNotLoggedIn_ReturnsView()
         {
             var result = _controller.SignIn();
             Assert.NotNull(result);
             Assert.IsType<ViewResult>(result);
         }
         [Fact]
-        public void IfNotLoggedIn_GetSignUpAction_ReturnsView()
+        public void GetSignUpAction_IfNotLoggedIn_ReturnsView()
         {
             var result = _controller.SignUp();
             Assert.NotNull(result);
             Assert.IsType<ViewResult>(result);
         }
         [Fact]
-        public void IfLoggedIn_GetSignInAction_ReturnsRedirect()
+        public void GetSignInAction_IfLoggedIn_ReturnsRedirect()
         {
             var httpContext = new DefaultHttpContext();
             httpContext.Request.Headers.Add("Cookie", new CookieHeaderValue("user", "100").ToString());
@@ -65,7 +65,7 @@ namespace Check_n_Cheer_XUnitTestProject
             Assert.IsType<RedirectToActionResult>(result);
         }
         [Fact]
-        public void IfLoggedIn_GetSignUpAction_ReturnsRedirect()
+        public void GetSignUpAction_LoggedIn_ReturnsRedirect()
         {
             var httpContext = new DefaultHttpContext();
             httpContext.Request.Headers.Add("Cookie", new CookieHeaderValue("user", "100").ToString());
@@ -79,7 +79,7 @@ namespace Check_n_Cheer_XUnitTestProject
             Assert.IsType<RedirectToActionResult>(result);
         }
         [Fact]
-        public void PostSignUpAction_RegisterUser_ReturnsView()
+        public void PostSignUpAction_RegisteredSuccessfully_ReturnsView()
         {
             var testUser = new User
             {
@@ -93,7 +93,7 @@ namespace Check_n_Cheer_XUnitTestProject
             Assert.Equal(testUser.Password, user.Password);
         }
         [Fact]
-        public void PostSignInAction_SignInUser_ReturnsView()
+        public void PostSignInAction_SignedSuccessfully_ReturnsView()
         {
             _mockRepo.Setup(repo => repo.GetUser("test@test.com"))
                 .Returns(new User() {
