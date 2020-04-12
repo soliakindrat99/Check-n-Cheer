@@ -454,6 +454,84 @@ namespace Check_n_Cheer_XUnitTestProject
             Assert.Equal("AdminProfile", redirect.ActionName);
         }
 
-        
+        [Fact]
+        public void ChangeToStudentAction_UserIsStudent_ReturnsRedirectToError()
+        {
+            var httpContext = new DefaultHttpContext();
+            httpContext.Request.Headers.Add("Cookie", new CookieHeaderValue("user", "100").ToString());
+            _controller.ControllerContext = new ControllerContext
+            {
+                HttpContext = httpContext
+            };
+            _mockRepo.Setup(repo => repo.GetUser(100))
+               .Returns(new User()
+               {
+                   Id = 100,
+                   Email = "test@test.com",
+                   Password = "test",
+                   Role = "Student"
+               });
+
+            var result = _controller.ChangeToStudent("100");
+            var redirect = Assert.IsType<RedirectToActionResult>(result);
+            Assert.Equal("Error", redirect.ActionName);
+        }
+        [Fact]
+        public void ChangeToStudentAction_UserIsNotLoginned_ReturnsRedirectToError()
+        {
+            _mockRepo.Setup(repo => repo.GetUser(100))
+              .Returns(new User()
+              {
+                  Id = 100,
+                  Email = "test@test.com",
+                  Password = "test",
+                  Role = "Student"
+              });
+
+            var result = _controller.ChangeToStudent("100");
+            var redirect = Assert.IsType<RedirectToActionResult>(result);
+            Assert.Equal("Error", redirect.ActionName);
+        }
+        [Fact]
+        public void ChangeToStudentAction_UserIsNotRegistered_ReturnsRedirectToError()
+        {
+            var httpContext = new DefaultHttpContext();
+            httpContext.Request.Headers.Add("Cookie", new CookieHeaderValue("user", "100").ToString());
+            _controller.ControllerContext = new ControllerContext
+            {
+                HttpContext = httpContext
+            };
+
+            _mockRepo.Setup(repo => repo.GetUser(100))
+              .Returns(null as User);
+
+            var result = _controller.ChangeToStudent("100");
+            var redirect = Assert.IsType<RedirectToActionResult>(result);
+            Assert.Equal("Error", redirect.ActionName);
+        }
+        [Fact]
+        public void ChangeToStudentAction_UserIsAdmin_ReturnsRedirectToAdmin()
+        {
+            var httpContext = new DefaultHttpContext();
+            httpContext.Request.Headers.Add("Cookie", new CookieHeaderValue("user", "100").ToString());
+            _controller.ControllerContext = new ControllerContext
+            {
+                HttpContext = httpContext
+            };
+            _mockRepo.Setup(repo => repo.GetUser(100))
+               .Returns(new User()
+               {
+                   Id = 100,
+                   Email = "test@test.com",
+                   Password = "test",
+                   Role = "Admin"
+               });
+
+
+            var result = _controller.ChangeToStudent("100");
+            var redirect = Assert.IsType<RedirectToActionResult>(result);
+            Assert.Equal("AdminProfile", redirect.ActionName);
+        }
+
     }
 }
