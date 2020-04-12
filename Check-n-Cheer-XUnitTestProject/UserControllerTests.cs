@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Microsoft.Net.Http.Headers;
+using System.Collections.Generic;
 
 
 namespace Check_n_Cheer_XUnitTestProject
@@ -36,21 +37,21 @@ namespace Check_n_Cheer_XUnitTestProject
         }
 
         [Fact]
-        public void GetSignInAction_IfNotLoggedIn_ReturnsView()
+        public void GetSignInAction_UserNotLoggedIn_ReturnsView()
         {
             var result = _controller.SignIn();
             Assert.NotNull(result);
             Assert.IsType<ViewResult>(result);
         }
         [Fact]
-        public void GetSignUpAction_IfNotLoggedIn_ReturnsView()
+        public void GetSignUpAction_UserNotLoggedIn_ReturnsView()
         {
             var result = _controller.SignUp();
             Assert.NotNull(result);
             Assert.IsType<ViewResult>(result);
         }
         [Fact]
-        public void GetSignInAction_IfLoggedIn_ReturnsRedirect()
+        public void GetSignInAction_UserLoggedIn_ReturnsRedirect()
         {
             var httpContext = new DefaultHttpContext();
             httpContext.Request.Headers.Add("Cookie", new CookieHeaderValue("user", "100").ToString());
@@ -62,10 +63,10 @@ namespace Check_n_Cheer_XUnitTestProject
             var result = _controller.SignIn();
           
             var redirect = Assert.IsType<RedirectToActionResult>(result);
-            Assert.Equal("Error", redirect.ActionName);
+            Assert.Equal("Index", redirect.ActionName);
         }
         [Fact]
-        public void GetSignUpAction_LoggedIn_ReturnsRedirect()
+        public void GetSignUpAction_UserLoggedIn_ReturnsRedirect()
         {
             var httpContext = new DefaultHttpContext();
             httpContext.Request.Headers.Add("Cookie", new CookieHeaderValue("user", "100").ToString());
@@ -76,7 +77,7 @@ namespace Check_n_Cheer_XUnitTestProject
 
             var result = _controller.SignUp();
             var redirect = Assert.IsType<RedirectToActionResult>(result);
-            Assert.Equal("Error", redirect.ActionName);
+            Assert.Equal("Index", redirect.ActionName);
         }
         [Fact]
         public void PostSignUpAction_RegisteredSuccessfully_ReturnsView()
@@ -131,7 +132,7 @@ namespace Check_n_Cheer_XUnitTestProject
             };
             var result = _controller.SignUp(testUser);
             var redirect = Assert.IsType<RedirectToActionResult>(result);
-            Assert.Equal("Error", redirect.ActionName);
+            Assert.Equal("SignUp", redirect.ActionName);
         }
         [Fact]
         public void PostSignInAction_WrongUser_ReturnsRedirect()
@@ -151,7 +152,7 @@ namespace Check_n_Cheer_XUnitTestProject
             };
             var result = _controller.SignIn(testUser);
             var redirect = Assert.IsType<RedirectToActionResult>(result);
-            Assert.Equal("Error", redirect.ActionName);
+            Assert.Equal("SignIn", redirect.ActionName);
         }
         [Fact]
         public void LogoutAction_RemoveUserFromCookies_ReturnsRedirect()
@@ -243,6 +244,135 @@ namespace Check_n_Cheer_XUnitTestProject
 
             var redirect = Assert.IsType<RedirectToActionResult>(result);
             Assert.Equal("Error", redirect.ActionName);
+        }
+        [Fact]
+        public void AdminProfileAction_UserIsStudent_ReturnsRedirectToError() 
+        {
+            var httpContext = new DefaultHttpContext();
+            httpContext.Request.Headers.Add("Cookie", new CookieHeaderValue("user", "100").ToString());
+            _controller.ControllerContext = new ControllerContext
+            {
+                HttpContext = httpContext
+            };
+            _mockRepo.Setup(repo => repo.GetUser(100))
+               .Returns(new User()
+               {
+                   Id = 100,
+                   Email = "test@test.com",
+                   Password = "test",
+                   Role = "Student"
+               });
+
+            var result = _controller.AdminProfile(null);
+            var redirect = Assert.IsType<RedirectToActionResult>(result);
+            Assert.Equal("Error", redirect.ActionName);
+        }
+        [Fact]
+        public void AdminProfileAction_UserIsNotLoginned_ReturnsRedirectToError()
+        {
+            _mockRepo.Setup(repo => repo.GetUser(100))
+               .Returns(new User()
+               {
+                   Id = 100,
+                   Email = "test@test.com",
+                   Password = "test",
+                   Role = "Student"
+               });
+          
+            var result = _controller.AdminProfile(null);
+            var redirect = Assert.IsType<RedirectToActionResult>(result);
+            Assert.Equal("Error", redirect.ActionName);
+        }
+        [Fact]
+        public void AdminProfileAction_UserIsNotRegistered_ReturnsRedirectToError()
+        {
+            var httpContext = new DefaultHttpContext();
+            httpContext.Request.Headers.Add("Cookie", new CookieHeaderValue("user", "100").ToString());
+            _controller.ControllerContext = new ControllerContext
+            {
+                HttpContext = httpContext
+            };
+
+            _mockRepo.Setup(repo => repo.GetUser(100))
+              .Returns(null as User);
+
+            var result = _controller.AdminProfile(null);
+            var redirect = Assert.IsType<RedirectToActionResult>(result);
+            Assert.Equal("Error", redirect.ActionName);
+        }
+        [Fact]
+        public void AdminProfileAction_UserIsAdmin_IdIsNull_ReturnsView_ModelLengthIs3() 
+        {
+            var httpContext = new DefaultHttpContext();
+            httpContext.Request.Headers.Add("Cookie", new CookieHeaderValue("user", "100").ToString());
+            _controller.ControllerContext = new ControllerContext
+            {
+                HttpContext = httpContext
+            };
+            _mockRepo.Setup(repo => repo.GetUser(100))
+               .Returns(new User()
+               {
+                   Id = 100,
+                   Email = "test@test.com",
+                   Password = "test",
+                   Role = "Admin"
+               });
+
+            _mockRepo.Setup(repo => repo.GetUsers())
+               .Returns(new User[] { new User(){
+                   Id = 100,
+                   Email = "test1@test.com",
+                   Password = "test",
+                   Role = "Student"
+               }, new User(){
+                   Id = 100,
+                   Email = "test2@test.com",
+                   Password = "test",
+                   Role = "Student"
+               }, new User(){
+                   Id = 100,
+                   Email = "test3@test.com",
+                   Password = "test",
+                   Role = "Student"
+               }
+               }
+               );
+
+            var result = _controller.AdminProfile(null);
+            var view = Assert.IsType<ViewResult>(result);
+            var model = Assert.IsType<User[]>(view.Model) ;
+            Assert.Equal(3, model.Length);
+        }
+        [Fact]
+        public void AdminProfileAction_UserIsAdmin_IdNotNull_ReturnsView_ModelLengthIs1()
+        {
+            var httpContext = new DefaultHttpContext();
+            httpContext.Request.Headers.Add("Cookie", new CookieHeaderValue("user", "100").ToString());
+            _controller.ControllerContext = new ControllerContext
+            {
+                HttpContext = httpContext
+            };
+            _mockRepo.Setup(repo => repo.GetUser(100))
+               .Returns(new User()
+               {
+                   Id = 100,
+                   Email = "test@test.com",
+                   Password = "test",
+                   Role = "Admin"
+               });
+
+            _mockRepo.Setup(repo => repo.GetUser("test1@test.com"))
+               .Returns(new User(){
+                   Id = 100,
+                   Email = "test1@test.com",
+                   Password = "test",
+                   Role = "Student"
+               } );
+
+            var result = _controller.AdminProfile("test1@test.com");
+            var view = Assert.IsType<ViewResult>(result);
+            var model = Assert.IsType<User[]>(view.Model);
+            Assert.Single(model);
         }
     }
 }
