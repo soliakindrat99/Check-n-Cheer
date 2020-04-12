@@ -22,7 +22,7 @@ namespace Check_n_Cheer.Controllers
         public string Get(string key)
         {
             if (Request == null)
-                return null;
+                return "-1";
             return Request.Cookies[key];
         }
         public void Set(string key, string value, int expireTime = 60)
