@@ -22,7 +22,7 @@ namespace Check_n_Cheer.Controllers
         public string Get(string key)
         {
             if (Request == null)
-                return "-1";
+                return null;
             return Request.Cookies[key];
         }
         public void Set(string key, string value, int expireTime = 60)
@@ -104,8 +104,12 @@ namespace Check_n_Cheer.Controllers
 
         public IActionResult Profile()
         {
-            int id = int.Parse(Get("user"));
-            User user = _repo.GetUser(id);
+            User user = null;
+            if (Get("user") != null)
+            {
+                int id = int.Parse(Get("user"));
+                user = _repo.GetUser(id);
+            }
             
             if (user != null)
             {
@@ -123,8 +127,12 @@ namespace Check_n_Cheer.Controllers
         [HttpGet]
         public IActionResult AdminProfile(string? id)
         {
-            int user_id = int.Parse(Get("user"));
-            User user = _repo.GetUser(user_id);
+            User user = null;
+            if (Get("user") != null)
+            {
+                int user_id = int.Parse(Get("user"));
+                user = _repo.GetUser(user_id);
+            }
             if (user!=null && user.Role == "Admin")
             {
                 User[] users;
@@ -146,8 +154,12 @@ namespace Check_n_Cheer.Controllers
         [HttpPost]
         public IActionResult ChangeToStudent(string id)
         {
-            int user_id = int.Parse(Get("user"));
-            User user = _repo.GetUser(user_id);
+            User user = null;
+            if (Get("user") != null)
+            {
+                int user_id = int.Parse(Get("user"));
+                user = _repo.GetUser(user_id);
+            }
             if (user != null && user.Role == "Admin")
             {
                 _repo.SetUserRole(int.Parse(id), "Student");
@@ -160,8 +172,12 @@ namespace Check_n_Cheer.Controllers
         [HttpPost]
         public IActionResult ChangeToTeacher(string id)
         {
-            int user_id = int.Parse(Get("user"));
-            User user = _repo.GetUser(user_id);
+            User user = null;
+            if (Get("user") != null)
+            {
+                int user_id = int.Parse(Get("user"));
+                user = _repo.GetUser(user_id);
+            }
             if (user != null && user.Role == "Admin")
             {
                 _repo.SetUserRole(int.Parse(id), "Teacher");
@@ -174,8 +190,12 @@ namespace Check_n_Cheer.Controllers
         [HttpPost]
         public IActionResult RemoveUser(string id)
         {
-            int user_id = int.Parse(Get("user"));
-            User user = _repo.GetUser(user_id);
+            User user = null;
+            if (Get("user") != null)
+            {
+                int user_id = int.Parse(Get("user"));
+                user = _repo.GetUser(user_id);
+            }
             if (user != null && user.Role == "Admin")
             {
                 _repo.RemoveUser(int.Parse(id));
