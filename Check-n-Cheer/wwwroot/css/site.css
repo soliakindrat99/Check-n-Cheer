@@ -71,3 +71,22 @@ body {
 }
 
 
+#label {
+    margin: 0.5rem;
+    width: 31%;
+    text-align: start;
+}
+
+.questions button {
+    margin: 0.7rem;
+}
+
+#td {
+    color: rgb(138, 34, 2);
+    text-decoration: none;
+}
+
+#create_option{
+    width:50%;
+    margin:0 auto;
+}
