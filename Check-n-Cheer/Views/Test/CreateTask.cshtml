@@ -29,15 +29,15 @@
                         <input type="text" id="condition" name="condition" value="@Model[i].Condition" />
                     </td>
                     <td>
-                        @Html.ActionLink("AddCondition", "UpdateTask", "Task", new { taskId = Model[i].Id, testId = Model[i].Test.Id, condition = "xxx" }, new {@class = "link"}) |
-                        @Html.ActionLink("AddOption", "Create", "Option", new { taskId = Model[i].Id, testId = Model[i].Test.Id }) |
-                        @Html.ActionLink("ViewOptions", "GetAllForTask", "Option", new { taskId = Model[i].Id })
+                        @Html.ActionLink("AddCondition", "UpdateTask", "Task", new {taskId = Model[i].Id, testId = Model[i].Test.Id, condition = "xxx" }, new { @id = "td", @class = "link"}) |
+                        @Html.ActionLink("AddOption", "Create", "Option", new { taskId = Model[i].Id, testId = Model[i].Test.Id }, new { @id = "td"}) |
+                        @Html.ActionLink("ViewOptions", "GetAllForTask", "Option", new { taskId = Model[i].Id }, new { @id = "td" })
                     </td>
                 </tr>
             }
         </tbody>
     </table>
-    <input name="command" type="submit" value="Submit" />
+    <input name="command" type="submit" class="btn button_color" value="Submit" />
 
     @section scripts{
         <script>

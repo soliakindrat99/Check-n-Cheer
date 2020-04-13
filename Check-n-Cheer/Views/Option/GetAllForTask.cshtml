@@ -28,7 +28,7 @@
                 @Html.DisplayFor(modelItem => item.IsCorrect)
             </td>
             <td>
-                @Html.ActionLink("Delete", "Delete", new {  id=item.Id })
+                @Html.ActionLink("Delete", "Delete", new {  id=item.Id }, new { @id = "td" })
             </td>
         </tr>
 }
