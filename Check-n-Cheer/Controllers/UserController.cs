@@ -84,7 +84,7 @@ namespace Check_n_Cheer.Controllers
         public IActionResult SignIn(User formData)
         {
             User user = _repo.GetUser(formData.Email);
-            if(user != null && user.Password == formData.Password)
+            if(user != null && user.CheckPassword(formData.Password))
             {
                 Set("user", Convert.ToString(user.Id));
                 var view = View("Thanks", user);
