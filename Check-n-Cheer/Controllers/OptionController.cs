@@ -7,16 +7,19 @@ using Microsoft.AspNetCore.Mvc;
 using Check_n_Cheer.Interfaces;
 using Check_n_Cheer.Models;
 using Check_n_Cheer.DTO;
+using Microsoft.Extensions.Logging;
 
 namespace Check_n_Cheer.Controllers
 {
     public class OptionController : Controller
     {
+        private readonly ILogger<TestController> _logger;
         private IUserRepository _userRepository;
         private ITaskRepository _taskRepository;
         private IOptionRepository _optionRepository;
-        public OptionController(IUserRepository userRepository, ITaskRepository taskRepository, IOptionRepository optionRepository)
+        public OptionController(ILogger<TestController> logger,IUserRepository userRepository, ITaskRepository taskRepository, IOptionRepository optionRepository)
         {
+            _logger = logger;
             _userRepository = userRepository;
             _taskRepository = taskRepository;
             _optionRepository = optionRepository;
