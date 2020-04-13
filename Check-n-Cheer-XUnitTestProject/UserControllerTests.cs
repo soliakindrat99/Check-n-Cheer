@@ -100,19 +100,19 @@ namespace Check_n_Cheer_XUnitTestProject
                 .Returns(new User() {
                     Id = 100,
                     Email = "test@test.com",
-                    Password = "test"
+                    Password = "G08OmFGXGZjnMgeFRMlrNsPQHO33yqMyNZ1vHYNWcBQ="
                 });
             var testUser = new User
             {
                 Id = 100,
                 Email = "test@test.com",
-                Password = "test"
+                Password = "test1"
             };
             var result = _controller.SignIn(testUser);
             var viewResult = Assert.IsType<ViewResult>(result);
             var user = Assert.IsType<User>(viewResult.Model);
             Assert.Equal(testUser.Email, user.Email);
-            Assert.Equal(testUser.Password, user.Password);
+            Assert.Equal(Crypto.Hash(testUser.Password), user.Password);
         }
         [Fact]
         public void PostSignUpAction_UserExists_ReturnsRedirect()

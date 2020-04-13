@@ -23,6 +23,7 @@ namespace Check_n_Cheer.Repositories
         }
         public void RegisterUser(User user)
         {
+            user.SetPassword(user.Password);
             _context.Add(user);
             _context.SaveChanges();
         }
