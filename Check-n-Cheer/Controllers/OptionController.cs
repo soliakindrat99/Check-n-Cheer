@@ -24,14 +24,22 @@ namespace Check_n_Cheer.Controllers
             _taskRepository = taskRepository;
             _optionRepository = optionRepository;
         }
+        public string Get(string key)
+        {
+            if (Request == null)
+                return null;
+            return Request.Cookies[key];
+        }
         public ActionResult Index()
         {
+            _logger.LogInformation("GET Option/Index");
             return View();
         }
 
         [HttpGet]
         public ActionResult Create(Guid taskId, Guid testId)
         {
+            _logger.LogInformation("GET Option/Create");
             var option = new CreateOptionDTO { TaskId = taskId, TestId = testId };
             int id = int.Parse(Get("user"));
             User user = _userRepository.GetUser(id);
@@ -49,6 +57,7 @@ namespace Check_n_Cheer.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(CreateOptionDTO newOption)
         {
+            _logger.LogInformation("POST Option/Create");
             try
             {
                 var task = _taskRepository.GetTask(newOption.TaskId);
@@ -71,21 +80,18 @@ namespace Check_n_Cheer.Controllers
         // GET: Option/Delete/5
         public ActionResult Delete(Guid id)
         {
+            _logger.LogInformation("GET Option/Delete");
             return View();
         }
 
         [HttpGet]
         public ActionResult GetAllForTask(Guid taskId)
         {
+            _logger.LogInformation("GET Option/GetAllForTask");
             var options = _optionRepository.GetOptions().Where(x => x.Task.Id == taskId);
             return View(options);
         }
 
-        public string Get(string key)
-        {
-            if (Request == null)
-                return null;
-            return Request.Cookies[key];
-        }
+
     }
 }

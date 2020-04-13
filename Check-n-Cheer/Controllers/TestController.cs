@@ -26,21 +26,6 @@ namespace Check_n_Cheer.Controllers
             _taskRepo = taskRepo;
         }
 
-        [HttpGet]
-        public IActionResult Open(Guid testId)
-        {
-            int id = int.Parse(Get("user"));
-            User user = _repo.GetUser(id);
-            if (user != null && user.Role == "Teacher")
-            {
-                ViewData["LoggedIn"] = "true";
-                var test = _testRepo.GetTest(testId);
-                return View(test);
-            }
-            ViewData["LoggedIn"] = "false";
-            return RedirectToAction("Error");
-        }
-
         public string Get(string key)
         {
             if (Request == null)
@@ -61,8 +46,26 @@ namespace Check_n_Cheer.Controllers
         }
 
         [HttpGet]
+        public IActionResult Open(Guid testId)
+        {
+            _logger.LogInformation("GET Test/Open");
+            int id = int.Parse(Get("user"));
+            User user = _repo.GetUser(id);
+            if (user != null && user.Role == "Teacher")
+            {
+                ViewData["LoggedIn"] = "true";
+                var test = _testRepo.GetTest(testId);
+                return View(test);
+            }
+            ViewData["LoggedIn"] = "false";
+            return RedirectToAction("Error");
+        }
+
+
+        [HttpGet]
         public IActionResult CreateTest()
         {
+            _logger.LogInformation("GET Test/CreateTest");
             int id = int.Parse(Get("user"));
             User user = _repo.GetUser(id);
             if (user != null && user.Role == "Teacher")
@@ -77,6 +80,7 @@ namespace Check_n_Cheer.Controllers
         [HttpGet]
         public IActionResult CreateTask(Guid testId)
         {
+            _logger.LogInformation("GET Test/CreateTest");
             int id = int.Parse(Get("user"));
             User user = _repo.GetUser(id);
             var test = _testRepo.GetTest(testId);
@@ -93,6 +97,7 @@ namespace Check_n_Cheer.Controllers
         [HttpPost]
         public IActionResult CreateTest(CreateTestDTO newTest)
         {
+            _logger.LogInformation("GET Test/CreateTest");
             int id = int.Parse(Get("user"));
             User user = _repo.GetUser(id);
             if (user == null || user.Role != "Teacher")

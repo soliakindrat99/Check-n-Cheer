@@ -39,6 +39,7 @@ namespace Check_n_Cheer.Controllers
         [HttpGet]
         public IActionResult Index()
         {
+            _logger.LogInformation("GET Home/Index");
             if (Get("user") == null)
                 ViewData["LoggedIn"] = "false";
             else

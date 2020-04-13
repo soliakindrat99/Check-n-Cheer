@@ -41,20 +41,28 @@ namespace Check_n_Cheer.Controllers
         [HttpGet]
         public IActionResult SignUp()
         {
+            _logger.LogInformation("GET User/SignUp");
             if (Get("user") == null){
                 ViewData["LoggedIn"] = "false";
+                
                 return View();
             }
+            _logger.LogInformation("User is logged in!");
             ViewData["LoggedIn"] = "true";
             return RedirectToAction("Index", "Home");
         }
         [HttpPost]
         public IActionResult SignUp(User formData)
         {
+            _logger.LogInformation("POST User/SignUp");
             User user = null;
             if (formData != null)
             {
                 user = _repo.GetUser(formData.Email);
+            }
+            else
+            {
+                _logger.LogInformation("Form data is empty!");
             }
 
             if (user == null)
@@ -65,6 +73,10 @@ namespace Check_n_Cheer.Controllers
                 view.ViewData["Type"] = "signing up";
                 return view;
             }
+            else if(formData!=null)
+            {
+                _logger.LogInformation("User has already registered!");
+            }
             ViewData["LoggedIn"] = "false";
             return RedirectToAction("SignUp");
         }
@@ -72,17 +84,20 @@ namespace Check_n_Cheer.Controllers
         [HttpGet]
         public IActionResult SignIn()
         {
+            _logger.LogInformation("GET User/SignIn");
             if (Get("user") == null)
             {
                 ViewData["LoggedIn"] = "false";
                 return View();
             }
+            _logger.LogInformation("User is logged in!");
             ViewData["LoggedIn"] = "true";
             return RedirectToAction("Index", "Home");
         }
         [HttpPost]
         public IActionResult SignIn(User formData)
         {
+            _logger.LogInformation("POST User/SignIn");
             User user = _repo.GetUser(formData.Email);
             if(user != null && user.CheckPassword(formData.Password))
             {
@@ -92,23 +107,37 @@ namespace Check_n_Cheer.Controllers
                 view.ViewData["Type"] = "signing in";
                 return view;
             }
+            if (user == null)
+            {
+                _logger.LogInformation("User not found!");
+            }
+            if (!user.CheckPassword(formData.Password))
+            {
+                _logger.LogInformation("Wrong password!");
+            }
             ViewData["LoggedIn"] = "false";
             return RedirectToAction("SignIn");
         }
-
+        [HttpGet]
         public IActionResult Logout()
         {
+            _logger.LogInformation("GET User/Logout");
             Remove("user");
             return RedirectToAction("SignIn");
         }
-
+        [HttpGet]
         public IActionResult Profile()
         {
+            _logger.LogInformation("GET User/Profile");
             User user = null;
             if (Get("user") != null)
             {
                 int id = int.Parse(Get("user"));
                 user = _repo.GetUser(id);
+            }
+            else
+            {
+                _logger.LogInformation("User is not logged!");
             }
             
             if (user != null)
@@ -120,6 +149,11 @@ namespace Check_n_Cheer.Controllers
                 ViewData["LoggedIn"] = "true";
                 return View(user);
             }
+            if(Get("user") != null)
+            {
+                _logger.LogInformation("User authorised but not exist!");
+            }
+
             ViewData["LoggedIn"] = "false";
             return RedirectToAction("Error");
         }
@@ -127,11 +161,16 @@ namespace Check_n_Cheer.Controllers
         [HttpGet]
         public IActionResult AdminProfile(string? id)
         {
+            _logger.LogInformation("GET User/AdminProfile");
             User user = null;
             if (Get("user") != null)
             {
                 int user_id = int.Parse(Get("user"));
                 user = _repo.GetUser(user_id);
+            }
+            else
+            {
+                _logger.LogInformation("User is not logged!");
             }
             if (user!=null && user.Role == "Admin")
             {
@@ -147,6 +186,14 @@ namespace Check_n_Cheer.Controllers
                 ViewData["LoggedIn"] = "true";
                 return View(users);
             }
+            if(user != null )
+            {
+                _logger.LogInformation("User is not admin!");
+            }
+            else
+            {
+                _logger.LogInformation("User authorised but not exist!");
+            }
             ViewData["LoggedIn"] = "false";
             return RedirectToAction("Error");
         }
@@ -154,16 +201,29 @@ namespace Check_n_Cheer.Controllers
         [HttpPost]
         public IActionResult ChangeToStudent(string id)
         {
+            _logger.LogInformation("POST User/ChangeToStudent");
             User user = null;
             if (Get("user") != null)
             {
                 int user_id = int.Parse(Get("user"));
                 user = _repo.GetUser(user_id);
             }
+            else
+            {
+                _logger.LogInformation("User is not logged!");
+            }
             if (user != null && user.Role == "Admin")
             {
                 _repo.SetUserRole(int.Parse(id), "Student");
                 return RedirectToAction("AdminProfile");
+            }
+            if (user != null)
+            {
+                _logger.LogInformation("User is not admin!");
+            }
+            else
+            {
+                _logger.LogInformation("User authorised but not exist!");
             }
             ViewData["LoggedIn"] = "false";
             return RedirectToAction("Error");
@@ -172,16 +232,29 @@ namespace Check_n_Cheer.Controllers
         [HttpPost]
         public IActionResult ChangeToTeacher(string id)
         {
+            _logger.LogInformation("POST User/ChangeToTeacher");
             User user = null;
             if (Get("user") != null)
             {
                 int user_id = int.Parse(Get("user"));
                 user = _repo.GetUser(user_id);
             }
+            else
+            {
+                _logger.LogInformation("User is not logged!");
+            }
             if (user != null && user.Role == "Admin")
             {
                 _repo.SetUserRole(int.Parse(id), "Teacher");
                 return RedirectToAction("AdminProfile");
+            }
+            if (user != null)
+            {
+                _logger.LogInformation("User is not admin!");
+            }
+            else
+            {
+                _logger.LogInformation("User authorised but not exist!");
             }
             ViewData["LoggedIn"] = "false";
             return RedirectToAction("Error");
@@ -190,16 +263,29 @@ namespace Check_n_Cheer.Controllers
         [HttpPost]
         public IActionResult RemoveUser(string id)
         {
+            _logger.LogInformation("POST User/RemoveUser");
             User user = null;
             if (Get("user") != null)
             {
                 int user_id = int.Parse(Get("user"));
                 user = _repo.GetUser(user_id);
             }
+            else
+            {
+                _logger.LogInformation("User is not logged!");
+            }
             if (user != null && user.Role == "Admin")
             {
                 _repo.RemoveUser(int.Parse(id));
                 return RedirectToAction("AdminProfile");
+            }
+            if (user != null)
+            {
+                _logger.LogInformation("User is not admin!");
+            }
+            else
+            {
+                _logger.LogInformation("User authorised but not exist!");
             }
             ViewData["LoggedIn"] = "false";
             return RedirectToAction("Error");
