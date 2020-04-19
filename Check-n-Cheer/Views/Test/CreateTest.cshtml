@@ -1,8 +1,7 @@
-﻿
+﻿@model Check_n_Cheer.DTO.CreateTestDTO
 @{
     ViewData["Title"] = "Create Test";
 }
-@model Check_n_Cheer.DTO.CreateTestDTO
 
 <form method="post" enctype="multipart/form-data" asp-controller="Test" asp-action="CreateTest">
     <div class="questions">
@@ -14,10 +13,7 @@
             <label asp-for="TaskCount" id="label"></label><br />
             <input type="number" asp-for="TaskCount" />
         </div>
-        <div>
-            <label asp-for="TeacherName" id="label"></label><br />
-            <input type="text" asp-for="TeacherName" />
-        </div>
+        <input type="text" asp-for="TeacherId" hidden value="@ViewData["Id"]"/>
         <button class="btn button_color">Create Tasks</button>
     </div>
 </form>

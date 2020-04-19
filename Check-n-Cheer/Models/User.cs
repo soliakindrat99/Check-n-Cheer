@@ -1,16 +1,12 @@
 ﻿using System;
-using System.ComponentModel.DataAnnotations;
 using System.Text;
 
 namespace Check_n_Cheer.Models
 {
     public class User
     {
-        [Key]
-        public int Id { get; set; }
-        [Required(ErrorMessage = "Email is not passed!")]
+        public Guid Id { get; set; }
         public string Email { get; set; }
-        [Required(ErrorMessage = "Password is not passed!")]
         public string Password{ get; set; }
         public void SetPassword(string password)
         {

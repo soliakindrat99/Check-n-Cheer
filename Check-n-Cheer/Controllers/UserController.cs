@@ -67,6 +67,7 @@ namespace Check_n_Cheer.Controllers
 
             if (user == null)
             {
+                formData.Id = Guid.NewGuid();
                 _repo.RegisterUser(formData);
                 var view = View("Thanks", formData);
                 view.ViewData["LoggedIn"] = "false";
@@ -132,7 +133,7 @@ namespace Check_n_Cheer.Controllers
             User user = null;
             if (Get("user") != null)
             {
-                int id = int.Parse(Get("user"));
+                Guid id = Guid.Parse(Get("user"));
                 user = _repo.GetUser(id);
             }
             else
@@ -165,7 +166,7 @@ namespace Check_n_Cheer.Controllers
             User user = null;
             if (Get("user") != null)
             {
-                int user_id = int.Parse(Get("user"));
+                Guid user_id = Guid.Parse(Get("user"));
                 user = _repo.GetUser(user_id);
             }
             else
@@ -197,7 +198,6 @@ namespace Check_n_Cheer.Controllers
             ViewData["LoggedIn"] = "false";
             return RedirectToAction("Error");
         }
-
         [HttpPost]
         public IActionResult ChangeToStudent(string id)
         {
@@ -205,7 +205,7 @@ namespace Check_n_Cheer.Controllers
             User user = null;
             if (Get("user") != null)
             {
-                int user_id = int.Parse(Get("user"));
+                Guid user_id = Guid.Parse(Get("user"));
                 user = _repo.GetUser(user_id);
             }
             else
@@ -214,7 +214,7 @@ namespace Check_n_Cheer.Controllers
             }
             if (user != null && user.Role == "Admin")
             {
-                _repo.SetUserRole(int.Parse(id), "Student");
+                _repo.SetUserRole(Guid.Parse(id), "Student");
                 return RedirectToAction("AdminProfile");
             }
             if (user != null)
@@ -228,7 +228,6 @@ namespace Check_n_Cheer.Controllers
             ViewData["LoggedIn"] = "false";
             return RedirectToAction("Error");
         }
-
         [HttpPost]
         public IActionResult ChangeToTeacher(string id)
         {
@@ -236,7 +235,7 @@ namespace Check_n_Cheer.Controllers
             User user = null;
             if (Get("user") != null)
             {
-                int user_id = int.Parse(Get("user"));
+                Guid user_id = Guid.Parse(Get("user"));
                 user = _repo.GetUser(user_id);
             }
             else
@@ -245,7 +244,7 @@ namespace Check_n_Cheer.Controllers
             }
             if (user != null && user.Role == "Admin")
             {
-                _repo.SetUserRole(int.Parse(id), "Teacher");
+                _repo.SetUserRole(Guid.Parse(id), "Teacher");
                 return RedirectToAction("AdminProfile");
             }
             if (user != null)
@@ -259,7 +258,6 @@ namespace Check_n_Cheer.Controllers
             ViewData["LoggedIn"] = "false";
             return RedirectToAction("Error");
         }
-
         [HttpPost]
         public IActionResult RemoveUser(string id)
         {
@@ -267,7 +265,7 @@ namespace Check_n_Cheer.Controllers
             User user = null;
             if (Get("user") != null)
             {
-                int user_id = int.Parse(Get("user"));
+                Guid user_id = Guid.Parse(Get("user"));
                 user = _repo.GetUser(user_id);
             }
             else
@@ -276,7 +274,7 @@ namespace Check_n_Cheer.Controllers
             }
             if (user != null && user.Role == "Admin")
             {
-                _repo.RemoveUser(int.Parse(id));
+                _repo.RemoveUser(Guid.Parse(id));
                 return RedirectToAction("AdminProfile");
             }
             if (user != null)
@@ -290,7 +288,6 @@ namespace Check_n_Cheer.Controllers
             ViewData["LoggedIn"] = "false";
             return RedirectToAction("Error");
         }
-
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

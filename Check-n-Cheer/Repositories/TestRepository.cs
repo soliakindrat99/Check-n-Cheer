@@ -38,7 +38,7 @@ namespace Check_n_Cheer.Repositories
         {
             var test = _context.Tests.FirstOrDefault(u => u.Id == id);
             test.Name = updatedTest.Name;
-            test.TeacherName = updatedTest.TeacherName;
+            test.TeacherId = updatedTest.TeacherId;
             test.Tasks = updatedTest.Tasks;
             _context.SaveChanges();
         }

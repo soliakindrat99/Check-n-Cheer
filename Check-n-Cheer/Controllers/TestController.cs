@@ -46,49 +46,28 @@ namespace Check_n_Cheer.Controllers
         }
 
         [HttpGet]
-        public IActionResult Open(Guid testId)
-        {
-            _logger.LogInformation("GET Test/Open");
-            int id = int.Parse(Get("user"));
-            User user = _repo.GetUser(id);
-            if (user != null && user.Role == "Teacher")
-            {
-                ViewData["LoggedIn"] = "true";
-                var test = _testRepo.GetTest(testId);
-                return View(test);
-            }
-            ViewData["LoggedIn"] = "false";
-            return RedirectToAction("Error");
-        }
-
-
-        [HttpGet]
         public IActionResult CreateTest()
         {
             _logger.LogInformation("GET Test/CreateTest");
-            int id = int.Parse(Get("user"));
-            User user = _repo.GetUser(id);
+            User user = null;
+            if (Get("user") != null)
+            {
+                Guid id = Guid.Parse(Get("user"));
+                user = _repo.GetUser(id);
+            }
+            else
+            {
+                _logger.LogInformation("User is not logged!");
+            }
             if (user != null && user.Role == "Teacher")
             {
                 ViewData["LoggedIn"] = "true";
+                ViewData["Id"] = user.Id;
                 return View();
             }
-            ViewData["LoggedIn"] = "false";
-            return RedirectToAction("Error");
-        }
-
-        [HttpGet]
-        public IActionResult CreateTask(Guid testId)
-        {
-            _logger.LogInformation("GET Test/CreateTest");
-            int id = int.Parse(Get("user"));
-            User user = _repo.GetUser(id);
-            var test = _testRepo.GetTest(testId);
-            test.Tasks = test.Tasks.OrderBy(x => x.TaskNumber).ToList();
-            if (user != null && user.Role == "Teacher")
+            else if(user != null)
             {
-                ViewData["LoggedIn"] = "true";
-                return View(test.Tasks);
+                _logger.LogInformation("User is not Teacher!");
             }
             ViewData["LoggedIn"] = "false";
             return RedirectToAction("Error");
@@ -98,16 +77,16 @@ namespace Check_n_Cheer.Controllers
         public IActionResult CreateTest(CreateTestDTO newTest)
         {
             _logger.LogInformation("GET Test/CreateTest");
-            int id = int.Parse(Get("user"));
+            Guid id = Guid.Parse(Get("user"));
             User user = _repo.GetUser(id);
             if (user == null || user.Role != "Teacher")
             {
                 ViewData["LoggedIn"] = "false";
                 return RedirectToAction("Error");
             }
-            var test = new Test(Guid.NewGuid(), newTest.Name, newTest.TeacherName);
-            test.Tasks = new System.Collections.Generic.List<Task>();
-            for(int i = 0; i < newTest.TaskCount;i++)
+            var test = new Test(Guid.NewGuid(), newTest.Name, newTest.TeacherId);
+            test.Tasks = new List<Task>();
+            for (int i = 0; i < newTest.TaskCount; i++)
             {
                 var task = new Task()
                 {
@@ -121,6 +100,54 @@ namespace Check_n_Cheer.Controllers
             return RedirectToAction("CreateTask", new { testId = test.Id });
         }
 
+        [HttpGet]
+        public IActionResult Open(Guid testId)
+        {
+            _logger.LogInformation("GET Test/Open");
+            User user = null;
+            if (Get("user") != null)
+            {
+                Guid id = Guid.Parse(Get("user"));
+                user = _repo.GetUser(id);
+            }
+            else
+            {
+                _logger.LogInformation("User is not logged!");
+            }
+            if (user != null && user.Role == "Teacher")
+            {
+                ViewData["LoggedIn"] = "true";
+                var test = _testRepo.GetTest(testId);
+                return View(test);
+            }
+            ViewData["LoggedIn"] = "false";
+            return RedirectToAction("Error");
+        }
+
+        [HttpGet]
+        public IActionResult CreateTask(Guid testId)
+        {
+            _logger.LogInformation("GET Test/CreateTest");
+            User user = null;
+            if (Get("user") != null)
+            {
+                Guid id = Guid.Parse(Get("user"));
+                user = _repo.GetUser(id);
+            }
+            else
+            {
+                _logger.LogInformation("User is not logged!");
+            }
+            if (user != null && user.Role == "Teacher")
+            {
+                var test = _testRepo.GetTest(testId);
+                test.Tasks = test.Tasks.OrderBy(x => x.TaskNumber).ToList();
+                ViewData["LoggedIn"] = "true";
+                return View(test.Tasks);
+            }
+            ViewData["LoggedIn"] = "false";
+            return RedirectToAction("Error");
+        }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

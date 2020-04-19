@@ -41,7 +41,7 @@ namespace Check_n_Cheer.Controllers
         {
             _logger.LogInformation("GET Option/Create");
             var option = new CreateOptionDTO { TaskId = taskId, TestId = testId };
-            int id = int.Parse(Get("user"));
+            Guid id = Guid.Parse(Get("user"));
             User user = _userRepository.GetUser(id);
             if (user != null && user.Role == "Teacher")
             {
@@ -52,9 +52,7 @@ namespace Check_n_Cheer.Controllers
             return RedirectToAction("Error");
         }
 
-        // POST: Option/Create
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public ActionResult Create(CreateOptionDTO newOption)
         {
             _logger.LogInformation("POST Option/Create");
@@ -77,7 +75,7 @@ namespace Check_n_Cheer.Controllers
             }
         }
 
-        // GET: Option/Delete/5
+        [HttpGet]
         public ActionResult Delete(Guid id)
         {
             _logger.LogInformation("GET Option/Delete");
@@ -91,7 +89,5 @@ namespace Check_n_Cheer.Controllers
             var options = _optionRepository.GetOptions().Where(x => x.Task.Id == taskId);
             return View(options);
         }
-
-
     }
 }

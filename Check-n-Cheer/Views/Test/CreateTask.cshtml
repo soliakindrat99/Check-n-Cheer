@@ -9,10 +9,10 @@
         <thead>
             <tr>
                 <th>
-                    TaskNumber
+                    №
                 </th>
                 <th>
-                    Condition
+                    Title
                 </th>
                 <th></th>
             </tr>
@@ -28,10 +28,10 @@
                     <td>
                         <input type="text" id="condition" name="condition" value="@Model[i].Condition" />
                     </td>
-                    <td>
-                        @Html.ActionLink("AddCondition", "UpdateTask", "Task", new {taskId = Model[i].Id, testId = Model[i].Test.Id, condition = "xxx" }, new { @id = "td", @class = "link"}) |
-                        @Html.ActionLink("AddOption", "Create", "Option", new { taskId = Model[i].Id, testId = Model[i].Test.Id }, new { @id = "td"}) |
-                        @Html.ActionLink("ViewOptions", "GetAllForTask", "Option", new { taskId = Model[i].Id }, new { @id = "td" })
+                    <td style="color:#fff">
+                        @Html.ActionLink("Add Condition", "UpdateTask", "Task", new { taskId = Model[i].Id, testId = Model[i].Test.Id, condition = "xxx" }, new { @id = "td", @class = "link btn button_color" })
+                        @Html.ActionLink("Add Option", "Create", "Option", new { taskId = Model[i].Id, testId = Model[i].Test.Id }, new { @id = "td", @class="btn button_color" })
+                        @Html.ActionLink("View Options", "GetAllForTask", "Option", new { taskId = Model[i].Id }, new { @id = "td", @class= "btn button_color" })
                     </td>
                 </tr>
             }
@@ -41,18 +41,17 @@
 
     @section scripts{
         <script>
-
-        $(function () {
-            $('.link').click(function () {
-                let x = [];
-                $("[name='condition']").each(function () {
-                    x.push(this.value)
+            $(function () {
+                $('.link').click(function () {
+                    let x = [];
+                    $("[name='condition']").each(function () {
+                        x.push(this.value)
+                    });
+                    var y = x.filter(function(v){return v!==''});
+                    var condition = y.reverse()[0];
+                    this.href = this.href.replace("xxx", condition);
                 });
-                var y = x.filter(function(v){return v!==''});
-                var condition = y.reverse()[0];
-         this.href = this.href.replace("xxx", condition);
-    });
-  });
+            });
         </script>
     }
 

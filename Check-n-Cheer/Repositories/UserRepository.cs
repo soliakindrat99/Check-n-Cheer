@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using Check_n_Cheer.Models;
 using Check_n_Cheer.Interfaces;
 
@@ -16,7 +17,7 @@ namespace Check_n_Cheer.Repositories
             User user = _context.Users.FirstOrDefault(u => u.Email == email);
             return user;
         }
-        public User GetUser(int id)
+        public User GetUser(Guid id)
         {
             User user = _context.Users.SingleOrDefault(u => u.Id == id);
             return user;
@@ -32,14 +33,14 @@ namespace Check_n_Cheer.Repositories
             var users =_context.Users.ToList();
             return users.ToArray();
         }
-        public void SetUserRole(int id, string role)
+        public void SetUserRole(Guid id, string role)
         {
             User user = _context.Users.SingleOrDefault(u => u.Id == id);
             user.Role = role;
             _context.Users.Update(user);
             _context.SaveChanges();
         }
-        public void RemoveUser(int id)
+        public void RemoveUser(Guid id)
         {
             User user = new User { Id = id };
             _context.Users.Remove(user);
