@@ -705,7 +705,6 @@ C:\Users\rusla\Desktop\Check-n-Cheer\Check-n-Cheer\obj\Debug\netcoreapp3.1\Razor
 C:\Users\rusla\Desktop\Check-n-Cheer\Check-n-Cheer\obj\Debug\netcoreapp3.1\Razor\Views\Shared\Error.cshtml.g.cs
 C:\Users\rusla\Desktop\Check-n-Cheer\Check-n-Cheer\obj\Debug\netcoreapp3.1\Razor\Views\Shared\_Layout.cshtml.g.cs
 C:\Users\rusla\Desktop\Check-n-Cheer\Check-n-Cheer\obj\Debug\netcoreapp3.1\Razor\Views\Shared\_ValidationScriptsPartial.cshtml.g.cs
-C:\Users\rusla\Desktop\Check-n-Cheer\Check-n-Cheer\obj\Debug\netcoreapp3.1\Razor\Views\Test\CreateTask.cshtml.g.cs
 C:\Users\rusla\Desktop\Check-n-Cheer\Check-n-Cheer\obj\Debug\netcoreapp3.1\Razor\Views\Test\CreateTest.cshtml.g.cs
 C:\Users\rusla\Desktop\Check-n-Cheer\Check-n-Cheer\obj\Debug\netcoreapp3.1\Razor\Views\Test\Open.cshtml.g.cs
 C:\Users\rusla\Desktop\Check-n-Cheer\Check-n-Cheer\obj\Debug\netcoreapp3.1\Razor\Views\User\AdminProfile.cshtml.g.cs
@@ -726,3 +725,4 @@ C:\Users\User\source\repos\Check-n-Cheer\Check-n-Cheer\obj\Debug\netcoreapp3.1\R
 C:\Users\User\source\repos\Check-n-Cheer\Check-n-Cheer\obj\Debug\netcoreapp3.1\Razor\Views\Test\CreateTask.cshtml.g.cs
 C:\Users\User\source\repos\Check-n-Cheer\Check-n-Cheer\obj\Debug\netcoreapp3.1\Razor\Views\Test\CreateTest.cshtml.g.cs
 C:\Users\User\source\repos\Check-n-Cheer\Check-n-Cheer\obj\Debug\netcoreapp3.1\Razor\Views\Test\Open.cshtml.g.cs
+C:\Users\rusla\Desktop\Check-n-Cheer\Check-n-Cheer\obj\Debug\netcoreapp3.1\Razor\Views\Test\ManageTasks.cshtml.g.cs

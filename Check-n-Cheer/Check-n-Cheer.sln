@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29806.167
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Check-n-Cheer", "Check-n-Cheer\Check-n-Cheer.csproj", "{ABC99FD1-DCBF-4839-905E-E4EC95E39239}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Check-n-Cheer-XUnitTestProject", "Check-n-Cheer-XUnitTestProject\Check-n-Cheer-XUnitTestProject.csproj", "{0F821560-5F66-413F-BFD9-8AE31DC09DBA}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{ABC99FD1-DCBF-4839-905E-E4EC95E39239}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ABC99FD1-DCBF-4839-905E-E4EC95E39239}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ABC99FD1-DCBF-4839-905E-E4EC95E39239}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ABC99FD1-DCBF-4839-905E-E4EC95E39239}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0F821560-5F66-413F-BFD9-8AE31DC09DBA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0F821560-5F66-413F-BFD9-8AE31DC09DBA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0F821560-5F66-413F-BFD9-8AE31DC09DBA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0F821560-5F66-413F-BFD9-8AE31DC09DBA}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {6DA0B52C-101D-45A1-B0DB-3EFEC52E21C4}
+	EndGlobalSection
+EndGlobal

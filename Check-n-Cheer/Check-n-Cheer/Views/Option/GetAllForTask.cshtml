@@ -1,0 +1,36 @@
+﻿@model IEnumerable<Check_n_Cheer.Models.Option>
+
+@{
+    ViewData["Title"] = "GetAllForTask";
+}
+
+<h1>All Options For Task</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IsCorrect)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsCorrect)
+            </td>
+            <td>
+                @Html.ActionLink("Delete", "Delete", new {  id=item.Id }, new { @id = "td" })
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

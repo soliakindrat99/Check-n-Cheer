@@ -1,0 +1,47 @@
+﻿@model IEnumerable<Check_n_Cheer.Models.User>;
+@{
+    ViewData["Title"] = "AdminProfile";
+}
+
+<h1>Admin Profile</h1>
+<label for="name">Search user:</label>
+<input type="text" name="name" id="search_user" value="" />
+<button class="btn button_color" id="search_btn">Search</button>
+<table style="width:100%">
+    @foreach (Check_n_Cheer.Models.User user in Model)
+    {
+        if (@user.Role != "Admin")
+        {
+            <tr>
+                <td>@user.Email</td>
+                <td>
+                    @if (@user.Role == "Student")
+                    {
+                        <form action="ChangeToStudent/@user.Id" method="post">
+                            <button class="btn button_color" disabled>Student</button>
+                        </form>
+                        <form action="ChangeToTeacher/@user.Id" method="post">
+                            <button class="btn button_color">Teacher</button>
+                        </form>
+                    }
+                    @if (@user.Role == "Teacher")
+                    {
+                        <form action="ChangeToStudent/@user.Id" method="post">
+                            <button class="btn button_color">Student</button>
+                        </form>
+                        <form action="ChangeToTeacher/@user.Id" method="post">
+                            <button class="btn button_color" disabled>Teacher</button>
+                        </form>
+                    }
+                </td>
+                <td>
+                    <form action="RemoveUser/@user.Id" method="post">
+                        <button class="btn button_color">Remove</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    }
+</table>
+
+
