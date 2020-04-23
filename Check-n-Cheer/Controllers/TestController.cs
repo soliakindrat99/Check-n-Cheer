@@ -154,14 +154,42 @@ namespace Check_n_Cheer.Controllers
             return RedirectToAction("Error");
         }
 
-        
+        [HttpPost]
+        public IActionResult RenameTask(string id,string condition)
+        {
+            _logger.LogInformation("POST Test/RenameTask");
+            User user = null;
+            if (Get("user") != null)
+            {
+                Guid user_id = Guid.Parse(Get("user"));
+                user = _repo.GetUser(user_id);
+            }
+            else
+            {
+                _logger.LogInformation("User is not logged!");
+            }
+            if (user != null && user.Role == "Teacher")
+            {
+                _taskRepo.RenameTask(Guid.Parse(id), condition);                
+                var task= _taskRepo.GetTask(Guid.Parse(id));
+                return RedirectToAction("ManageTasks", new { testId = task.Test.Id });
+            }
+            if (user != null)
+            {
+                _logger.LogInformation("User is not teacher!");
+            }
+            else
+            {
+                _logger.LogInformation("User authorised but not exist!");
+            }
+            ViewData["LoggedIn"] = "false";
+            return RedirectToAction("Error");
+        }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
-
-
     }
 }
