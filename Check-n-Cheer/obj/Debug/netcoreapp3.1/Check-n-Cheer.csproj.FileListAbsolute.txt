@@ -726,3 +726,8 @@ C:\Users\User\source\repos\Check-n-Cheer\Check-n-Cheer\obj\Debug\netcoreapp3.1\R
 C:\Users\User\source\repos\Check-n-Cheer\Check-n-Cheer\obj\Debug\netcoreapp3.1\Razor\Views\Test\CreateTest.cshtml.g.cs
 C:\Users\User\source\repos\Check-n-Cheer\Check-n-Cheer\obj\Debug\netcoreapp3.1\Razor\Views\Test\Open.cshtml.g.cs
 C:\Users\rusla\Desktop\Check-n-Cheer\Check-n-Cheer\obj\Debug\netcoreapp3.1\Razor\Views\Test\ManageTasks.cshtml.g.cs
+C:\Users\zakhar\source\repos\Check-n-Cheer\Check-n-Cheer\obj\Debug\netcoreapp3.1\Razor\Views\Option\Create.cshtml.g.cs
+C:\Users\zakhar\source\repos\Check-n-Cheer\Check-n-Cheer\obj\Debug\netcoreapp3.1\Razor\Views\Option\GetAllForTask.cshtml.g.cs
+C:\Users\zakhar\source\repos\Check-n-Cheer\Check-n-Cheer\obj\Debug\netcoreapp3.1\Razor\Views\Test\CreateTask.cshtml.g.cs
+C:\Users\zakhar\source\repos\Check-n-Cheer\Check-n-Cheer\obj\Debug\netcoreapp3.1\Razor\Views\Test\ManageTasks.cshtml.g.cs
+C:\Users\zakhar\source\repos\Check-n-Cheer\Check-n-Cheer\obj\Debug\netcoreapp3.1\Razor\Views\Test\Open.cshtml.g.cs

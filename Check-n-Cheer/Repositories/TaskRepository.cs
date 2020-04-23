@@ -23,7 +23,7 @@ namespace Check_n_Cheer.Repositories
 
         public Task GetTask(Guid id)
         {
-            var task = _context.Tasks.Include(x => x.Options).FirstOrDefault(u => u.Id == id);
+            var task = _context.Tasks.Include(x => x.Options).Include(x => x.Test).FirstOrDefault(u => u.Id == id);
             return task;
         }
 
@@ -45,6 +45,13 @@ namespace Check_n_Cheer.Repositories
             var task = _context.Tasks.FirstOrDefault(u => u.Id == id);
             task.Condition = updatedTask.Condition;
             _context.SaveChanges();
+        }
+        public void RenameTask(Guid id,string condition)
+        {
+            var task = _context.Tasks.FirstOrDefault(u => u.Id == id);
+            task.Condition = condition;
+            _context.SaveChanges();
+
         }
     }
 }
