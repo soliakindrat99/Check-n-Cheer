@@ -210,8 +210,9 @@ namespace Check_n_Cheer.Controllers
                 else
                 {
                     tests =new List<Test> ();
+                    // TODO: two tests with equal names different teachers
                     Test test = _testRepo.GetByName(id);
-                    if (test != null && test.TeacherId==user.Id)
+                    if (test != null && test.TeacherId == user.Id)
                     {
                         tests.Add(test);
                     }       
