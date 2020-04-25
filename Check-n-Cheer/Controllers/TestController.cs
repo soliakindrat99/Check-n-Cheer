@@ -14,14 +14,14 @@ namespace Check_n_Cheer.Controllers
     public class TestController : Controller
     {
         private readonly ILogger<TestController> _logger;
-        private IUserRepository _repo;
+        private IUserRepository _userRepo;
         private ITestRepository _testRepo;
         private ITaskRepository _taskRepo;
 
         public TestController(ILogger<TestController> logger, IUserRepository repo, ITestRepository testRepo, ITaskRepository taskRepo)
         {
             _logger = logger;
-            _repo = repo;
+            _userRepo = repo;
             _testRepo = testRepo;
             _taskRepo = taskRepo;
         }
@@ -53,7 +53,7 @@ namespace Check_n_Cheer.Controllers
             if (Get("user") != null)
             {
                 Guid id = Guid.Parse(Get("user"));
-                user = _repo.GetUser(id);
+                user = _userRepo.GetUser(id);
             }
             else
             {
@@ -78,7 +78,7 @@ namespace Check_n_Cheer.Controllers
         {
             _logger.LogInformation("GET Test/CreateTest");
             Guid id = Guid.Parse(Get("user"));
-            User user = _repo.GetUser(id);
+            User user = _userRepo.GetUser(id);
             if (user == null || user.Role != "Teacher")
             {
                 ViewData["LoggedIn"] = "false";
@@ -113,7 +113,7 @@ namespace Check_n_Cheer.Controllers
             if (Get("user") != null)
             {
                 Guid id = Guid.Parse(Get("user"));
-                user = _repo.GetUser(id);
+                user = _userRepo.GetUser(id);
             }
             else
             {
@@ -137,7 +137,7 @@ namespace Check_n_Cheer.Controllers
             if (Get("user") != null)
             {
                 Guid id = Guid.Parse(Get("user"));
-                user = _repo.GetUser(id);
+                user = _userRepo.GetUser(id);
             }
             else
             {
@@ -162,7 +162,7 @@ namespace Check_n_Cheer.Controllers
             if (Get("user") != null)
             {
                 Guid user_id = Guid.Parse(Get("user"));
-                user = _repo.GetUser(user_id);
+                user = _userRepo.GetUser(user_id);
             }
             else
             {
@@ -177,6 +177,51 @@ namespace Check_n_Cheer.Controllers
             if (user != null)
             {
                 _logger.LogInformation("User is not teacher!");
+            }
+            else
+            {
+                _logger.LogInformation("User authorised but not exist!");
+            }
+            ViewData["LoggedIn"] = "false";
+            return RedirectToAction("Error");
+        }
+
+        [HttpGet]
+        public IActionResult TestHistory(string? id)
+        {
+            _logger.LogInformation("GET User/TestHistory");
+            User user = null;
+            if (Get("user") != null)
+            {
+                Guid user_id = Guid.Parse(Get("user"));
+                user = _userRepo.GetUser(user_id);
+            }
+            else
+            {
+                _logger.LogInformation("User is not logged!");
+            }
+            if (user != null && user.Role == "Teacher")
+            {
+                List<Test> tests;
+                if (id == null)
+                {
+                    tests = _testRepo.GetTests(user.Id);
+                }
+                else
+                {
+                    tests =new List<Test> ();
+                    Test test = _testRepo.GetByName(id);
+                    if (test != null && test.TeacherId==user.Id)
+                    {
+                        tests.Add(test);
+                    }       
+                }
+                ViewData["LoggedIn"] = "true";
+                return View(tests);
+            }
+            if (user != null)
+            {
+                _logger.LogInformation("User is not admin!");
             }
             else
             {

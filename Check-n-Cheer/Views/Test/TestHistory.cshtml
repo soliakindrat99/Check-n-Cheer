@@ -1,0 +1,29 @@
+﻿@model IEnumerable<Check_n_Cheer.Models.Test>;
+@{
+    ViewData["Title"] = "TestHistory";
+}
+
+<h1>Test History</h1>
+<label for="name">Search test:</label>
+<input type="text" name="name" id="search_test_input" value="" />
+<button class="btn button_color" id="search_test_btn">Search</button>
+<table style="width:100%">
+    @foreach (Check_n_Cheer.Models.Test test in Model)
+    {
+            <tr>
+                <td>
+                    <h4>@test.Name</h4>
+                </td>
+                <td>       
+                    <a href="/Test/ManageTasks?testId=@test.Id" class="btn button_color">Edit test</a>
+                </td>
+                <td>
+                    <form action="RemoveTest/@test.Id" method="post">
+                        <button class="btn button_color">Remove</button>
+                    </form>
+                </td>
+            </tr>
+    }
+</table>
+
+

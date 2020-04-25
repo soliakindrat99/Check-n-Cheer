@@ -5,18 +5,21 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Check_n_Cheer.Models;
 using Check_n_Cheer.Interfaces;
+using System.Collections.Generic;
 
 namespace Check_n_Cheer.Controllers
 {
     public class UserController : Controller
     {
         private readonly ILogger<UserController> _logger;
-        private IUserRepository _repo;
+        private IUserRepository _userRepo;
+        private ITestRepository _testRepo;
 
-        public UserController(ILogger<UserController> logger, IUserRepository repo)
+        public UserController(ILogger<UserController> logger, IUserRepository userRepo,ITestRepository testRepo)
         {
             _logger = logger;
-            _repo = repo;
+            _userRepo = userRepo;
+            _testRepo = testRepo;
         }
 
         public string Get(string key)
@@ -58,7 +61,7 @@ namespace Check_n_Cheer.Controllers
             User user = null;
             if (formData != null)
             {
-                user = _repo.GetUser(formData.Email);
+                user = _userRepo.GetUser(formData.Email);
             }
             else
             {
@@ -68,7 +71,7 @@ namespace Check_n_Cheer.Controllers
             if (user == null)
             {
                 formData.Id = Guid.NewGuid();
-                _repo.RegisterUser(formData);
+                _userRepo.RegisterUser(formData);
                 var view = View("Thanks", formData);
                 view.ViewData["LoggedIn"] = "false";
                 view.ViewData["Type"] = "signing up";
@@ -99,7 +102,7 @@ namespace Check_n_Cheer.Controllers
         public IActionResult SignIn(User formData)
         {
             _logger.LogInformation("POST User/SignIn");
-            User user = _repo.GetUser(formData.Email);
+            User user = _userRepo.GetUser(formData.Email);
             if(user != null && user.CheckPassword(formData.Password))
             {
                 Set("user", Convert.ToString(user.Id));
@@ -134,7 +137,7 @@ namespace Check_n_Cheer.Controllers
             if (Get("user") != null)
             {
                 Guid id = Guid.Parse(Get("user"));
-                user = _repo.GetUser(id);
+                user = _userRepo.GetUser(id);
             }
             else
             {
@@ -167,7 +170,7 @@ namespace Check_n_Cheer.Controllers
             if (Get("user") != null)
             {
                 Guid user_id = Guid.Parse(Get("user"));
-                user = _repo.GetUser(user_id);
+                user = _userRepo.GetUser(user_id);
             }
             else
             {
@@ -178,11 +181,11 @@ namespace Check_n_Cheer.Controllers
                 User[] users;
                 if (id == null)
                 {
-                    users = _repo.GetUsers();
+                    users = _userRepo.GetUsers();
                 }
                 else
                 {
-                    users = new User[] { _repo.GetUser(id)};
+                    users = new User[] { _userRepo.GetUser(id)};
                 }
                 ViewData["LoggedIn"] = "true";
                 return View(users);
@@ -206,7 +209,7 @@ namespace Check_n_Cheer.Controllers
             if (Get("user") != null)
             {
                 Guid user_id = Guid.Parse(Get("user"));
-                user = _repo.GetUser(user_id);
+                user = _userRepo.GetUser(user_id);
             }
             else
             {
@@ -214,7 +217,7 @@ namespace Check_n_Cheer.Controllers
             }
             if (user != null && user.Role == "Admin")
             {
-                _repo.SetUserRole(Guid.Parse(id), "Student");
+                _userRepo.SetUserRole(Guid.Parse(id), "Student");
                 return RedirectToAction("AdminProfile");
             }
             if (user != null)
@@ -236,7 +239,7 @@ namespace Check_n_Cheer.Controllers
             if (Get("user") != null)
             {
                 Guid user_id = Guid.Parse(Get("user"));
-                user = _repo.GetUser(user_id);
+                user = _userRepo.GetUser(user_id);
             }
             else
             {
@@ -244,7 +247,7 @@ namespace Check_n_Cheer.Controllers
             }
             if (user != null && user.Role == "Admin")
             {
-                _repo.SetUserRole(Guid.Parse(id), "Teacher");
+                _userRepo.SetUserRole(Guid.Parse(id), "Teacher");
                 return RedirectToAction("AdminProfile");
             }
             if (user != null)
@@ -266,7 +269,7 @@ namespace Check_n_Cheer.Controllers
             if (Get("user") != null)
             {
                 Guid user_id = Guid.Parse(Get("user"));
-                user = _repo.GetUser(user_id);
+                user = _userRepo.GetUser(user_id);
             }
             else
             {
@@ -274,7 +277,7 @@ namespace Check_n_Cheer.Controllers
             }
             if (user != null && user.Role == "Admin")
             {
-                _repo.RemoveUser(Guid.Parse(id));
+                _userRepo.RemoveUser(Guid.Parse(id));
                 return RedirectToAction("AdminProfile");
             }
             if (user != null)

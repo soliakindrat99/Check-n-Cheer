@@ -67,7 +67,7 @@ namespace Check_n_Cheer.Controllers
                     Task = task
                 };
                 _optionRepository.AddOption(option);
-                return RedirectToAction("CreateTask", "Test", new { testId = newOption.TestId});
+                return RedirectToAction("ManageTasks", "Test", new { testId = newOption.TestId});
             }
             catch
             {

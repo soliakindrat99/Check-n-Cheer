@@ -28,9 +28,9 @@ namespace Check_n_Cheer.Repositories
             return test;
         }
 
-        public List<Test> GetTests()
-        {
-            var tests = _context.Tests.Include(x => x.Tasks).ThenInclude(x => x.Options).ToList();
+        public List<Test> GetTests(Guid teacherId)
+        {            
+            var tests = _context.Tests.Include(x => x.Tasks).ThenInclude(x => x.Options).Where(x => x.TeacherId == teacherId).ToList();
             return tests;
         }
 
