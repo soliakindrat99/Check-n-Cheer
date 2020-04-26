@@ -97,30 +97,6 @@ namespace Check_n_Cheer.Controllers
         }
 
         [HttpGet]
-        public IActionResult Open(Guid testId)
-        {
-            _logger.LogInformation("GET Test/Open");
-            User user = null;
-            if (Get("user") != null)
-            {
-                Guid id = Guid.Parse(Get("user"));
-                user = _userRepo.GetUser(id);
-            }
-            else
-            {
-                _logger.LogInformation("User is not logged!");
-            }
-            if (user != null && user.Role == "Teacher")
-            {
-                ViewData["LoggedIn"] = "true";
-                var test = _testRepo.GetTest(testId);
-                return View(test);
-            }
-            ViewData["LoggedIn"] = "false";
-            return RedirectToAction("Error");
-        }
-
-        [HttpGet]
         public IActionResult ManageTasks(Guid testId)
         {
             _logger.LogInformation("GET Test/CreateTest");
@@ -243,7 +219,7 @@ namespace Check_n_Cheer.Controllers
         }
 
         [HttpPost]
-        public ActionResult RemoveTask(Guid id )
+        public ActionResult RemoveTask(Guid id)
         {
             var task = _taskRepo.GetTask(id);
             if(task != null)
@@ -252,6 +228,18 @@ namespace Check_n_Cheer.Controllers
                 return RedirectToAction("ManageTasks", new { testId = task.Test.Id });
             }
             return RedirectToAction( "Error" );
+        }
+
+        [HttpPost]
+        public ActionResult RemoveTest(Guid id)
+        {
+            var test = _testRepo.GetTest(id);
+            if (test != null)
+            {
+                _testRepo.RemoveTest(id);
+                return RedirectToAction("TestHistory");
+            }
+            return RedirectToAction("Error");
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

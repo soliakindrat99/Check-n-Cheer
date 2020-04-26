@@ -6,7 +6,7 @@
 <h1>Test History</h1>
 <label for="name">Search test:</label>
 <input type="text" name="name" id="search_test_input" value="" />
-<button class="btn button_color" id="search_test_btn">Search</button>
+<button class="btn btn-info" id="search_test_btn">Search</button>
 <table style="width:100%">
     @foreach (Check_n_Cheer.Models.Test test in Model)
     {
@@ -15,11 +15,11 @@
                     <h4>@test.Name</h4>
                 </td>
                 <td>       
-                    <a href="/Test/ManageTasks?testId=@test.Id" class="btn button_color">Edit test</a>
+                    <a href="/Test/ManageTasks?testId=@test.Id" class="btn btn-warning">Edit test</a>
                 </td>
                 <td>
-                    <form action="RemoveTest/@test.Id" method="post">
-                        <button class="btn button_color">Remove</button>
+                    <form action="/Test/RemoveTest/@test.Id" method="post">
+                        <button class="btn btn-danger">Remove</button>
                     </form>
                 </td>
             </tr>

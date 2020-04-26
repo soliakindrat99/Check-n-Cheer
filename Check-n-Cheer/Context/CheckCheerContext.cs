@@ -13,5 +13,16 @@ namespace Check_n_Cheer.Models
         {
             Database.EnsureCreated();
         }
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Task>()
+                .HasOne(p => p.Test)
+                .WithMany(t => t.Tasks)
+                .OnDelete(DeleteBehavior.Cascade);
+            modelBuilder.Entity<Option>()
+                .HasOne(p => p.Task)
+                .WithMany(t => t.Options)
+                .OnDelete(DeleteBehavior.Cascade);
+        }
     }
 }

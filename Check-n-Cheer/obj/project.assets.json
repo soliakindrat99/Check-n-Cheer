@@ -8168,19 +8168,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Zver\\.nuget\\packages\\": {}
+    "C:\\Users\\User\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Zver\\Source\\Repos\\Check-n-Cheer\\Check-n-Cheer\\Check-n-Cheer.csproj",
+      "projectUniqueName": "C:\\Users\\User\\source\\repos\\Check-n-Cheer\\Check-n-Cheer\\Check-n-Cheer.csproj",
       "projectName": "Check-n-Cheer",
-      "projectPath": "C:\\Users\\Zver\\Source\\Repos\\Check-n-Cheer\\Check-n-Cheer\\Check-n-Cheer.csproj",
-      "packagesPath": "C:\\Users\\Zver\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Zver\\Source\\Repos\\Check-n-Cheer\\Check-n-Cheer\\obj\\",
+      "projectPath": "C:\\Users\\User\\source\\repos\\Check-n-Cheer\\Check-n-Cheer\\Check-n-Cheer.csproj",
+      "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\User\\source\\repos\\Check-n-Cheer\\Check-n-Cheer\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\Zver\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\User\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -8235,7 +8235,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.201\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.101\\RuntimeIdentifierGraph.json"
       }
     }
   }

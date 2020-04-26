@@ -29,9 +29,9 @@ namespace Check_n_Cheer.Repositories
             return option;
         }
 
-        public List<Option> GetOptions()
+        public List<Option> GetOptions(Guid taskId)
         {
-            var options = _context.Options.Include(x => x.Task).ToList();
+            var options = _context.Options.Include(x => x.Task).Where(x => x.Task.Id == taskId).ToList();
             return options;
         }
 

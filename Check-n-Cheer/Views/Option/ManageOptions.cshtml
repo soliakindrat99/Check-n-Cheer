@@ -21,22 +21,23 @@
             <tr>
 
                 <td>
-                    <form action="ChangeOption/@item.Id" method="post">
+                    <form action="/Option/ChangeOption/@item.Id" method="post">
                         <input type="text" name="optionName" value="@item.Name" required />
+                        <label for="IsCorrect">Is correct:</label>
                         @if (item.IsCorrect)
                         {
-                            <input type="checkbox" name="optionIsCorrect" value="correct" checked />
+                            <input type="checkbox" name="optionIsCorrect" id="IsCorrect" value="correct" checked />
                         }
                         @if (!item.IsCorrect)
                         {
-                            <input type="checkbox" name="optionIsCorrect" value="correct" />
+                            <input type="checkbox" name="optionIsCorrect" id="IsCorrect" value="correct" />
                         }
 
                         <button type="submit" class="btn btn-warning">Save option</button>
                     </form>
                 </td>
                 <td>
-                    <form action="DeleteOption/@item.Id" method="post">
+                    <form action="/Option/DeleteOption/@item.Id" method="post">
                         <button type="submit" class="btn btn-danger">Delete</button>
                     </form>
 
@@ -47,11 +48,11 @@
         }
         <tr>
             <td>
-                <form action="CreateOption/@ViewData["TaskId"]" method="post">
+                <form action="/Option/CreateOption/@ViewData["TaskId"]" method="post">
                     <input type="text" name="optionName" value="" required />
 
-                    
-                    <input type="checkbox" name="optionIsCorrect" value="correct" />
+                    <label for="IsCorrect">Is correct:</label>
+                    <input type="checkbox" name="optionIsCorrect" id="IsCorrect" value="correct" />
                     
 
                     <button type="submit" class="btn btn-success">Add option</button>

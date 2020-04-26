@@ -17,25 +17,25 @@
                 <td>
                     @if (@user.Role == "Student")
                     {
-                        <form action="ChangeToStudent/@user.Id" method="post">
+                        <form action="/User/ChangeToStudent/@user.Id" method="post">
                             <button class="btn button_color" disabled>Student</button>
                         </form>
-                        <form action="ChangeToTeacher/@user.Id" method="post">
+                        <form action="/User/ChangeToTeacher/@user.Id" method="post">
                             <button class="btn button_color">Teacher</button>
                         </form>
                     }
                     @if (@user.Role == "Teacher")
                     {
-                        <form action="ChangeToStudent/@user.Id" method="post">
+                        <form action="/User/ChangeToStudent/@user.Id" method="post">
                             <button class="btn button_color">Student</button>
                         </form>
-                        <form action="ChangeToTeacher/@user.Id" method="post">
+                        <form action="/User/ChangeToTeacher/@user.Id" method="post">
                             <button class="btn button_color" disabled>Teacher</button>
                         </form>
                     }
                 </td>
                 <td>
-                    <form action="RemoveUser/@user.Id" method="post">
+                    <form action="/User/RemoveUser/@user.Id" method="post">
                         <button class="btn button_color">Remove</button>
                     </form>
                 </td>

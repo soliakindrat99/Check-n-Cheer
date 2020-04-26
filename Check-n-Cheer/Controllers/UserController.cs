@@ -115,7 +115,7 @@ namespace Check_n_Cheer.Controllers
             {
                 _logger.LogInformation("User not found!");
             }
-            if (!user.CheckPassword(formData.Password))
+            else if (!user.CheckPassword(formData.Password))
             {
                 _logger.LogInformation("Wrong password!");
             }

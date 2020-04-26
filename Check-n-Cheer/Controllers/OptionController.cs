@@ -81,7 +81,7 @@ namespace Check_n_Cheer.Controllers
         public ActionResult ManageOptions(Guid taskId)
         {
             _logger.LogInformation("GET Option/ManageOptions");
-            var options = _optionRepository.GetOptions().Where(x => x.Task.Id == taskId);
+            var options = _optionRepository.GetOptions(taskId);
             ViewData["TaskId"] = taskId;
             return View(options);
         }
