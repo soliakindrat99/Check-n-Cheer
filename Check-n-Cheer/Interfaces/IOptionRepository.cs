@@ -12,5 +12,6 @@ namespace Check_n_Cheer.Interfaces
         List<Option> GetOptions();
         void RemoveOption(Guid id);
         void AddOption(Option option);
+        void UpdateOption(Guid id, Option updatedOption);
     }
 }

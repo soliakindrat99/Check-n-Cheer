@@ -1,0 +1,48 @@
+﻿@model IEnumerable<Check_n_Cheer.Models.Option>
+
+@{
+    ViewData["Title"] = "Manage Options";
+}
+
+    <h1>Manage Options</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IsCorrect)
+            </th>
+            <th></th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            
+            <td>
+                <form action="ChangeOption/@item.Id" method="post">
+                    <input type="text" name="optionName" value="@item.Name" />
+                    @if (item.IsCorrect)
+                    {
+                        <input type="checkbox" name="optionIsCorrect" value="correct" checked/>
+                    }
+                    @if (!item.IsCorrect)
+                    {
+                        <input type="checkbox" name="optionIsCorrect" value="correct" />
+                    }
+
+                    <button type="submit">Save option</button>
+                </form>
+            </td>
+            <td>
+                @Html.ActionLink("Delete", "Delete", new {  id=item.Id }, new { @id = "td" })
+            </td>
+            
+        </tr>
+}
+    </tbody>
+</table>

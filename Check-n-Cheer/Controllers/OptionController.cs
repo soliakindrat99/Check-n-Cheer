@@ -83,11 +83,30 @@ namespace Check_n_Cheer.Controllers
         }
 
         [HttpGet]
-        public ActionResult GetAllForTask(Guid taskId)
+        public ActionResult ManageOptions(Guid taskId)
         {
-            _logger.LogInformation("GET Option/GetAllForTask");
+            _logger.LogInformation("GET Option/ManageOptions");
             var options = _optionRepository.GetOptions().Where(x => x.Task.Id == taskId);
             return View(options);
+        }
+
+        [HttpPost]
+        public ActionResult ChangeOption(Guid id, string optionName, string? optionIsCorrect)
+        {
+            Option option = _optionRepository.GetOption(id);
+
+            bool correct = (optionIsCorrect!=null);
+            if(option != null)
+            {
+                if(optionName != option.Name || option.IsCorrect != correct)
+                {
+                    option.Name = optionName;
+                    option.IsCorrect = correct;
+                    _optionRepository.UpdateOption(id, option);                    
+                }
+                return RedirectToAction("ManageOptions", new { taskId =  option.Task.Id});
+            }
+            return RedirectToAction("Error");
         }
     }
 }

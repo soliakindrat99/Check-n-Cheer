@@ -24,7 +24,8 @@ namespace Check_n_Cheer.Repositories
 
         public Option GetOption(Guid id)
         {
-            var option = _context.Options.FirstOrDefault(u => u.Id == id);
+            var option = _context.Options.Include(x => x.Task).FirstOrDefault(u => u.Id == id);
+            
             return option;
         }
 
@@ -38,6 +39,14 @@ namespace Check_n_Cheer.Repositories
         {
             var option = _context.Options.FirstOrDefault(u => u.Id == id);
             _context.Options.Remove(option);
+            _context.SaveChanges();
+        }
+
+        public void UpdateOption(Guid id, Option updatedOption)
+        {
+            var option = _context.Options.FirstOrDefault(u => u.Id == id);
+            option.Name = updatedOption.Name;
+            option.IsCorrect = updatedOption.IsCorrect;
             _context.SaveChanges();
         }
     }

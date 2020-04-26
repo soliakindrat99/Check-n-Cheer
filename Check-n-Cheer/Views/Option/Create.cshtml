@@ -8,7 +8,7 @@
 <hr />
 <div class="row">
     <div class="col-md-4" id="create_option">
-        <form asp-action="Create" ,>
+        <form asp-action="Create">
             @Html.HiddenFor(model => model.TaskId)
             @Html.HiddenFor(model => model.TestId)
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>

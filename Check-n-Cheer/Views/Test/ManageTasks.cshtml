@@ -1,7 +1,7 @@
 ﻿@model List<Check_n_Cheer.Models.Task>
 
 @{
-    ViewData["Title"] = "CreateTask";
+    ViewData["Title"] = "Manage tasks";
 }
 
 
@@ -33,9 +33,8 @@
 
                 </td>
                 <td style="color:white">
-                    @*@Html.ActionLink("Add Condition", "UpdateTask", "Task", new { taskId = Model[i].Id, testId = Model[i].Test.Id, condition = "xxx" }, new { @id = "td", @class = "btn button_color" })*@
-                    @Html.ActionLink("Add Option", "Create", "Option", new { taskId = Model[i].Id, testId = Model[i].Test.Id }, new { @id = "td", @class = "btn button_color", style = "color:white" })
-                    @Html.ActionLink("View Options", "GetAllForTask", "Option", new { taskId = Model[i].Id }, new { @id = "td", @class = "btn button_color", style = "color:white" })
+                    @*@Html.ActionLink("Add Option", "Create", "Option", new { taskId = Model[i].Id, testId = Model[i].Test.Id }, new { @id = "td", @class = "btn button_color", style = "color:white" })*@
+                    @Html.ActionLink("Manage options", "ManageOptions", "Option", new { taskId = Model[i].Id }, new { @id = "td", @class = "btn button_color", style = "color:white" })
 
 
                 </td>
