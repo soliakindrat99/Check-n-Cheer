@@ -53,26 +53,21 @@ namespace Check_n_Cheer.Controllers
         }
 
         [HttpPost]
-        public ActionResult Create(CreateOptionDTO newOption)
+        public ActionResult CreateOption(Guid id, string optionName, string? optionIsCorrect)
         {
             _logger.LogInformation("POST Option/Create");
-            try
+            bool correct = (optionIsCorrect != null);
+            var task = _taskRepository.GetTask(id); 
+            var option = new Option()
             {
-                var task = _taskRepository.GetTask(newOption.TaskId);
-                var option = new Option()
-                {
-                    Id = Guid.NewGuid(),
-                    IsCorrect = newOption.IsCorrect,
-                    Name = newOption.Name,
-                    Task = task
-                };
-                _optionRepository.AddOption(option);
-                return RedirectToAction("ManageTasks", "Test", new { testId = newOption.TestId});
-            }
-            catch
-            {
-                return View();
-            }
+                Id = Guid.NewGuid(),
+                IsCorrect = correct,
+                Name = optionName,
+                Task = task
+            };
+            _optionRepository.AddOption(option);
+            return RedirectToAction("ManageOptions", new { taskId = id});
+            
         }
 
         [HttpGet]
@@ -87,6 +82,7 @@ namespace Check_n_Cheer.Controllers
         {
             _logger.LogInformation("GET Option/ManageOptions");
             var options = _optionRepository.GetOptions().Where(x => x.Task.Id == taskId);
+            ViewData["TaskId"] = taskId;
             return View(options);
         }
 
@@ -105,6 +101,20 @@ namespace Check_n_Cheer.Controllers
                     _optionRepository.UpdateOption(id, option);                    
                 }
                 return RedirectToAction("ManageOptions", new { taskId =  option.Task.Id});
+            }
+            return RedirectToAction("Error");
+        }
+
+        [HttpPost]
+        public ActionResult DeleteOption(Guid id)
+        {
+            Option option = _optionRepository.GetOption(id);
+
+            
+            if (option != null)
+            {
+                _optionRepository.RemoveOption(id);
+                return RedirectToAction("ManageOptions", new { taskId = option.Task.Id });
             }
             return RedirectToAction("Error");
         }
