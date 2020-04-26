@@ -33,23 +33,7 @@ namespace Check_n_Cheer.Controllers
             _taskRepo.UpdateTask(taskId, task);
             return RedirectToAction("ManageTask", "Test", new { testId });
         }
-
-        [HttpGet]
-        public ActionResult AddTask(Guid testId)
-        {
-            var test = _testRepo.GetTest(testId);
-            var task = new Task()
-            {
-                Id = Guid.NewGuid(),
-                TaskNumber = test.Tasks.Count + 1,
-                Test = test
-            };
-            _taskRepo.AddTask(task);
-            test.Tasks.Add(task);
-            _testRepo.UpdateTest(testId, test);
-
-            return RedirectToAction("ManageTasks", "Test", new { testId });
-        }
+        
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

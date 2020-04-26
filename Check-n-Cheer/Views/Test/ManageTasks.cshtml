@@ -36,12 +36,33 @@
                     @*@Html.ActionLink("Add Option", "Create", "Option", new { taskId = Model[i].Id, testId = Model[i].Test.Id }, new { @id = "td", @class = "btn button_color", style = "color:white" })*@
                     @Html.ActionLink("Manage options", "ManageOptions", "Option", new { taskId = Model[i].Id }, new { @id = "td", @class = "btn button_color", style = "color:white" })
 
+                    <form action="RemoveTask/@Model[i].Id" method="post">
+                        <button type="submit" class="btn btn-danger">Remove task</button>
+                    </form>
+
 
                 </td>
             </tr>
         }
+
+    <tr>
+        <td>
+            new
+        </td>
+        <td>
+            <form action="AddTask/@ViewData["TestID"]" method="post">
+                <input type="text" id="condition" name="condition" value="" required />
+                <button type="submit" class="btn btn-success">Create task</button>
+            </form>
+
+        </td>
+
+        <td>
+
+        </td>
+    </tr>
     </tbody>
 </table>
 <input name="command" type="submit" class="btn button_color" value="Submit" />
-@Html.ActionLink("Create Task", "AddTask", "Task", new { testId = Model[0].Test.Id }, new { @class = "btn button_color" });
+
 

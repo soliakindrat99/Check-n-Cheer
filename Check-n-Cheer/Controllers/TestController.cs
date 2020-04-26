@@ -85,20 +85,11 @@ namespace Check_n_Cheer.Controllers
                 return RedirectToAction("Error");
             }
             
-            if(newTest.Name!="" && newTest.TaskCount>0)
+            if(newTest.Name!="")
             { 
                 var test = new Test(Guid.NewGuid(), newTest.Name, newTest.TeacherId);
                 test.Tasks = new List<Task>();
-                for (int i = 0; i < newTest.TaskCount; i++)
-                {
-                    var task = new Task()
-                    {
-                        Id = Guid.NewGuid(),
-                        TaskNumber = i + 1,
-                        Test = test
-                    };
-                    test.Tasks.Add(task);
-                }
+             
                 _testRepo.AddTest(test);
                 return RedirectToAction("ManageTasks", new { testId = test.Id });
             }
@@ -148,6 +139,7 @@ namespace Check_n_Cheer.Controllers
                 var test = _testRepo.GetTest(testId);
                 test.Tasks = test.Tasks.OrderBy(x => x.TaskNumber).ToList();
                 ViewData["LoggedIn"] = "true";
+                ViewData["TestID"] = testId;
                 return View(test.Tasks);
             }
             ViewData["LoggedIn"] = "false";
@@ -230,6 +222,36 @@ namespace Check_n_Cheer.Controllers
             }
             ViewData["LoggedIn"] = "false";
             return RedirectToAction("Error");
+        }
+
+        [HttpPost]
+        public ActionResult AddTask(Guid id, string condition)
+        {
+            var test = _testRepo.GetTest(id);
+            var task = new Task()
+            {
+                Id = Guid.NewGuid(),
+                Condition = condition,
+                TaskNumber = test.Tasks.Count + 1,
+                Test = test
+            };
+            _taskRepo.AddTask(task);
+            test.Tasks.Add(task);
+            _testRepo.UpdateTest(id, test);
+
+            return RedirectToAction("ManageTasks", "Test", new {testId = id });
+        }
+
+        [HttpPost]
+        public ActionResult RemoveTask(Guid id )
+        {
+            var task = _taskRepo.GetTask(id);
+            if(task != null)
+            {
+                _taskRepo.RemoveTask(id);
+                return RedirectToAction("ManageTasks", new { testId = task.Test.Id });
+            }
+            return RedirectToAction( "Error" );
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
