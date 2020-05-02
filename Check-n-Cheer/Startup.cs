@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using Check_n_Cheer.Models;  
 using Check_n_Cheer.Repositories;  
 using Check_n_Cheer.Interfaces;
+using Check_n_Cheer.Hubs;
 
 namespace Check_n_Cheer
 {
@@ -29,6 +30,8 @@ namespace Check_n_Cheer
             services.AddScoped<ITaskRepository, TaskRepository>();
             services.AddScoped<IOptionRepository, OptionRepository>();
             services.AddControllersWithViews();
+
+            services.AddSignalR();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -57,6 +60,7 @@ namespace Check_n_Cheer
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
+                endpoints.MapHub<CheckNCheerHub>("/chat");
             });
         }
     }
