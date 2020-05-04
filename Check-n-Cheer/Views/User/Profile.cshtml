@@ -8,7 +8,7 @@
 {
     <p>@Model.Email</p>
     <a class="btn button_color" asp-area="" asp-controller="Home" asp-action="Index">View current test</a>
-    <a class="btn button_color" asp-area="" asp-controller="Home" asp-action="Index">View history</a>
+    <a class="btn button_color" asp-area="" asp-controller="Test" asp-action="TestHistory">View history</a>
 }
 @if (@Model.Role == "Teacher")
 {

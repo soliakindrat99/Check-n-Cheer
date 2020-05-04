@@ -168,6 +168,7 @@ namespace Check_n_Cheer.Controllers
             {
                 _logger.LogInformation("User is not logged!");
             }
+            ViewData["UserRole"] = user.Role;
             if (user != null && user.Role == "Teacher")
             {
                 List<Test> tests;
@@ -184,6 +185,26 @@ namespace Check_n_Cheer.Controllers
                     {
                         tests.Add(test);
                     }       
+                }
+                ViewData["LoggedIn"] = "true";
+                return View(tests);
+            }
+            if (user != null && user.Role == "Student")
+            {
+                List<Test> tests;
+                if (id == null)
+                {
+                    tests = _testRepo.GetTests();
+                }
+                else
+                {
+                    tests = new List<Test>();
+                    // TODO: two tests with equal names different teachers
+                    Test test = _testRepo.GetByName(id);
+                    if (test != null)
+                    {
+                        tests.Add(test);
+                    }
                 }
                 ViewData["LoggedIn"] = "true";
                 return View(tests);
@@ -238,6 +259,19 @@ namespace Check_n_Cheer.Controllers
             {
                 _testRepo.RemoveTest(id);
                 return RedirectToAction("TestHistory");
+            }
+            return RedirectToAction("Error");
+        }
+
+        [HttpGet]
+        public ActionResult CurrentTest(Guid testId)
+        {
+            var test = _testRepo.GetTest(testId);
+            if (test != null)
+            {
+                ViewData["TestName"]=test.Name;
+                ViewData["TestId"] = test.Id;
+                return View(test.Tasks);
             }
             return RedirectToAction("Error");
         }

@@ -727,12 +727,8 @@ C:\Users\zakhar\source\repos\Check-n-Cheer\Check-n-Cheer\obj\Debug\netcoreapp3.1
 C:\Users\zakhar\source\repos\Check-n-Cheer\Check-n-Cheer\obj\Debug\netcoreapp3.1\Razor\Views\Test\CreateTask.cshtml.g.cs
 C:\Users\zakhar\source\repos\Check-n-Cheer\Check-n-Cheer\obj\Debug\netcoreapp3.1\Razor\Views\Test\ManageTasks.cshtml.g.cs
 C:\Users\zakhar\source\repos\Check-n-Cheer\Check-n-Cheer\obj\Debug\netcoreapp3.1\Razor\Views\Test\Open.cshtml.g.cs
-D:\Програмна інженерія\Check-n-Cheer\Check-n-Cheer\obj\Debug\netcoreapp3.1\Razor\Views\Option\Create.cshtml.g.cs
-D:\Програмна інженерія\Check-n-Cheer\Check-n-Cheer\obj\Debug\netcoreapp3.1\Razor\Views\Option\GetAllForTask.cshtml.g.cs
-D:\Програмна інженерія\Check-n-Cheer\Check-n-Cheer\obj\Debug\netcoreapp3.1\Razor\Views\Test\CreateTask.cshtml.g.cs
 D:\Програмна інженерія\Check-n-Cheer\Check-n-Cheer\obj\Debug\netcoreapp3.1\Razor\Views\Test\CreateTest.cshtml.g.cs
 D:\Програмна інженерія\Check-n-Cheer\Check-n-Cheer\obj\Debug\netcoreapp3.1\Razor\Views\Test\ManageTasks.cshtml.g.cs
-D:\Програмна інженерія\Check-n-Cheer\Check-n-Cheer\obj\Debug\netcoreapp3.1\Razor\Views\Test\Open.cshtml.g.cs
 D:\Програмна інженерія\Check-n-Cheer\Check-n-Cheer\obj\Debug\netcoreapp3.1\Razor\Views\Test\TestHistory.cshtml.g.cs
 C:\Users\rusla\Desktop\Check-n-Cheer\Check-n-Cheer\obj\Debug\netcoreapp3.1\Razor\Views\Test\CreateTask.cshtml.g.cs
 C:\Users\rusla\Desktop\Check-n-Cheer\Check-n-Cheer\obj\Debug\netcoreapp3.1\Razor\Views\Test\TestHistory.cshtml.g.cs
@@ -1037,3 +1033,6 @@ C:\Users\User\Desktop\Check-n-Cheer\Check-n-Cheer\obj\Debug\netcoreapp3.1\Check-
 C:\Users\User\Desktop\Check-n-Cheer\Check-n-Cheer\obj\Debug\netcoreapp3.1\Check-n-Cheer.csproj.CopyComplete
 C:\Users\User\Desktop\Check-n-Cheer\Check-n-Cheer\obj\Debug\netcoreapp3.1\Check-n-Cheer.dll
 C:\Users\User\Desktop\Check-n-Cheer\Check-n-Cheer\obj\Debug\netcoreapp3.1\Check-n-Cheer.pdb
+D:\Програмна інженерія\Check-n-Cheer\Check-n-Cheer\bin\Debug\netcoreapp3.1\libman.json
+D:\Програмна інженерія\Check-n-Cheer\Check-n-Cheer\obj\Debug\netcoreapp3.1\Razor\Views\Option\ManageOptions.cshtml.g.cs
+D:\Програмна інженерія\Check-n-Cheer\Check-n-Cheer\obj\Debug\netcoreapp3.1\Razor\Views\Test\CurrentTest.cshtml.g.cs

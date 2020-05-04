@@ -1,0 +1,62 @@
+﻿@model List<Check_n_Cheer.Models.Task>
+
+@{
+    ViewData["Title"] = "Current test";
+}
+
+<h1>@ViewData["TestName"]</h1>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                №
+            </th>
+            <th>
+                Title
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @for (int i = 0; i < Model.Count; i++)
+        {
+            @Html.HiddenFor(model => model[i].Id)
+            <tr>
+                <td>
+                    <h5>@(i+1)</h5>
+                </td>
+                <td>
+                    <h4>@Model[i].Condition</h4>
+                    <form action="/Test/SaveAnswer/@Model[i].Id" method="post">
+                        @if (Model[i].Options.ToList().Count(item => item.IsCorrect) == 1)
+                        {
+                            for (int j = 0; j < Model[i].Options.ToList().Count; j++)
+                            {
+                                <div>
+                                    <label for="@Model[i].Options.ToList()[j].Id">@Model[i].Options.ToList()[j].Name</label>
+                                    <input type="radio" name="answer" id="@Model[i].Options.ToList()[j].Id" value="@Model[i].Options.ToList()[j].Id" />
+                                </div>
+                            }
+                        }
+                        @if (Model[i].Options.ToList().Count(item => item.IsCorrect) > 1)
+                        {
+                            for (int j = 0; j < Model[i].Options.ToList().Count; j++)
+                            {
+                                <div>
+                                    <label for="@Model[i].Options.ToList()[j].Id">@Model[i].Options.ToList()[j].Name</label>
+                                    <input type="checkbox" name="answers[]" id="@Model[i].Options.ToList()[j].Id" value="@Model[i].Options.ToList()[j].Id" />
+                                </div>
+                            }
+                        }
+                        @if (Model[i].Options.ToList().Count(item => item.IsCorrect) == 0)
+                        {
+                            <h5>There aren't any correct answers</h5>
+                        }
+                        <button type="submit" class="btn btn-info">Save answer</button>
+                    </form>
+                </td>            
+            </tr>
+        }
+    </tbody>
+</table>
+<a href="Test/Results?testId=@ViewData["TestId"]" class="btn btn-success">Complete test</a>

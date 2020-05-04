@@ -16,6 +16,7 @@ namespace Check_n_Cheer.Repositories
             _context = context;
         }
         
+
         public Test GetTest(Guid id)
         {
             var test = _context.Tests.Include(x => x.Tasks).ThenInclude(x => x.Options).FirstOrDefault(u => u.Id == id);
@@ -27,7 +28,11 @@ namespace Check_n_Cheer.Repositories
             var test = _context.Tests.FirstOrDefault(u => u.Name == name);
             return test;
         }
-
+        public List<Test> GetTests()
+        {
+            var tests = _context.Tests.Include(x => x.Tasks).ThenInclude(x => x.Options).ToList();
+            return tests;
+        }
         public List<Test> GetTests(Guid teacherId)
         {            
             var tests = _context.Tests.Include(x => x.Tasks).ThenInclude(x => x.Options).Where(x => x.TeacherId == teacherId).ToList();

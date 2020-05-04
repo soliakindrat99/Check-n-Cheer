@@ -10,6 +10,7 @@ namespace Check_n_Cheer.Interfaces
     {
         Test GetTest(Guid id);
         Test GetByName(string name);
+        List<Test> GetTests();
         List<Test> GetTests(Guid teacherId);
         void UpdateTest(Guid id, Test updatedTest);
         void RemoveTest(Guid id);

@@ -7,23 +7,34 @@
 <label for="name">Search test:</label>
 <input type="text" name="name" id="search_test_input" value="" />
 <button class="btn btn-info" id="search_test_btn">Search</button>
-<table style="width:100%">
-    @foreach (Check_n_Cheer.Models.Test test in Model)
-    {
+<br />
+    <table style="width:100%">
+        @foreach (Check_n_Cheer.Models.Test test in Model)
+        {
             <tr>
                 <td>
                     <h4>@test.Name</h4>
                 </td>
-                <td>       
-                    <a href="/Test/ManageTasks?testId=@test.Id" class="btn btn-warning">Edit test</a>
-                </td>
-                <td>
-                    <form action="/Test/RemoveTest/@test.Id" method="post">
-                        <button class="btn btn-danger">Remove</button>
-                    </form>
-                </td>
+
+                @if (String.Equals(ViewData["UserRole"],"Teacher"))
+                {
+                    <td>
+                        <a href="/Test/ManageTasks?testId=@test.Id" class="btn btn-warning">Edit test</a>
+                    </td>
+                    <td>
+                        <form action="/Test/RemoveTest/@test.Id" method="post">
+                            <button class="btn btn-danger">Remove</button>
+                        </form>
+                    </td>
+                }
+                @if (String.Equals(ViewData["UserRole"],"Student"))
+                {
+                    <td>
+                        <a href="/Test/CurrentTest?testId=@test.Id" class="btn btn-warning">Pass test</a>
+                    </td>
+                }
             </tr>
-    }
-</table>
+        }
+    </table>
 
 
