@@ -26,8 +26,9 @@
                     @Html.DisplayFor(modelItem => Model[i].TaskNumber)
                 </td>
                 <td>
-                    <form action="/Test/RenameTask/@Model[i].Id" method="post">
+                    <form action="/Test/SaveTask/@Model[i].Id" method="post">
                         <input type="text" id="condition" name="condition" value="@Model[i].Condition"  required/>
+                        <input type="number" id="mark" name="mark" value="@Model[i].Mark" required />
                         <button type="submit" class="btn btn-warning">Save task</button>
                     </form>
 
@@ -51,6 +52,7 @@
         <td>
             <form action="/Test/AddTask/@ViewData["TestID"]" method="post">
                 <input type="text" id="condition" name="condition" value="" required />
+                <input type="number" id="mark" name="mark" value="" required />
                 <button type="submit" class="btn btn-success">Create task</button>
             </form>
 

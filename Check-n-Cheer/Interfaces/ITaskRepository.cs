@@ -12,7 +12,5 @@ namespace Check_n_Cheer.Interfaces
         void UpdateTask(Guid id, Task updatedTask);
         void RemoveTask(Guid id);
         void AddTask(Task task);
-
-        void RenameTask(Guid id, string condition);
     }
 }

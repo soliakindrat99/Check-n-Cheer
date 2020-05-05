@@ -25,11 +25,12 @@ namespace Check_n_Cheer.Controllers
         }       
 
         [HttpGet]
-        public ActionResult UpdateTask(Guid taskId, Guid testId, string condition)
+        public ActionResult UpdateTask(Guid taskId, Guid testId, string condition,double mark)
         {
             _logger.LogInformation("GET Task/UpdateTasks");
             var task = _taskRepo.GetTask(taskId);
             task.Condition = condition;
+            task.Mark = mark;
             _taskRepo.UpdateTask(taskId, task);
             return RedirectToAction("ManageTask", "Test", new { testId });
         }

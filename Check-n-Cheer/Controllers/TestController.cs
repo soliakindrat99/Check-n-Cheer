@@ -123,9 +123,9 @@ namespace Check_n_Cheer.Controllers
         }
 
         [HttpPost]
-        public IActionResult RenameTask(string id,string condition)
+        public IActionResult SaveTask(string id,string condition,double mark)
         {
-            _logger.LogInformation("POST Test/RenameTask");
+            _logger.LogInformation("POST Test/SaveTask");
             User user = null;
             if (Get("user") != null)
             {
@@ -138,9 +138,16 @@ namespace Check_n_Cheer.Controllers
             }
             if (user != null && user.Role == "Teacher")
             {
-                _taskRepo.RenameTask(Guid.Parse(id), condition);                
+                
                 var task= _taskRepo.GetTask(Guid.Parse(id));
-                return RedirectToAction("ManageTasks", new { testId = task.Test.Id });
+                if (task != null) 
+                {
+                    task.Condition = condition;
+                    task.Mark = mark;
+                    _taskRepo.UpdateTask(Guid.Parse(id), task);
+                    return RedirectToAction("ManageTasks", new { testId = task.Test.Id });
+                }
+                
             }
             if (user != null)
             {
@@ -222,13 +229,14 @@ namespace Check_n_Cheer.Controllers
         }
 
         [HttpPost]
-        public ActionResult AddTask(Guid id, string condition)
+        public ActionResult AddTask(Guid id, string condition,double mark)
         {
             var test = _testRepo.GetTest(id);
             var task = new Task()
             {
                 Id = Guid.NewGuid(),
                 Condition = condition,
+                Mark=mark,
                 TaskNumber = test.Tasks.Count + 1,
                 Test = test
             };
