@@ -222,13 +222,14 @@ namespace Check_n_Cheer.Controllers
         }
 
         [HttpPost]
-        public ActionResult AddTask(Guid id, string condition)
+        public ActionResult AddTask(Guid id, string condition,double mark)
         {
             var test = _testRepo.GetTest(id);
             var task = new Task()
             {
                 Id = Guid.NewGuid(),
                 Condition = condition,
+                Mark=mark,
                 TaskNumber = test.Tasks.Count + 1,
                 Test = test
             };

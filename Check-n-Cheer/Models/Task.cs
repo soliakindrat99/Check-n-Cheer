@@ -11,6 +11,7 @@ namespace Check_n_Cheer.Models
         public Test Test { get; set; }
         public string Condition { get; set; }
         public int TaskNumber { get; set; }
+        public double Mark { get; set; }
         public IEnumerable<Option> Options { get; set; }
     }
 }
