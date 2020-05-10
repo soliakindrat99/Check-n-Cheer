@@ -2,6 +2,7 @@
 using System.Linq;
 using Check_n_Cheer.Models;
 using Check_n_Cheer.Interfaces;
+using System.Collections.Generic;
 
 namespace Check_n_Cheer.Repositories
 {
@@ -11,6 +12,12 @@ namespace Check_n_Cheer.Repositories
         public UserRepository(CheckCheerContext context)
         {
             _context = context;
+        }
+        public void RegisterUser(User user)
+        {
+            user.SetPassword(user.Password);
+            _context.Add(user);
+            _context.SaveChanges();
         }
         public User GetUser(string email)
         {
@@ -22,21 +29,22 @@ namespace Check_n_Cheer.Repositories
             User user = _context.Users.SingleOrDefault(u => u.Id == id);
             return user;
         }
-        public void RegisterUser(User user)
-        {
-            user.SetPassword(user.Password);
-            _context.Add(user);
-            _context.SaveChanges();
-        }
-        public User[] GetUsers()
+        public List<User> GetUsers()
         {
             var users =_context.Users.ToList();
-            return users.ToArray();
+            return users;
         }
         public void SetUserRole(Guid id, string role)
         {
             User user = _context.Users.SingleOrDefault(u => u.Id == id);
             user.Role = role;
+            _context.Users.Update(user);
+            _context.SaveChanges();
+        }
+        public void SetCurrentTest(Guid id, Guid testId)
+        {
+            User user = _context.Users.SingleOrDefault(u => u.Id == id);
+            user.CurrentTestId = testId;
             _context.Users.Update(user);
             _context.SaveChanges();
         }

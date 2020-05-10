@@ -29,7 +29,7 @@ namespace Check_n_Cheer.Controllers
         {
             _logger.LogInformation("GET Task/UpdateTasks");
             var task = _taskRepo.GetTask(taskId);
-            task.Condition = condition;
+            task.Name = condition;
             task.Mark = mark;
             _taskRepo.UpdateTask(taskId, task);
             return RedirectToAction("ManageTask", "Test", new { testId });

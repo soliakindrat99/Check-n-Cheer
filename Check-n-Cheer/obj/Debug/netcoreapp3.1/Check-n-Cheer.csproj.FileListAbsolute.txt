@@ -999,7 +999,6 @@ C:\Users\User\Desktop\Check-n-Cheer\Check-n-Cheer\bin\Debug\netcoreapp3.1\runtim
 C:\Users\User\Desktop\Check-n-Cheer\Check-n-Cheer\obj\Debug\netcoreapp3.1\Check-n-Cheer.csprojAssemblyReference.cache
 C:\Users\User\Desktop\Check-n-Cheer\Check-n-Cheer\obj\Debug\netcoreapp3.1\staticwebassets\Check-n-Cheer.StaticWebAssets.Manifest.cache
 C:\Users\User\Desktop\Check-n-Cheer\Check-n-Cheer\obj\Debug\netcoreapp3.1\staticwebassets\Check-n-Cheer.StaticWebAssets.xml
-C:\Users\User\Desktop\Check-n-Cheer\Check-n-Cheer\obj\Debug\netcoreapp3.1\Check-n-Cheer.MvcApplicationPartsAssemblyInfo.cache
 C:\Users\User\Desktop\Check-n-Cheer\Check-n-Cheer\obj\Debug\netcoreapp3.1\Check-n-Cheer.RazorAssemblyInfo.cache
 C:\Users\User\Desktop\Check-n-Cheer\Check-n-Cheer\obj\Debug\netcoreapp3.1\Check-n-Cheer.RazorAssemblyInfo.cs
 C:\Users\User\Desktop\Check-n-Cheer\Check-n-Cheer\obj\Debug\netcoreapp3.1\Check-n-Cheer.AssemblyInfoInputs.cache
@@ -1014,7 +1013,6 @@ C:\Users\User\Desktop\Check-n-Cheer\Check-n-Cheer\obj\Debug\netcoreapp3.1\Razor\
 C:\Users\User\Desktop\Check-n-Cheer\Check-n-Cheer\obj\Debug\netcoreapp3.1\Razor\Views\Shared\_ValidationScriptsPartial.cshtml.g.cs
 C:\Users\User\Desktop\Check-n-Cheer\Check-n-Cheer\obj\Debug\netcoreapp3.1\Razor\Views\Test\CreateTest.cshtml.g.cs
 C:\Users\User\Desktop\Check-n-Cheer\Check-n-Cheer\obj\Debug\netcoreapp3.1\Razor\Views\Test\ManageTasks.cshtml.g.cs
-C:\Users\User\Desktop\Check-n-Cheer\Check-n-Cheer\obj\Debug\netcoreapp3.1\Razor\Views\Test\Open.cshtml.g.cs
 C:\Users\User\Desktop\Check-n-Cheer\Check-n-Cheer\obj\Debug\netcoreapp3.1\Razor\Views\Test\TestHistory.cshtml.g.cs
 C:\Users\User\Desktop\Check-n-Cheer\Check-n-Cheer\obj\Debug\netcoreapp3.1\Razor\Views\User\AdminProfile.cshtml.g.cs
 C:\Users\User\Desktop\Check-n-Cheer\Check-n-Cheer\obj\Debug\netcoreapp3.1\Razor\Views\User\Profile.cshtml.g.cs
@@ -1036,3 +1034,6 @@ C:\Users\zakhar\source\repos\Check-n-Cheer\Check-n-Cheer\bin\Debug\netcoreapp3.1
 C:\Users\zakhar\source\repos\Check-n-Cheer\Check-n-Cheer\obj\Debug\netcoreapp3.1\Razor\Views\Option\ManageOptions.cshtml.g.cs
 C:\Users\zakhar\source\repos\Check-n-Cheer\Check-n-Cheer\obj\Debug\netcoreapp3.1\Razor\Views\Test\CurrentTest.cshtml.g.cs
 C:\Users\zakhar\source\repos\Check-n-Cheer\Check-n-Cheer\obj\Debug\netcoreapp3.1\Razor\Views\Test\TestHistory.cshtml.g.cs
+C:\Users\User\Desktop\Check-n-Cheer\Check-n-Cheer\obj\Debug\netcoreapp3.1\Razor\Views\Test\CurrentTest.cshtml.g.cs
+C:\Users\User\Desktop\Check-n-Cheer\Check-n-Cheer\obj\Debug\netcoreapp3.1\Check-n-Cheer.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\User\Desktop\Check-n-Cheer\Check-n-Cheer\bin\Debug\netcoreapp3.1\Microsoft.EntityFrameworkCore.Design.dll

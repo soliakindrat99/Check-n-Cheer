@@ -27,7 +27,7 @@
                 </td>
                 <td>
                     <form action="/Test/SaveTask/@Model[i].Id" method="post">
-                        <input type="text" id="condition" name="condition" value="@Model[i].Condition"  required/>
+                        <input type="text" id="condition" name="condition" value="@Model[i].Name"  required/>
                         <input type="number" id="mark" name="mark" value="@Model[i].Mark" required />
                         <button type="submit" class="btn btn-warning">Save task</button>
                     </form>

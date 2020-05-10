@@ -17,15 +17,19 @@ namespace Check_n_Cheer.Repositories
         }
         
 
+        public void AddTest(Test test)
+        {
+            _context.Add(test);
+            _context.SaveChanges();
+        }
         public Test GetTest(Guid id)
         {
             var test = _context.Tests.Include(x => x.Tasks).ThenInclude(x => x.Options).FirstOrDefault(u => u.Id == id);
             return test;
         }
-
         public Test GetByName(string name)
         {
-            var test = _context.Tests.FirstOrDefault(u => u.Name == name);
+            var test = _context.Tests.Include(x => x.Teacher).FirstOrDefault(u => u.Name == name);
             return test;
         }
         public List<Test> GetTests()
@@ -34,29 +38,23 @@ namespace Check_n_Cheer.Repositories
             return tests;
         }
         public List<Test> GetTests(Guid teacherId)
-        {            
-            var tests = _context.Tests.Include(x => x.Tasks).ThenInclude(x => x.Options).Where(x => x.TeacherId == teacherId).ToList();
-            return tests;
+        {
+            var teacher = _context.Users.Include(x => x.Tests)
+                .ThenInclude(x => x.Tasks)
+                .ThenInclude(x => x.Options)
+                .FirstOrDefault(x => x.Id == teacherId);
+            return teacher.Tests;
         }
-
         public void UpdateTest(Guid id, Test updatedTest)
         {
             var test = _context.Tests.FirstOrDefault(u => u.Id == id);
             test.Name = updatedTest.Name;
-            test.TeacherId = updatedTest.TeacherId;
-            test.Tasks = updatedTest.Tasks;
             _context.SaveChanges();
         }
-
         public void RemoveTest(Guid id)
         {
             var test = _context.Tests.FirstOrDefault(u => u.Id == id);
             _context.Tests.Remove(test);
-            _context.SaveChanges();
-        }
-        public void AddTest(Test test)
-        {
-            _context.Add(test);
             _context.SaveChanges();
         }
     }

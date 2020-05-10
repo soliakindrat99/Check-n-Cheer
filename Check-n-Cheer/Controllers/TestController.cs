@@ -17,13 +17,29 @@ namespace Check_n_Cheer.Controllers
         private IUserRepository _userRepo;
         private ITestRepository _testRepo;
         private ITaskRepository _taskRepo;
+        private IOptionRepository _optionRepo;
+        private ITaskResultRepository _taskResultRepo;
+        private ITestResultRepository _testResultRepo;
+        private IOptionResultRepository _optionResultRepo;
 
-        public TestController(ILogger<TestController> logger, IUserRepository repo, ITestRepository testRepo, ITaskRepository taskRepo)
+        public TestController(ILogger<TestController> logger,
+            IUserRepository repo,
+            ITestRepository testRepo,
+            ITaskRepository taskRepo,
+            IOptionRepository optionRepo,
+            ITestResultRepository testResultRepo,
+            ITaskResultRepository taskResultRepo,
+            IOptionResultRepository optionResultRepo)
         {
             _logger = logger;
             _userRepo = repo;
             _testRepo = testRepo;
             _taskRepo = taskRepo;
+            _testResultRepo = testResultRepo;
+            _taskResultRepo = taskResultRepo;
+            _optionRepo = optionRepo;
+            _optionResultRepo = optionResultRepo;
+
         }
 
         public string Get(string key)
@@ -86,8 +102,9 @@ namespace Check_n_Cheer.Controllers
             }
             
             if(newTest.Name!="")
-            { 
-                var test = new Test(Guid.NewGuid(), newTest.Name, newTest.TeacherId);
+            {
+                var teacher = _userRepo.GetUser(newTest.TeacherId);
+                var test = new Test(Guid.NewGuid(), newTest.Name, teacher);
                 test.Tasks = new List<Task>();
              
                 _testRepo.AddTest(test);
@@ -142,7 +159,7 @@ namespace Check_n_Cheer.Controllers
                 var task= _taskRepo.GetTask(Guid.Parse(id));
                 if (task != null) 
                 {
-                    task.Condition = condition;
+                    task.Name = condition;
                     task.Mark = mark;
                     _taskRepo.UpdateTask(Guid.Parse(id), task);
                     return RedirectToAction("ManageTasks", new { testId = task.Test.Id });
@@ -188,7 +205,7 @@ namespace Check_n_Cheer.Controllers
                     tests =new List<Test> ();
                     // TODO: two tests with equal names different teachers
                     Test test = _testRepo.GetByName(id);
-                    if (test != null && test.TeacherId == user.Id)
+                    if (test != null && test.Teacher.Id == user.Id)
                     {
                         tests.Add(test);
                     }       
@@ -218,7 +235,7 @@ namespace Check_n_Cheer.Controllers
             }
             if (user != null)
             {
-                _logger.LogInformation("User is not admin!");
+                _logger.LogInformation("User is not teacher or student!");
             }
             else
             {
@@ -235,7 +252,7 @@ namespace Check_n_Cheer.Controllers
             var task = new Task()
             {
                 Id = Guid.NewGuid(),
-                Condition = condition,
+                Name = condition,
                 Mark=mark,
                 TaskNumber = test.Tasks.Count + 1,
                 Test = test
@@ -272,14 +289,94 @@ namespace Check_n_Cheer.Controllers
         }
 
         [HttpGet]
-        public ActionResult CurrentTest(Guid testId)
+        public ActionResult PassTest(Guid testId)
         {
-            var test = _testRepo.GetTest(testId);
-            if (test != null)
+            _logger.LogInformation("GET Test/PassTest");
+            User user = null;
+            if (Get("user") != null)
             {
-                ViewData["TestName"]=test.Name;
-                ViewData["TestId"] = test.Id;
-                return View(test.Tasks);
+                Guid user_id = Guid.Parse(Get("user"));
+                user = _userRepo.GetUser(user_id);
+            }
+            else
+            {
+                _logger.LogInformation("User is not logged!");
+            }
+            var test = _testRepo.GetTest(testId);
+            if (test != null && user != null && user.Role == "Student")
+            {
+                var testResult = new TestResult(user, test);
+                _testResultRepo.AddTestResult(testResult);
+                foreach (var task in test.Tasks)
+                {
+                    var taskResult = new TaskResult(testResult, task);
+                    _taskResultRepo.AddTaskResult(taskResult);
+                    task.Options.ForEach(x => _optionResultRepo.AddOptionResult(new OptionResult(taskResult, x, false)));
+                }
+                _userRepo.SetCurrentTest(user.Id, testResult.Id);
+                return RedirectToAction("CurrentTest", new { testResultId = testResult.Id });
+            }
+            if (user != null)
+            {
+                _logger.LogInformation("User is not student!");
+            }
+            else
+            {
+                _logger.LogInformation("User authorised but not exist!");
+            }
+            return RedirectToAction("Error");
+        }
+
+        [HttpGet]
+        public ActionResult CurrentTest(Guid testResultId)
+        {
+            var testResult = _testResultRepo.GetTestResult(testResultId);
+            if (testResult != null && testResult.Test != null)
+            {
+                ViewData["TestName"] = testResult.Test.Name;
+                ViewData["TestId"] = testResult.Id;
+                return View(testResult.TaskResults);
+            }
+            return RedirectToAction("Error");
+        }
+
+        [HttpPost]
+        public ActionResult SaveAnswer(Guid id, List<Guid> answers)
+        {
+            var taskResult = _taskResultRepo.GetTaskResult(id);
+            if (taskResult != null)
+            {
+                var totalCount = taskResult.Task.Options.Count;
+                var goalCount = taskResult.Task.Options.Count(x => x.IsCorrect);
+                var actualTotalCount = answers.Count;
+                double penaltyMultiplier = 1.0;
+                if(actualTotalCount == totalCount)
+                {
+                    penaltyMultiplier = 0;
+                }
+                if(actualTotalCount > goalCount)
+                {
+                    penaltyMultiplier = 0.5;
+                }
+                var actualCount = answers.Count(x => _optionRepo.GetOption(x).IsCorrect);
+                var result = ((double)actualCount / (double)goalCount)*penaltyMultiplier;
+                taskResult.Percent = result;
+                _taskResultRepo.UpdateTaskResult(taskResult.Id, taskResult);
+                foreach (var option in taskResult.Task.Options)
+                {
+                    var optionResult = _optionResultRepo.GetOptionResult(taskResult.Id, option.Id);
+                    if(optionResult != null)
+                    {
+                        optionResult.IsChecked = answers.Exists(x => x == option.Id);
+                        _optionResultRepo.UpdateOptionResult(optionResult.Id, optionResult);
+                    } 
+                    else
+                    {
+                        optionResult = new OptionResult(taskResult, option, answers.Exists(x => x == option.Id));
+                        _optionResultRepo.AddOptionResult(optionResult);
+                    }
+                }
+                return RedirectToAction("CurrentTest", new { testResultId = taskResult.TestResult.Id });
             }
             return RedirectToAction("Error");
         }

@@ -21,32 +21,35 @@ namespace Check_n_Cheer.Repositories
             _context.Add(option);
             _context.SaveChanges();
         }
-
         public Option GetOption(Guid id)
         {
             var option = _context.Options.Include(x => x.Task).FirstOrDefault(u => u.Id == id);
             
             return option;
         }
-
-        public List<Option> GetOptions(Guid taskId)
+        public List<Option> GetOptions()
         {
-            var options = _context.Options.Include(x => x.Task).Where(x => x.Task.Id == taskId).ToList();
+            var options = _context.Options.ToList();
             return options;
         }
-
-        public void RemoveOption(Guid id)
+        public List<Option> GetOptions(Guid taskId)
         {
-            var option = _context.Options.FirstOrDefault(u => u.Id == id);
-            _context.Options.Remove(option);
-            _context.SaveChanges();
+            var task = _context.Tasks
+                .Include(x => x.Options)
+                .FirstOrDefault(x => x.Id == taskId);
+            return task.Options;
         }
-
         public void UpdateOption(Guid id, Option updatedOption)
         {
             var option = _context.Options.FirstOrDefault(u => u.Id == id);
             option.Name = updatedOption.Name;
             option.IsCorrect = updatedOption.IsCorrect;
+            _context.SaveChanges();
+        }
+        public void RemoveOption(Guid id)
+        {
+            var option = _context.Options.FirstOrDefault(u => u.Id == id);
+            _context.Options.Remove(option);
             _context.SaveChanges();
         }
     }

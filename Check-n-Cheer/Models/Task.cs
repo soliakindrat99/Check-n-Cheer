@@ -9,9 +9,10 @@ namespace Check_n_Cheer.Models
     { 
         public Guid Id { get; set; }
         public Test Test { get; set; }
-        public string Condition { get; set; }
+        public string Name { get; set; }
         public int TaskNumber { get; set; }
         public double Mark { get; set; }
-        public IEnumerable<Option> Options { get; set; }
+        public List<Option> Options { get; set; }
+        public List<TaskResult> Results { get; set; }
     }
 }

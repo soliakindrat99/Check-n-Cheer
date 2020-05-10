@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Text;
 
 namespace Check_n_Cheer.Models
@@ -7,7 +8,10 @@ namespace Check_n_Cheer.Models
     {
         public Guid Id { get; set; }
         public string Email { get; set; }
-        public string Password{ get; set; }
+        public string Password { get; set; }
+        public Guid? CurrentTestId { get; set; } = null;
+        public List<Test> Tests { get; set; }
+        public List<TestResult> TestResults { get; set; }
         public void SetPassword(string password)
         {
             Password = Crypto.Hash(password);

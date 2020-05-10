@@ -7,10 +7,11 @@ namespace Check_n_Cheer.Interfaces
 {
     public interface ITaskRepository
     {
+        void AddTask(Task task);
         Task GetTask(Guid id);
         List<Task> GetTasks();
+        List<Task> GetTasks(Guid testId);
         void UpdateTask(Guid id, Task updatedTask);
         void RemoveTask(Guid id);
-        void AddTask(Task task);
     }
 }

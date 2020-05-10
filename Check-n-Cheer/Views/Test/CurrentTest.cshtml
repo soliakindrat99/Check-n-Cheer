@@ -1,4 +1,4 @@
-﻿@model List<Check_n_Cheer.Models.Task>
+﻿@model List<Check_n_Cheer.Models.TaskResult>
 
 @{
     ViewData["Title"] = "Current test";
@@ -26,29 +26,42 @@
                     <h5>@(i+1)</h5>
                 </td>
                 <td>
-                    <h4>@Model[i].Condition</h4>
+                    <h4>@Model[i].Task.Name</h4>
                     <form action="/Test/SaveAnswer/@Model[i].Id" method="post">
-                        @if (Model[i].Options.ToList().Count(item => item.IsCorrect) == 1)
+                        @if (Model[i].Task.Options.Count(item => item.IsCorrect) == 1)
                         {
-                            for (int j = 0; j < Model[i].Options.ToList().Count; j++)
+                            for (int j = 0; j < Model[i].OptionResults.Count; j++)
                             {
                                 <div>
-                                    <label for="@Model[i].Options.ToList()[j].Id">@Model[i].Options.ToList()[j].Name</label>
-                                    <input type="radio" name="answer" id="@Model[i].Options.ToList()[j].Id" value="@Model[i].Options.ToList()[j].Id" />
+                                    <label for="@Model[i].OptionResults[j].Option.Id">@Model[i].OptionResults[j].Option.Name</label>
+                                    @if (Model[i].OptionResults[j].IsChecked)
+                                    {
+                                        <input type="radio" name="answers[0]" id="@Model[i].OptionResults[j].Option.Id" value="@Model[i].OptionResults[j].Option.Id" checked/>
+                                    }
+                                    else { 
+                                        <input type="radio" name="answers[0]" id="@Model[i].OptionResults[j].Option.Id" value="@Model[i].OptionResults[j].Option.Id"/>
+                                    }
                                 </div>
                             }
                         }
-                        @if (Model[i].Options.ToList().Count(item => item.IsCorrect) > 1)
+                        else if (Model[i].Task.Options.Count(item => item.IsCorrect) > 1)
                         {
-                            for (int j = 0; j < Model[i].Options.ToList().Count; j++)
+                            for (int j = 0; j < Model[i].OptionResults.Count; j++)
                             {
                                 <div>
-                                    <label for="@Model[i].Options.ToList()[j].Id">@Model[i].Options.ToList()[j].Name</label>
-                                    <input type="checkbox" name="answers[]" id="@Model[i].Options.ToList()[j].Id" value="@Model[i].Options.ToList()[j].Id" />
+                                    <label for="@Model[i].OptionResults[j].Option.Id">@Model[i].OptionResults[j].Option.Name</label>
+                                    @if (Model[i].OptionResults[j].IsChecked)
+                                    {
+                                        <input type="checkbox" name="answers[]" id="@Model[i].OptionResults[j].Option.Id" value="@Model[i].OptionResults[j].Option.Id" checked />
+                                    }
+                                    else
+                                    {
+                                        <input type="checkbox" name="answers[]" id="@Model[i].OptionResults[j].Option.Id" value="@Model[i].OptionResults[j].Option.Id" />
+                                    }
                                 </div>
                             }
                         }
-                        @if (Model[i].Options.ToList().Count(item => item.IsCorrect) == 0)
+                        else
                         {
                             <h5>There aren't any correct answers</h5>
                         }

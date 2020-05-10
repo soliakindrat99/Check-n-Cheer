@@ -29,6 +29,9 @@ namespace Check_n_Cheer
             services.AddScoped<ITestRepository, TestRepository>();
             services.AddScoped<ITaskRepository, TaskRepository>();
             services.AddScoped<IOptionRepository, OptionRepository>();
+            services.AddScoped<ITestResultRepository, TestResultRepository>();
+            services.AddScoped<ITaskResultRepository, TaskResultRepository>();
+            services.AddScoped<IOptionResultRepository, OptionResultRepository>();
             services.AddControllersWithViews();
 
             services.AddSignalR();

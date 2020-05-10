@@ -8,15 +8,15 @@ namespace Check_n_Cheer.Models
     {
         public Guid Id { get; set; }
         public string Name { get; set; }
-        public Guid TeacherId { get; set; }
+        public User Teacher { get; set; }
         public List<Task> Tasks{ get; set; }
-
+        public List<TestResult> Results { get; set; }
         private Test() { }
-        public Test(Guid id, string name, Guid teacherId)
+        public Test(Guid id, string name, User teacher)
         {
             Id = id;
             Name = name;
-            TeacherId = teacherId;
+            Teacher = teacher;
         }
 
         public void SetTask(List<Task> tasks)

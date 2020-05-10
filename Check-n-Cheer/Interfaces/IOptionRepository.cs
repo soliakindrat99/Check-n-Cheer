@@ -8,10 +8,11 @@ namespace Check_n_Cheer.Interfaces
 {
     public interface IOptionRepository
     {
-        Option GetOption(Guid id);
-        List<Option> GetOptions(Guid taskId);
-        void RemoveOption(Guid id);
         void AddOption(Option option);
+        Option GetOption(Guid id);
+        List<Option> GetOptions();
+        List<Option> GetOptions(Guid taskId);
         void UpdateOption(Guid id, Option updatedOption);
+        void RemoveOption(Guid id);
     }
 }

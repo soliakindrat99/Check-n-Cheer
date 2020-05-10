@@ -26,6 +26,7 @@
         "dependencies": {
           "Microsoft.EntityFrameworkCore": "3.1.3",
           "Microsoft.EntityFrameworkCore.SqlServer": "3.1.3",
+          "Microsoft.EntityFrameworkCore.Tools": "3.1.3",
           "Microsoft.VisualStudio.Web.CodeGeneration.Design": "3.1.2",
           "Microsoft.AspNetCore.Antiforgery": "3.1.0.0",
           "Microsoft.AspNetCore.Authentication.Abstractions": "3.1.0.0",
@@ -142,6 +143,7 @@
           "Microsoft.VisualBasic.Core": "10.0.5.0",
           "Microsoft.VisualBasic": "10.0.0.0",
           "Microsoft.Win32.Primitives.Reference": "4.1.2.0",
+          "Microsoft.Win32.Registry.Reference": "4.1.3.0",
           "mscorlib": "4.0.0.0",
           "netstandard": "2.1.0.0",
           "System.AppContext.Reference": "4.2.2.0",
@@ -166,6 +168,7 @@
           "System.Diagnostics.Contracts": "4.0.4.0",
           "System.Diagnostics.Debug.Reference": "4.1.2.0",
           "System.Diagnostics.DiagnosticSource.Reference": "4.0.5.0",
+          "System.Diagnostics.EventLog": "4.0.2.0",
           "System.Diagnostics.FileVersionInfo": "4.0.4.0",
           "System.Diagnostics.Process": "4.2.2.0",
           "System.Diagnostics.StackTrace": "4.1.2.0",
@@ -191,6 +194,7 @@
           "System.IO.FileSystem.Watcher": "4.1.2.0",
           "System.IO.IsolatedStorage": "4.1.2.0",
           "System.IO.MemoryMappedFiles": "4.1.2.0",
+          "System.IO.Pipelines": "4.0.2.0",
           "System.IO.Pipes": "4.1.2.0",
           "System.IO.UnmanagedMemoryStream": "4.1.2.0",
           "System.Linq.Reference": "4.2.2.0",
@@ -246,14 +250,19 @@
           "System.Runtime.Serialization.Json.Reference": "4.0.5.0",
           "System.Runtime.Serialization.Primitives.Reference": "4.2.2.0",
           "System.Runtime.Serialization.Xml": "4.1.5.0",
+          "System.Security.AccessControl.Reference": "4.1.1.0",
           "System.Security.Claims": "4.1.2.0",
           "System.Security.Cryptography.Algorithms.Reference": "4.3.2.0",
+          "System.Security.Cryptography.Cng.Reference": "4.3.3.0",
           "System.Security.Cryptography.Csp.Reference": "4.1.2.0",
           "System.Security.Cryptography.Encoding.Reference": "4.1.2.0",
           "System.Security.Cryptography.Primitives.Reference": "4.1.2.0",
           "System.Security.Cryptography.X509Certificates.Reference": "4.2.2.0",
+          "System.Security.Cryptography.Xml": "4.0.3.0",
           "System.Security": "4.0.0.0",
+          "System.Security.Permissions.Reference": "4.0.3.0",
           "System.Security.Principal": "4.1.2.0",
+          "System.Security.Principal.Windows.Reference": "4.1.1.0",
           "System.Security.SecureString.Reference": "4.1.2.0",
           "System.ServiceModel.Web": "4.0.0.0",
           "System.ServiceProcess": "4.0.0.0",
@@ -279,6 +288,7 @@
           "System.Web": "4.0.0.0",
           "System.Web.HttpUtility": "4.0.2.0",
           "System.Windows": "4.0.0.0",
+          "System.Windows.Extensions": "4.0.1.0",
           "System.Xml": "4.0.0.0",
           "System.Xml.Linq": "4.0.0.0",
           "System.Xml.ReaderWriter.Reference": "4.2.2.0",
@@ -592,7 +602,7 @@
           "lib/netstandard2.0/Microsoft.CodeAnalysis.Workspaces.dll": {}
         }
       },
-      "Microsoft.CSharp/4.5.0": {},
+      "Microsoft.CSharp/4.7.0": {},
       "Microsoft.Data.SqlClient/1.0.19269.1": {
         "dependencies": {
           "Microsoft.Identity.Client": "3.0.8",
@@ -662,6 +672,18 @@
         }
       },
       "Microsoft.EntityFrameworkCore.Analyzers/3.1.3": {},
+      "Microsoft.EntityFrameworkCore.Design/3.1.3": {
+        "dependencies": {
+          "Microsoft.CSharp": "4.7.0",
+          "Microsoft.EntityFrameworkCore.Relational": "3.1.3"
+        },
+        "runtime": {
+          "lib/netstandard2.0/Microsoft.EntityFrameworkCore.Design.dll": {
+            "assemblyVersion": "3.1.3.0",
+            "fileVersion": "3.100.320.12804"
+          }
+        }
+      },
       "Microsoft.EntityFrameworkCore.Relational/3.1.3": {
         "dependencies": {
           "Microsoft.EntityFrameworkCore": "3.1.3"
@@ -689,6 +711,11 @@
         },
         "compile": {
           "lib/netstandard2.0/Microsoft.EntityFrameworkCore.SqlServer.dll": {}
+        }
+      },
+      "Microsoft.EntityFrameworkCore.Tools/3.1.3": {
+        "dependencies": {
+          "Microsoft.EntityFrameworkCore.Design": "3.1.3"
         }
       },
       "Microsoft.Extensions.Caching.Abstractions/3.1.3": {
@@ -845,7 +872,7 @@
       },
       "Microsoft.Identity.Client/3.0.8": {
         "dependencies": {
-          "Microsoft.CSharp": "4.5.0",
+          "Microsoft.CSharp": "4.7.0",
           "System.ComponentModel.TypeConverter": "4.3.0",
           "System.Net.NameResolution": "4.3.0",
           "System.Runtime.Serialization.Formatters": "4.3.0",
@@ -2775,6 +2802,12 @@
         },
         "compileOnly": true
       },
+      "Microsoft.Win32.Registry.Reference/4.1.3.0": {
+        "compile": {
+          "Microsoft.Win32.Registry.dll": {}
+        },
+        "compileOnly": true
+      },
       "mscorlib/4.0.0.0": {
         "compile": {
           "mscorlib.dll": {}
@@ -2916,6 +2949,12 @@
       "System.Diagnostics.DiagnosticSource.Reference/4.0.5.0": {
         "compile": {
           "System.Diagnostics.DiagnosticSource.dll": {}
+        },
+        "compileOnly": true
+      },
+      "System.Diagnostics.EventLog/4.0.2.0": {
+        "compile": {
+          "System.Diagnostics.EventLog.dll": {}
         },
         "compileOnly": true
       },
@@ -3066,6 +3105,12 @@
       "System.IO.MemoryMappedFiles/4.1.2.0": {
         "compile": {
           "System.IO.MemoryMappedFiles.dll": {}
+        },
+        "compileOnly": true
+      },
+      "System.IO.Pipelines/4.0.2.0": {
+        "compile": {
+          "System.IO.Pipelines.dll": {}
         },
         "compileOnly": true
       },
@@ -3399,6 +3444,12 @@
         },
         "compileOnly": true
       },
+      "System.Security.AccessControl.Reference/4.1.1.0": {
+        "compile": {
+          "System.Security.AccessControl.dll": {}
+        },
+        "compileOnly": true
+      },
       "System.Security.Claims/4.1.2.0": {
         "compile": {
           "System.Security.Claims.dll": {}
@@ -3408,6 +3459,12 @@
       "System.Security.Cryptography.Algorithms.Reference/4.3.2.0": {
         "compile": {
           "System.Security.Cryptography.Algorithms.dll": {}
+        },
+        "compileOnly": true
+      },
+      "System.Security.Cryptography.Cng.Reference/4.3.3.0": {
+        "compile": {
+          "System.Security.Cryptography.Cng.dll": {}
         },
         "compileOnly": true
       },
@@ -3435,15 +3492,33 @@
         },
         "compileOnly": true
       },
+      "System.Security.Cryptography.Xml/4.0.3.0": {
+        "compile": {
+          "System.Security.Cryptography.Xml.dll": {}
+        },
+        "compileOnly": true
+      },
       "System.Security/4.0.0.0": {
         "compile": {
           "System.Security.dll": {}
         },
         "compileOnly": true
       },
+      "System.Security.Permissions.Reference/4.0.3.0": {
+        "compile": {
+          "System.Security.Permissions.dll": {}
+        },
+        "compileOnly": true
+      },
       "System.Security.Principal/4.1.2.0": {
         "compile": {
           "System.Security.Principal.dll": {}
+        },
+        "compileOnly": true
+      },
+      "System.Security.Principal.Windows.Reference/4.1.1.0": {
+        "compile": {
+          "System.Security.Principal.Windows.dll": {}
         },
         "compileOnly": true
       },
@@ -3594,6 +3669,12 @@
       "System.Windows/4.0.0.0": {
         "compile": {
           "System.Windows.dll": {}
+        },
+        "compileOnly": true
+      },
+      "System.Windows.Extensions/4.0.1.0": {
+        "compile": {
+          "System.Windows.Extensions.dll": {}
         },
         "compileOnly": true
       },
@@ -3749,12 +3830,12 @@
       "path": "microsoft.codeanalysis.workspaces.common/3.3.1",
       "hashPath": "microsoft.codeanalysis.workspaces.common.3.3.1.nupkg.sha512"
     },
-    "Microsoft.CSharp/4.5.0": {
+    "Microsoft.CSharp/4.7.0": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-kaj6Wb4qoMuH3HySFJhxwQfe8R/sJsNJnANrvv8WdFPMoNbKY5htfNscv+LHCu5ipz+49m2e+WQXpLXr9XYemQ==",
-      "path": "microsoft.csharp/4.5.0",
-      "hashPath": "microsoft.csharp.4.5.0.nupkg.sha512"
+      "sha512": "sha512-pTj+D3uJWyN3My70i2Hqo+OXixq3Os2D1nJ2x92FFo6sk8fYS1m1WLNTs0Dc1uPaViH0YvEEwvzddQ7y4rhXmA==",
+      "path": "microsoft.csharp/4.7.0",
+      "hashPath": "microsoft.csharp.4.7.0.nupkg.sha512"
     },
     "Microsoft.Data.SqlClient/1.0.19269.1": {
       "type": "package",
@@ -3784,6 +3865,13 @@
       "path": "microsoft.entityframeworkcore.analyzers/3.1.3",
       "hashPath": "microsoft.entityframeworkcore.analyzers.3.1.3.nupkg.sha512"
     },
+    "Microsoft.EntityFrameworkCore.Design/3.1.3": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-T0d+lFCf0UUHkl9trdUosjyqa4/yMlVRwPOTXJAKZxkkJ2Mgl98IK+e4dsVyYdZaVukVnT7xhh5j7Qs21rJ45g==",
+      "path": "microsoft.entityframeworkcore.design/3.1.3",
+      "hashPath": "microsoft.entityframeworkcore.design.3.1.3.nupkg.sha512"
+    },
     "Microsoft.EntityFrameworkCore.Relational/3.1.3": {
       "type": "package",
       "serviceable": true,
@@ -3797,6 +3885,13 @@
       "sha512": "sha512-1w8LLkPwwrwN1lrwkSNvpUNy/3UX3nbo2fXEBOj8HYOrdIcjdpC3zkdwKznXjHpGAuk8lAIdFSGZJhXZljs3rQ==",
       "path": "microsoft.entityframeworkcore.sqlserver/3.1.3",
       "hashPath": "microsoft.entityframeworkcore.sqlserver.3.1.3.nupkg.sha512"
+    },
+    "Microsoft.EntityFrameworkCore.Tools/3.1.3": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-/VSHVXwg8Zu5gJILvcEIVjmpQbuUg6+SEwU6pFa/RtXMPD+QSgAuzRYIfDbeVHjJuQxK3nRwkTFxorO254BLLw==",
+      "path": "microsoft.entityframeworkcore.tools/3.1.3",
+      "hashPath": "microsoft.entityframeworkcore.tools.3.1.3.nupkg.sha512"
     },
     "Microsoft.Extensions.Caching.Abstractions/3.1.3": {
       "type": "package",
@@ -5297,6 +5392,11 @@
       "serviceable": false,
       "sha512": ""
     },
+    "Microsoft.Win32.Registry.Reference/4.1.3.0": {
+      "type": "referenceassembly",
+      "serviceable": false,
+      "sha512": ""
+    },
     "mscorlib/4.0.0.0": {
       "type": "referenceassembly",
       "serviceable": false,
@@ -5413,6 +5513,11 @@
       "sha512": ""
     },
     "System.Diagnostics.DiagnosticSource.Reference/4.0.5.0": {
+      "type": "referenceassembly",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "System.Diagnostics.EventLog/4.0.2.0": {
       "type": "referenceassembly",
       "serviceable": false,
       "sha512": ""
@@ -5538,6 +5643,11 @@
       "sha512": ""
     },
     "System.IO.MemoryMappedFiles/4.1.2.0": {
+      "type": "referenceassembly",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "System.IO.Pipelines/4.0.2.0": {
       "type": "referenceassembly",
       "serviceable": false,
       "sha512": ""
@@ -5817,12 +5927,22 @@
       "serviceable": false,
       "sha512": ""
     },
+    "System.Security.AccessControl.Reference/4.1.1.0": {
+      "type": "referenceassembly",
+      "serviceable": false,
+      "sha512": ""
+    },
     "System.Security.Claims/4.1.2.0": {
       "type": "referenceassembly",
       "serviceable": false,
       "sha512": ""
     },
     "System.Security.Cryptography.Algorithms.Reference/4.3.2.0": {
+      "type": "referenceassembly",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "System.Security.Cryptography.Cng.Reference/4.3.3.0": {
       "type": "referenceassembly",
       "serviceable": false,
       "sha512": ""
@@ -5847,12 +5967,27 @@
       "serviceable": false,
       "sha512": ""
     },
+    "System.Security.Cryptography.Xml/4.0.3.0": {
+      "type": "referenceassembly",
+      "serviceable": false,
+      "sha512": ""
+    },
     "System.Security/4.0.0.0": {
       "type": "referenceassembly",
       "serviceable": false,
       "sha512": ""
     },
+    "System.Security.Permissions.Reference/4.0.3.0": {
+      "type": "referenceassembly",
+      "serviceable": false,
+      "sha512": ""
+    },
     "System.Security.Principal/4.1.2.0": {
+      "type": "referenceassembly",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "System.Security.Principal.Windows.Reference/4.1.1.0": {
       "type": "referenceassembly",
       "serviceable": false,
       "sha512": ""
@@ -5978,6 +6113,11 @@
       "sha512": ""
     },
     "System.Windows/4.0.0.0": {
+      "type": "referenceassembly",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "System.Windows.Extensions/4.0.1.0": {
       "type": "referenceassembly",
       "serviceable": false,
       "sha512": ""

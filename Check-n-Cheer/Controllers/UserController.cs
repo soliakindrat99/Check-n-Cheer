@@ -178,14 +178,14 @@ namespace Check_n_Cheer.Controllers
             }
             if (user!=null && user.Role == "Admin")
             {
-                User[] users;
+                List<User> users;
                 if (id == null)
                 {
                     users = _userRepo.GetUsers();
                 }
                 else
                 {
-                    users = new User[] { _userRepo.GetUser(id)};
+                    users = new List<User> { _userRepo.GetUser(id)};
                 }
                 ViewData["LoggedIn"] = "true";
                 return View(users);
