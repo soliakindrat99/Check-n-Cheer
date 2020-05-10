@@ -1,0 +1,105 @@
+﻿@model List<Check_n_Cheer.Models.TaskResult>;
+@{
+    ViewData["Title"] = "Test Result";
+}
+
+<h1>Test Result</h1>
+
+<br />
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                №
+            </th>
+            <th>
+                Title
+            </th>
+            <th>Marks</th>
+            
+        </tr>
+    </thead>
+    <tbody>
+        @for (int i = 0; i < Model.Count; i++)
+        {
+            @Html.HiddenFor(model => model[i].Id)
+            <tr>
+                <td>
+                    <h5>@(i + 1)</h5>
+                </td>
+                <td>
+                    <h4>@Model[i].Task.Name</h4>
+                    <form>
+                        @if (Model[i].Task.Options.Count(item => item.IsCorrect) == 1)
+                        {
+                            for (int j = 0; j < Model[i].OptionResults.Count; j++)
+                            {
+                                string style = "";
+                                if (Model[i].OptionResults[j].Option.IsCorrect)
+                                {
+                                    style = "color:green; text-shadow:2 2 green";
+                                }
+                                else if (Model[i].OptionResults[j].IsChecked)
+                                {
+                                    style = "color:red; text-shadow:2 2 red";
+                                }
+
+                                <div style="@style">
+                                    <label for="@Model[i].OptionResults[j].Option.Id">@Model[i].OptionResults[j].Option.Name</label>
+                                    @if (Model[i].OptionResults[j].IsChecked)
+                                    {
+
+                                        <input type="radio" name="answers[0]" id="@Model[i].OptionResults[j].Option.Id" value="@Model[i].OptionResults[j].Option.Id" checked disabled />
+                                    }
+                                    else
+                                    {
+                                        <input type="radio" name="answers[0]" id="@Model[i].OptionResults[j].Option.Id" value="@Model[i].OptionResults[j].Option.Id" disabled />
+                                    }
+                                </div>
+                            }
+                        }
+                        else if (Model[i].Task.Options.Count(item => item.IsCorrect) > 1)
+                        {
+                            for (int j = 0; j < Model[i].OptionResults.Count; j++)
+                            {
+                                string style = "";
+                                if (Model[i].OptionResults[j].Option.IsCorrect)
+                                {
+                                    style = "color:green; text-shadow:2 2 green";
+                                }
+                                else if (Model[i].OptionResults[j].IsChecked)
+                                {
+                                    style = "color:red; text-shadow:2 2 red";
+                                }
+                                <div  style="@style">
+                                    <label for="@Model[i].OptionResults[j].Option.Id">@Model[i].OptionResults[j].Option.Name</label>
+                                    @if (Model[i].OptionResults[j].IsChecked)
+                                    {
+                                        <input type="checkbox" name="answers[]" id="@Model[i].OptionResults[j].Option.Id" value="@Model[i].OptionResults[j].Option.Id" checked disabled />
+                                    }
+                                    else
+                                    {
+                                        <input type="checkbox" name="answers[]" id="@Model[i].OptionResults[j].Option.Id" value="@Model[i].OptionResults[j].Option.Id" disabled />
+                                    }
+                                </div>
+                            }
+                        }
+                        else
+                        {
+                            <h5>There aren't any correct answers</h5>
+                        }
+
+                    </form>
+                </td>
+                <td>
+                    @{var mark=Model[i].Percent * Model[i].Task.Mark;}
+                    Mark: @mark
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<h3>Final mark: @ViewData["FinalMark"]</h3>
+
+

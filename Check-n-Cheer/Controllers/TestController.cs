@@ -334,7 +334,7 @@ namespace Check_n_Cheer.Controllers
             if (testResult != null && testResult.Test != null)
             {
                 ViewData["TestName"] = testResult.Test.Name;
-                ViewData["TestId"] = testResult.Id;
+                ViewData["TestResultId"] = testResult.Id;
                 return View(testResult.TaskResults);
             }
             return RedirectToAction("Error");
@@ -343,6 +343,7 @@ namespace Check_n_Cheer.Controllers
         [HttpPost]
         public ActionResult SaveAnswer(Guid id, List<Guid> answers)
         {
+
             var taskResult = _taskResultRepo.GetTaskResult(id);
             if (taskResult != null)
             {
@@ -377,6 +378,24 @@ namespace Check_n_Cheer.Controllers
                     }
                 }
                 return RedirectToAction("CurrentTest", new { testResultId = taskResult.TestResult.Id });
+            }
+            return RedirectToAction("Error");
+        }
+
+        [HttpGet]
+        public ActionResult CompleteTest(Guid testResultId)
+        {
+            _logger.LogInformation(Convert.ToString(testResultId));
+            var testResult = _testResultRepo.GetTestResult(testResultId);
+            if (testResult != null)
+            {
+                var finalMark = 0.0;
+                foreach (var result in testResult.TaskResults)
+                {
+                    finalMark += result.Percent * result.Task.Mark;
+                }
+                ViewData["FinalMark"] = finalMark;
+                return View(testResult.TaskResults);
             }
             return RedirectToAction("Error");
         }
