@@ -533,5 +533,107 @@ namespace Check_n_Cheer.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+
+        public ActionResult Index()
+        {
+            _logger.LogInformation("GET Option/Index");
+            return View();
+        }
+
+        [HttpGet]
+        public ActionResult Create(Guid taskId, Guid testId)
+        {
+            _logger.LogInformation("GET Option/Create");
+            var option = new CreateOptionDTO { TaskId = taskId, TestId = testId };
+            Guid id = Guid.Parse(Get("user"));
+            User user = _userRepo.GetUser(id);
+            if (user != null && user.Role == "Teacher")
+            {
+                ViewData["LoggedIn"] = "true";
+                return View(option);
+            }
+            ViewData["LoggedIn"] = "false";
+            return RedirectToAction("Error");
+        }
+
+        [HttpPost]
+        public ActionResult CreateOption(Guid id, string optionName, string? optionIsCorrect)
+        {
+            _logger.LogInformation("POST Option/Create");
+            bool correct = (optionIsCorrect != null);
+            var task = _taskRepo.GetTask(id);
+            var option = new Option()
+            {
+                Id = Guid.NewGuid(),
+                IsCorrect = correct,
+                Name = optionName,
+                Task = task
+            };
+            _optionRepo.AddOption(option);
+            return RedirectToAction("ManageOptions", new { taskId = id });
+
+        }
+
+        [HttpGet]
+        public ActionResult Delete(Guid id)
+        {
+            _logger.LogInformation("GET Option/Delete");
+            return View();
+        }
+
+        [HttpGet]
+        public ActionResult ManageOptions(Guid taskId)
+        {
+            _logger.LogInformation("GET Option/ManageOptions");
+            var options = _taskRepo.GetTask(taskId);
+            ViewData["TestId"] = options.Test.Id;
+            ViewData["TaskId"] = taskId;
+            ViewData["LoggedIn"] = "true";
+            return View(options.Options);
+        }
+
+        [HttpPost]
+        public ActionResult ChangeOption(Guid id, string optionName, string? optionIsCorrect)
+        {
+            Option option = _optionRepo.GetOption(id);
+
+            bool correct = (optionIsCorrect != null);
+            if (option != null)
+            {
+                if (optionName != option.Name || option.IsCorrect != correct)
+                {
+                    option.Name = optionName;
+                    option.IsCorrect = correct;
+                    _optionRepo.UpdateOption(id, option);
+                }
+                return RedirectToAction("ManageOptions", new { taskId = option.Task.Id });
+            }
+            return RedirectToAction("Error");
+        }
+
+        [HttpPost]
+        public ActionResult DeleteOption(Guid id)
+        {
+            Option option = _optionRepo.GetOption(id);
+
+
+            if (option != null)
+            {
+                _optionRepo.RemoveOption(id);
+                return RedirectToAction("ManageOptions", new { taskId = option.Task.Id });
+            }
+            return RedirectToAction("Error");
+        }
+
+        [HttpGet]
+        public ActionResult UpdateTask(Guid taskId, Guid testId, string condition, double mark)
+        {
+            _logger.LogInformation("GET Task/UpdateTasks");
+            var task = _taskRepo.GetTask(taskId);
+            task.Name = condition;
+            task.Mark = mark;
+            _taskRepo.UpdateTask(taskId, task);
+            return RedirectToAction("ManageTask", "Test", new { testId });
+        }
     }
 }
