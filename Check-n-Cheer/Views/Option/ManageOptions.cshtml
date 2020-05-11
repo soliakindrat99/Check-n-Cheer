@@ -4,14 +4,14 @@
     ViewData["Title"] = "Manage Options";
 }
 
-    <h1>Manage Options</h1>
+<h1>Manage Options</h1>
 
 <table class="table">
     <thead>
         <tr>
-           
+
             <th>Name</th>
-           
+
             <th>Delete</th>
         </tr>
     </thead>
@@ -42,9 +42,8 @@
                     </form>
 
                 </td>
-
-
             </tr>
+
         }
         <tr>
             <td>
@@ -53,7 +52,7 @@
 
                     <label for="IsCorrect">Is correct:</label>
                     <input type="checkbox" name="optionIsCorrect" id="IsCorrect" value="correct" />
-                    
+
 
                     <button type="submit" class="btn btn-success">Add option</button>
                 </form>
@@ -68,3 +67,8 @@
 
 </table>
 
+
+
+
+<a href="/Test/ManageTasks?testId=@ViewData["TestId"]"  class="btn btn-success">Save all options</a>
+    

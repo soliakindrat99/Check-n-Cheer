@@ -1037,3 +1037,4 @@ C:\Users\zakhar\source\repos\Check-n-Cheer\Check-n-Cheer\obj\Debug\netcoreapp3.1
 C:\Users\User\Desktop\Check-n-Cheer\Check-n-Cheer\obj\Debug\netcoreapp3.1\Razor\Views\Test\CurrentTest.cshtml.g.cs
 C:\Users\User\Desktop\Check-n-Cheer\Check-n-Cheer\obj\Debug\netcoreapp3.1\Check-n-Cheer.MvcApplicationPartsAssemblyInfo.cache
 C:\Users\User\Desktop\Check-n-Cheer\Check-n-Cheer\bin\Debug\netcoreapp3.1\Microsoft.EntityFrameworkCore.Design.dll
+C:\Users\zakhar\source\repos\Check-n-Cheer\Check-n-Cheer\bin\Debug\netcoreapp3.1\Microsoft.EntityFrameworkCore.Design.dll

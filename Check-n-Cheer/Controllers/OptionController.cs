@@ -81,9 +81,11 @@ namespace Check_n_Cheer.Controllers
         public ActionResult ManageOptions(Guid taskId)
         {
             _logger.LogInformation("GET Option/ManageOptions");
-            var options = _optionRepository.GetOptions(taskId);
+            var options = _taskRepository.GetTask(taskId);
+            ViewData["TestId"] = options.Test.Id;
             ViewData["TaskId"] = taskId;
-            return View(options);
+            ViewData["LoggedIn"] = "true";
+            return View(options.Options);
         }
 
         [HttpPost]
