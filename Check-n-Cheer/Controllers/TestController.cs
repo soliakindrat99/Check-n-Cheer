@@ -371,41 +371,62 @@ namespace Check_n_Cheer.Controllers
         [HttpPost]
         public ActionResult SaveAnswer(Guid id, List<Guid> answers)
         {
-
-            var taskResult = _taskResultRepo.GetTaskResult(id);
-            if (taskResult != null)
+            _logger.LogInformation("GET Test/PassTest");
+            User user = null;
+            if (Get("user") != null)
             {
-                var totalCount = taskResult.Task.Options.Count;
-                var goalCount = taskResult.Task.Options.Count(x => x.IsCorrect);
-                var actualTotalCount = answers.Count;
-                double penaltyMultiplier = 1.0;
-                if(actualTotalCount == totalCount)
+                Guid user_id = Guid.Parse(Get("user"));
+                user = _userRepo.GetUser(user_id);
+            }
+            else
+            {
+                _logger.LogInformation("User is not logged!");
+            }
+            if (user != null && user.Role == "Student")
+            {
+                var taskResult = _taskResultRepo.GetTaskResult(id);
+                if (taskResult != null)
                 {
-                    penaltyMultiplier = 0;
-                }
-                if(actualTotalCount > goalCount)
-                {
-                    penaltyMultiplier = 0.5;
-                }
-                var actualCount = answers.Count(x => _optionRepo.GetOption(x).IsCorrect);
-                var result = ((double)actualCount / (double)goalCount)*penaltyMultiplier;
-                taskResult.Percent = result;
-                _taskResultRepo.UpdateTaskResult(taskResult.Id, taskResult);
-                foreach (var option in taskResult.Task.Options)
-                {
-                    var optionResult = _optionResultRepo.GetOptionResult(taskResult.Id, option.Id);
-                    if(optionResult != null)
+                    var totalCount = taskResult.Task.Options.Count;
+                    var goalCount = taskResult.Task.Options.Count(x => x.IsCorrect);
+                    var actualTotalCount = answers.Count;
+                    double penaltyMultiplier = 1.0;
+                    if(actualTotalCount == totalCount)
                     {
-                        optionResult.IsChecked = answers.Exists(x => x == option.Id);
-                        _optionResultRepo.UpdateOptionResult(optionResult.Id, optionResult);
-                    } 
-                    else
-                    {
-                        optionResult = new OptionResult(taskResult, option, answers.Exists(x => x == option.Id));
-                        _optionResultRepo.AddOptionResult(optionResult);
+                        penaltyMultiplier = 0;
                     }
+                    if(actualTotalCount > goalCount)
+                    {
+                        penaltyMultiplier = 0.5;
+                    }
+                    var actualCount = answers.Count(x => _optionRepo.GetOption(x).IsCorrect);
+                    var result = ((double)actualCount / (double)goalCount)*penaltyMultiplier;
+                    taskResult.Percent = result;
+                    _taskResultRepo.UpdateTaskResult(taskResult.Id, taskResult);
+                    foreach (var option in taskResult.Task.Options)
+                    {
+                        var optionResult = _optionResultRepo.GetOptionResult(taskResult.Id, option.Id);
+                        if(optionResult != null)
+                        {
+                            optionResult.IsChecked = answers.Exists(x => x == option.Id);
+                            _optionResultRepo.UpdateOptionResult(optionResult.Id, optionResult);
+                        } 
+                        else
+                        {
+                            optionResult = new OptionResult(taskResult, option, answers.Exists(x => x == option.Id));
+                            _optionResultRepo.AddOptionResult(optionResult);
+                        }
+                    }
+                    return RedirectToAction("CurrentTest", new { testResultId = taskResult.TestResult.Id });
                 }
-                return RedirectToAction("CurrentTest", new { testResultId = taskResult.TestResult.Id });
+            }
+            if (user != null)
+            {
+                _logger.LogInformation("User is not student!");
+            }
+            else
+            {
+                _logger.LogInformation("User authorised but not exist!");
             }
             return RedirectToAction("Error");
         }
@@ -424,7 +445,7 @@ namespace Check_n_Cheer.Controllers
             {
                 _logger.LogInformation("User is not logged!");
             }
-            if (user != null)
+            if (user != null && (user.Role == "Student" || user.Role == "Teacher"))
             {
                 var testResult = _testResultRepo.GetTestResult(testResultId);
                 if (testResult != null)
@@ -441,6 +462,14 @@ namespace Check_n_Cheer.Controllers
                     ViewData["LoggedIn"] = "true";
                     return View(testResult.TaskResults);
                 }
+            }
+            if (user != null)
+            {
+                _logger.LogInformation("User is not student or teacher!");
+            }
+            else
+            {
+                _logger.LogInformation("User authorised but not exist!");
             }
             ViewData["LoggedIn"] = "false";
             return RedirectToAction("Error");
@@ -471,6 +500,18 @@ namespace Check_n_Cheer.Controllers
                         var results = _testResultRepo.GetTestResultsForTest(test.Id);
                         testResults.AddRange(results);
                     }
+                    ViewData["UserRole"] = "Teacher";
+                    ViewData["LoggedIn"] = "true";
+                    return View(testResults);
+                }
+            }
+            if (user != null && user.Role == "Student")
+            {
+                var tests = _testRepo.GetTests(user.Id);
+                if (tests != null)
+                {
+                    var testResults = _testResultRepo.GetTestResultsForStudent(user.Id);
+                    ViewData["UserRole"] = "Student";
                     ViewData["LoggedIn"] = "true";
                     return View(testResults);
                 }

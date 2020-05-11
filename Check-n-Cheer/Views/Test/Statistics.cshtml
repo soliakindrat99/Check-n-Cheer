@@ -15,9 +15,12 @@
                 <td>
                     Test: <strong>@testResult.Test.Name</strong>
                 </td>
-                <td>
-                    Student: <strong>@testResult.Student.Email</strong>
-                </td>
+                @if(ViewData["UserRole"]=="Teacher")
+                {
+                    <td>
+                        Student: <strong>@testResult.Student.Email</strong>
+                    </td>
+                }
                 <td>
                     <a class="btn btn-info" href="/Test/TestResult?testResultId=@testResult.Id">View Details</a>
                 </td>

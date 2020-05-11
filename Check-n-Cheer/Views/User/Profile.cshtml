@@ -11,10 +11,7 @@
     {
         <a class="btn button_color" href="/Test/CurrentTest?testResultId=@Model.CurrentTestId">View current test</a>
     }
-    @if (Model.TestResults != null)
-    {
-        <a class="btn button_color" href="/">View history</a>
-    }
+    <a class="btn btn-info" asp-area="" asp-controller="Test" asp-action="Statistics">View history</a>
 }
 @if (@Model.Role == "Teacher")
 {
