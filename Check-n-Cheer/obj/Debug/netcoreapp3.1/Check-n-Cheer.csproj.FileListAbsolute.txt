@@ -1039,3 +1039,6 @@ C:\Users\User\Desktop\Check-n-Cheer\Check-n-Cheer\obj\Debug\netcoreapp3.1\Check-
 C:\Users\User\Desktop\Check-n-Cheer\Check-n-Cheer\bin\Debug\netcoreapp3.1\Microsoft.EntityFrameworkCore.Design.dll
 D:\Програмна інженерія\Check-n-Cheer\Check-n-Cheer\bin\Debug\netcoreapp3.1\Microsoft.EntityFrameworkCore.Design.dll
 D:\Програмна інженерія\Check-n-Cheer\Check-n-Cheer\obj\Debug\netcoreapp3.1\Razor\Views\Test\CompleteTest.cshtml.g.cs
+C:\Users\User\Desktop\Check-n-Cheer\Check-n-Cheer\obj\Debug\netcoreapp3.1\Razor\Views\Test\SubmitTest.cshtml.g.cs
+C:\Users\User\Desktop\Check-n-Cheer\Check-n-Cheer\obj\Debug\netcoreapp3.1\Razor\Views\Test\Statistics.cshtml.g.cs
+C:\Users\User\Desktop\Check-n-Cheer\Check-n-Cheer\obj\Debug\netcoreapp3.1\Razor\Views\Test\TestResult.cshtml.g.cs

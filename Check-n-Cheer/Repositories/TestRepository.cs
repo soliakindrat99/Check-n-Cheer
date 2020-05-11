@@ -39,11 +39,11 @@ namespace Check_n_Cheer.Repositories
         }
         public List<Test> GetTests(Guid teacherId)
         {
-            var teacher = _context.Users.Include(x => x.Tests)
-                .ThenInclude(x => x.Tasks)
+            var tests = _context.Tests
+                .Include(x => x.Tasks)
                 .ThenInclude(x => x.Options)
-                .FirstOrDefault(x => x.Id == teacherId);
-            return teacher.Tests;
+                .ToList();
+            return tests;
         }
         public void UpdateTest(Guid id, Test updatedTest)
         {

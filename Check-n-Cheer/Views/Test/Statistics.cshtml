@@ -1,0 +1,28 @@
+﻿@model List<Check_n_Cheer.Models.TestResult>;
+@{
+    ViewData["Title"] = "TestHistory";
+}
+
+<h1>Test History</h1>
+@*<label for="name">Search test:</label>
+<input type="text" name="name" id="search_test_input" value="" />
+<button class="btn btn-info" id="search_test_btn">Search</button>*@
+<br />
+    <table style="width:100%">
+        @foreach (var testResult in Model)
+        {
+            <tr>
+                <td>
+                    Test: <strong>@testResult.Test.Name</strong>
+                </td>
+                <td>
+                    Student: <strong>@testResult.Student.Email</strong>
+                </td>
+                <td>
+                    <a class="btn btn-info" href="/Test/TestResult?testResultId=@testResult.Id">View Details</a>
+                </td>
+            </tr>
+        }
+    </table>
+
+

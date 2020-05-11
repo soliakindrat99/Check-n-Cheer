@@ -11,7 +11,6 @@
     {
         <a class="btn button_color" href="/Test/CurrentTest?testResultId=@Model.CurrentTestId">View current test</a>
     }
-    <a class="btn button_color" asp-area="" asp-controller="Test" asp-action="TestHistory">View available tests</a>
     @if (Model.TestResults != null)
     {
         <a class="btn button_color" href="/">View history</a>
@@ -22,4 +21,5 @@
     <p>@Model.Email</p>
     <a class="btn btn-success" asp-area="" asp-controller="Test" asp-action="CreateTest">Create test</a>
     <a class="btn btn-info" asp-area="" asp-controller="Test" asp-action="TestHistory">View history</a>
+    <a class="btn btn-info" asp-area="" asp-controller="Test" asp-action="Statistics">Statistics</a>
 }

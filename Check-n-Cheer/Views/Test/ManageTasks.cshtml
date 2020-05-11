@@ -50,7 +50,7 @@
             new
         </td>
         <td>
-            <form action="/Test/AddTask/@ViewData["TestID"]" method="post">
+            <form action="/Test/AddTask/@ViewData["TestId"]" method="post">
                 <input type="text" id="condition" name="condition" value="" required />
                 <input type="number" id="mark" name="mark" value="" required />
                 <button type="submit" class="btn btn-success">Create task</button>
@@ -64,6 +64,6 @@
     </tr>
     </tbody>
 </table>
-<input name="command" type="submit" class="btn btn-info" value="Submit" />
+<a href="/Test/SubmitTest?testId=@ViewData["TestId"]" class="btn btn-info">Submit</a>
 
 

@@ -3,6 +3,7 @@ using System.Linq;
 using Check_n_Cheer.Models;
 using Check_n_Cheer.Interfaces;
 using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore;
 
 namespace Check_n_Cheer.Repositories
 {

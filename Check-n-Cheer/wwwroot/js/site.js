@@ -23,6 +23,7 @@ function validatePassword() {
         confirm_password.setCustomValidity('');
     }
 }
+
 if (search_user_btn !== null) {
     search_user_btn.onclick = search_user;
 }

@@ -94,12 +94,12 @@
                 </td>
                 <td>
                     @{var mark=Model[i].Percent * Model[i].Task.Mark;}
-                    Mark: @mark
+                    Mark: @mark/@Model[i].Task.Mark
                 </td>
             </tr>
         }
     </tbody>
 </table>
-<h3>Final mark: @ViewData["FinalMark"]</h3>
-
+<h3>Final mark: @ViewData["FinalMark"]/@ViewData["PossibleMark"]</h3>
+<a class="btn btn-info" asp-area="" asp-controller="Test" asp-action="Statistics">Go to Statistics</a>
 
