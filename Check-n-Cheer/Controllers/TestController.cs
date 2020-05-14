@@ -62,11 +62,17 @@ namespace Check_n_Cheer.Controllers
         }
 
         [HttpGet]
-        public IActionResult CreateTest()
+        public IActionResult CreateTest() 
         {
             _logger.LogInformation("GET Test/CreateTest");
             User user = null;
-            if (Get("user") != null)
+            //CreateTest_UserIsNotLogined_RedirectToError
+            //CreateTest_UserIsLogined_DoesNotExist_RedirectToError
+            //CreateTest_UserIsLogined_Exist_UserIsNotTeacher_RedirectToError
+            //CreateTest_UserIsLogined_Exist_UserIsTeacher_ReturnsView
+
+
+            if (Get("user") != null) 
             {
                 Guid id = Guid.Parse(Get("user"));
                 user = _userRepo.GetUser(id);
@@ -93,8 +99,12 @@ namespace Check_n_Cheer.Controllers
         public IActionResult CreateTest(CreateTestDTO newTest)
         {
             _logger.LogInformation("GET Test/CreateTest");
-            Guid id = Guid.Parse(Get("user"));
-            User user = _userRepo.GetUser(id);
+            User user = null;
+            if (Get("user") != null)
+            {
+                Guid id = Guid.Parse(Get("user"));
+                user = _userRepo.GetUser(id);
+            }
             if (user == null || user.Role != "Teacher")
             {
                 ViewData["LoggedIn"] = "false";
@@ -178,6 +188,49 @@ namespace Check_n_Cheer.Controllers
             return RedirectToAction("Error");
         }
 
+        [HttpPost]
+        public ActionResult AddTask(Guid id, string condition,double mark)
+        {
+            _logger.LogInformation("POST Test/SaveTask");
+            User user = null;
+            if (Get("user") != null)
+            {
+                Guid user_id = Guid.Parse(Get("user"));
+                user = _userRepo.GetUser(user_id);
+            }
+            else
+            {
+                _logger.LogInformation("User is not logged!");
+            }
+            if (user != null && user.Role == "Teacher")
+            {
+                var test = _testRepo.GetTest(id);
+                var task = new Task()
+                {
+                    Id = Guid.NewGuid(),
+                    Name = condition,
+                    Mark = mark,
+                    TaskNumber = test.Tasks.Count + 1,
+                    Test = test
+                };
+                _taskRepo.AddTask(task);
+                test.Tasks.Add(task);
+                _testRepo.UpdateTest(id, test);
+
+                return RedirectToAction("ManageTasks", "Test", new { testId = id });
+            }
+            if (user != null)
+            {
+                _logger.LogInformation("User is not teacher!");
+            }
+            else
+            {
+                _logger.LogInformation("User authorised but not exist!");
+            }
+            ViewData["LoggedIn"] = "false";
+            return RedirectToAction("Error");
+        }
+        
         [HttpGet]
         public IActionResult SubmitTest(Guid testId)
         {
@@ -250,45 +303,74 @@ namespace Check_n_Cheer.Controllers
         }
 
         [HttpPost]
-        public ActionResult AddTask(Guid id, string condition,double mark)
-        {
-            var test = _testRepo.GetTest(id);
-            var task = new Task()
-            {
-                Id = Guid.NewGuid(),
-                Name = condition,
-                Mark=mark,
-                TaskNumber = test.Tasks.Count + 1,
-                Test = test
-            };
-            _taskRepo.AddTask(task);
-            test.Tasks.Add(task);
-            _testRepo.UpdateTest(id, test);
-
-            return RedirectToAction("ManageTasks", "Test", new {testId = id });
-        }
-
-        [HttpPost]
         public ActionResult RemoveTask(Guid id)
         {
-            var task = _taskRepo.GetTask(id);
-            if(task != null)
+            
+            _logger.LogInformation("GET User/TestHistory");
+            User user = null;
+            if (Get("user") != null)
             {
-                _taskRepo.RemoveTask(id);
-                return RedirectToAction("ManageTasks", new { testId = task.Test.Id });
+                Guid user_id = Guid.Parse(Get("user"));
+                user = _userRepo.GetUser(user_id);
             }
-            return RedirectToAction( "Error" );
+            else
+            {
+                _logger.LogInformation("User is not logged!");
+            }
+            if (user != null && user.Role == "Teacher")
+            {
+                var task = _taskRepo.GetTask(id);
+                if (task != null)
+                {
+                    _taskRepo.RemoveTask(id);
+                    return RedirectToAction("ManageTasks", new { testId = task.Test.Id });
+                }
+              
+            }
+            if (user != null)
+            {
+                _logger.LogInformation("User is not teacher!");
+            }
+            else
+            {
+                _logger.LogInformation("User authorised but not exist!");
+            }
+            ViewData["LoggedIn"] = "false";
+            return RedirectToAction("Error");
         }
 
         [HttpPost]
         public ActionResult RemoveTest(Guid id)
         {
-            var test = _testRepo.GetTest(id);
-            if (test != null)
+            _logger.LogInformation("GET User/TestHistory");
+            User user = null;
+            if (Get("user") != null)
             {
-                _testRepo.RemoveTest(id);
-                return RedirectToAction("TestHistory");
+                Guid user_id = Guid.Parse(Get("user"));
+                user = _userRepo.GetUser(user_id);
             }
+            else
+            {
+                _logger.LogInformation("User is not logged!");
+            }
+            if (user != null && user.Role == "Teacher")
+            {
+                var test = _testRepo.GetTest(id);
+                if (test != null)
+                {
+                    _testRepo.RemoveTest(id);
+                    return RedirectToAction("TestHistory");
+                }
+            }
+            if (user != null)
+            {
+                _logger.LogInformation("User is not teacher!");
+            }
+            else
+            {
+                _logger.LogInformation("User authorised but not exist!");
+            }
+            ViewData["LoggedIn"] = "false";
             return RedirectToAction("Error");
         }
 
@@ -306,19 +388,23 @@ namespace Check_n_Cheer.Controllers
             {
                 _logger.LogInformation("User is not logged!");
             }
-            var test = _testRepo.GetTest(testId);
-            if (test != null && user != null && user.Role == "Student")
+            
+            if (user != null && user.Role == "Student")
             {
-                var testResult = new TestResult(user, test);
-                _testResultRepo.AddTestResult(testResult);
-                foreach (var task in test.Tasks)
+                var test = _testRepo.GetTest(testId);
+                if (test != null)
                 {
-                    var taskResult = new TaskResult(testResult, task);
-                    _taskResultRepo.AddTaskResult(taskResult);
-                    task.Options.ForEach(x => _optionResultRepo.AddOptionResult(new OptionResult(taskResult, x, false)));
+                    var testResult = new TestResult(user, test);
+                    _testResultRepo.AddTestResult(testResult);
+                    foreach (var task in test.Tasks)
+                    {
+                        var taskResult = new TaskResult(testResult, task);
+                        _taskResultRepo.AddTaskResult(taskResult);
+                        task.Options.ForEach(x => _optionResultRepo.AddOptionResult(new OptionResult(taskResult, x, false)));
+                    }
+                    _userRepo.SetCurrentTest(user.Id, testResult.Id);
+                    return RedirectToAction("CurrentTest", new { testResultId = testResult.Id });
                 }
-                _userRepo.SetCurrentTest(user.Id, testResult.Id);
-                return RedirectToAction("CurrentTest", new { testResultId = testResult.Id });
             }
             if (user != null)
             {
@@ -625,15 +711,6 @@ namespace Check_n_Cheer.Controllers
             return RedirectToAction("Error");
         }
 
-        [HttpGet]
-        public ActionResult UpdateTask(Guid taskId, Guid testId, string condition, double mark)
-        {
-            _logger.LogInformation("GET Task/UpdateTasks");
-            var task = _taskRepo.GetTask(taskId);
-            task.Name = condition;
-            task.Mark = mark;
-            _taskRepo.UpdateTask(taskId, task);
-            return RedirectToAction("ManageTask", "Test", new { testId });
-        }
+        
     }
 }

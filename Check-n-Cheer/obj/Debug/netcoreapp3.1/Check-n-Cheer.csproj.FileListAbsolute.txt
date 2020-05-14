@@ -700,12 +700,10 @@ C:\Users\rusla\Desktop\Check-n-Cheer\Check-n-Cheer\obj\Debug\netcoreapp3.1\Check
 C:\Users\rusla\Desktop\Check-n-Cheer\Check-n-Cheer\obj\Debug\netcoreapp3.1\Check-n-Cheer.TagHelpers.output.cache
 C:\Users\rusla\Desktop\Check-n-Cheer\Check-n-Cheer\obj\Debug\netcoreapp3.1\Check-n-Cheer.RazorCoreGenerate.cache
 C:\Users\rusla\Desktop\Check-n-Cheer\Check-n-Cheer\obj\Debug\netcoreapp3.1\Razor\Views\Home\Index.cshtml.g.cs
-C:\Users\rusla\Desktop\Check-n-Cheer\Check-n-Cheer\obj\Debug\netcoreapp3.1\Razor\Views\Option\Create.cshtml.g.cs
 C:\Users\rusla\Desktop\Check-n-Cheer\Check-n-Cheer\obj\Debug\netcoreapp3.1\Razor\Views\Shared\Error.cshtml.g.cs
 C:\Users\rusla\Desktop\Check-n-Cheer\Check-n-Cheer\obj\Debug\netcoreapp3.1\Razor\Views\Shared\_Layout.cshtml.g.cs
 C:\Users\rusla\Desktop\Check-n-Cheer\Check-n-Cheer\obj\Debug\netcoreapp3.1\Razor\Views\Shared\_ValidationScriptsPartial.cshtml.g.cs
 C:\Users\rusla\Desktop\Check-n-Cheer\Check-n-Cheer\obj\Debug\netcoreapp3.1\Razor\Views\Test\CreateTest.cshtml.g.cs
-C:\Users\rusla\Desktop\Check-n-Cheer\Check-n-Cheer\obj\Debug\netcoreapp3.1\Razor\Views\Test\Open.cshtml.g.cs
 C:\Users\rusla\Desktop\Check-n-Cheer\Check-n-Cheer\obj\Debug\netcoreapp3.1\Razor\Views\User\AdminProfile.cshtml.g.cs
 C:\Users\rusla\Desktop\Check-n-Cheer\Check-n-Cheer\obj\Debug\netcoreapp3.1\Razor\Views\User\Profile.cshtml.g.cs
 C:\Users\rusla\Desktop\Check-n-Cheer\Check-n-Cheer\obj\Debug\netcoreapp3.1\Razor\Views\User\SignIn.cshtml.g.cs
@@ -726,9 +724,7 @@ C:\Users\zakhar\source\repos\Check-n-Cheer\Check-n-Cheer\obj\Debug\netcoreapp3.1
 D:\Програмна інженерія\Check-n-Cheer\Check-n-Cheer\obj\Debug\netcoreapp3.1\Razor\Views\Test\CreateTest.cshtml.g.cs
 D:\Програмна інженерія\Check-n-Cheer\Check-n-Cheer\obj\Debug\netcoreapp3.1\Razor\Views\Test\ManageTasks.cshtml.g.cs
 D:\Програмна інженерія\Check-n-Cheer\Check-n-Cheer\obj\Debug\netcoreapp3.1\Razor\Views\Test\TestHistory.cshtml.g.cs
-C:\Users\rusla\Desktop\Check-n-Cheer\Check-n-Cheer\obj\Debug\netcoreapp3.1\Razor\Views\Test\CreateTask.cshtml.g.cs
 C:\Users\rusla\Desktop\Check-n-Cheer\Check-n-Cheer\obj\Debug\netcoreapp3.1\Razor\Views\Test\TestHistory.cshtml.g.cs
-C:\Users\rusla\Desktop\Check-n-Cheer\Check-n-Cheer\obj\Debug\netcoreapp3.1\Razor\Views\Option\ManageOptions.cshtml.g.cs
 C:\Users\Zver\Source\Repos\Check-n-Cheer\Check-n-Cheer\bin\Debug\netcoreapp3.1\appsettings.Development.json
 C:\Users\Zver\Source\Repos\Check-n-Cheer\Check-n-Cheer\bin\Debug\netcoreapp3.1\appsettings.json
 C:\Users\Zver\Source\Repos\Check-n-Cheer\Check-n-Cheer\bin\Debug\netcoreapp3.1\Properties\launchSettings.json
@@ -1042,3 +1038,10 @@ D:\Програмна інженерія\Check-n-Cheer\Check-n-Cheer\obj\Debug\n
 C:\Users\User\Desktop\Check-n-Cheer\Check-n-Cheer\obj\Debug\netcoreapp3.1\Razor\Views\Test\SubmitTest.cshtml.g.cs
 C:\Users\User\Desktop\Check-n-Cheer\Check-n-Cheer\obj\Debug\netcoreapp3.1\Razor\Views\Test\Statistics.cshtml.g.cs
 C:\Users\User\Desktop\Check-n-Cheer\Check-n-Cheer\obj\Debug\netcoreapp3.1\Razor\Views\Test\TestResult.cshtml.g.cs
+C:\Users\rusla\Desktop\Check-n-Cheer\Check-n-Cheer\bin\Debug\netcoreapp3.1\libman.json
+C:\Users\rusla\Desktop\Check-n-Cheer\Check-n-Cheer\bin\Debug\netcoreapp3.1\Microsoft.EntityFrameworkCore.Design.dll
+C:\Users\rusla\Desktop\Check-n-Cheer\Check-n-Cheer\obj\Debug\netcoreapp3.1\Razor\Views\Test\CurrentTest.cshtml.g.cs
+C:\Users\rusla\Desktop\Check-n-Cheer\Check-n-Cheer\obj\Debug\netcoreapp3.1\Razor\Views\Test\ManageOptions.cshtml.g.cs
+C:\Users\rusla\Desktop\Check-n-Cheer\Check-n-Cheer\obj\Debug\netcoreapp3.1\Razor\Views\Test\Statistics.cshtml.g.cs
+C:\Users\rusla\Desktop\Check-n-Cheer\Check-n-Cheer\obj\Debug\netcoreapp3.1\Razor\Views\Test\SubmitTest.cshtml.g.cs
+C:\Users\rusla\Desktop\Check-n-Cheer\Check-n-Cheer\obj\Debug\netcoreapp3.1\Razor\Views\Test\TestResult.cshtml.g.cs

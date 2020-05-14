@@ -11,7 +11,7 @@ namespace Check_n_Cheer.Models
         public User Teacher { get; set; }
         public List<Task> Tasks{ get; set; }
         public List<TestResult> Results { get; set; }
-        private Test() { }
+        public Test() { }
         public Test(Guid id, string name, User teacher)
         {
             Id = id;
