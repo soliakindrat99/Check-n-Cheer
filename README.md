@@ -1,2 +1,2 @@
 # Check&Cheer
-Web-application for student testing
+Web-application for testing students
